@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('menus', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            // $table->string('memo');
+            $table->string('genre');
+            $table->string('type');
             $table->timestamps();
         });
     }

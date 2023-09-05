@@ -30,15 +30,15 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        $menu = Menu::create($request->all());
-        return $menu
-            ? response()->json($menu, 201)
-            : response()->json([], 500);
+        // $menu = Menu::create($request->all());
+        // return $menu
+        //     ? response()->json($menu, 201)
+        //     : response()->json([], 500);
         
 
         $menu = new Menu;
         $menu->name = $request->input('name');
-        // $menu->memo = $request->input('memo');
+        $menu->memo = $request->input('memo');
         $menu->save();
     }
 
@@ -63,7 +63,16 @@ class MenuController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
+        $menu = Menu::find($id);
+        
+        $menu->name = $request->name;
+        $menu->memo = $request->memo;
+        $menu->save();
+            
+        return response()->json($menu);
+
+       
     }
 
     /**
