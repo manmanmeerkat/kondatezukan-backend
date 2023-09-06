@@ -21,6 +21,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::resource('menu', MenuController::class);
 
-Route::get('/random', [RandomController::class, 'random']);
+// Route::get('/random', [RandomController::class, 'random']);
 
+Route::get('/syusai', [RandomController::class, 'syusai']);
+Route::get('/fukusai', [RandomController::class, 'fukusai']);
 Route::get('/soup', [RandomController::class, 'soup']);
