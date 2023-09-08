@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GenreController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MenuController;
@@ -26,3 +27,8 @@ Route::resource('menu', MenuController::class);
 Route::get('/syusai', [RandomController::class, 'syusai']);
 Route::get('/fukusai', [RandomController::class, 'fukusai']);
 Route::get('/soup', [RandomController::class, 'soup']);
+
+Route::get('/japanese', [GenreController::class, 'japanese']);
+Route::get('/western', [GenreController::class, 'western']);
+Route::get('/chinese', [GenreController::class, 'chinese']);
+Route::get('/others', [GenreController::class, 'others']);

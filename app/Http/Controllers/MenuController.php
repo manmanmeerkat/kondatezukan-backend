@@ -22,7 +22,6 @@ class MenuController extends Controller
      */
     public function create()
     {
-        
     }
 
     /**
@@ -34,7 +33,7 @@ class MenuController extends Controller
         // return $menu
         //     ? response()->json($menu, 201)
         //     : response()->json([], 500);
-        
+
 
         $menu = new Menu;
         $menu->name = $request->input('name');
@@ -65,14 +64,12 @@ class MenuController extends Controller
     {
 
         $menu = Menu::find($id);
-        
+
         $menu->name = $request->name;
         $menu->memo = $request->memo;
         $menu->save();
-            
-        return response()->json($menu);
 
-       
+        return response()->json($menu);
     }
 
     /**
