@@ -80,4 +80,25 @@ class MenuController extends Controller
         $menu = Menu::find($id);
         $menu->delete();
     }
+    public function submitform(Request $request)
+    {
+        // $menu = new Menu;
+        // $menu->name = $request->input('name');
+        // $menu->genre = $request->input('genre');
+        // $menu->type = $request->input('type');
+        // $menu->save();
+        $formData = $request->validate([
+            'name' => 'required|string|max:255',
+            'genre' => 'required|string',
+            'type' => 'required|string',
+            'reference_url' => 'nullable|string',
+        ]);
+
+        try {
+            Menu::create($formData); // モデルを使用してデータベースに保存
+            return response()->json(['message' => 'データが保存されました'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'データの保存に失敗しました'], 500);
+        }
+    }
 }

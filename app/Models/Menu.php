@@ -11,6 +11,8 @@ class Menu extends Model
 
     protected $fillable = [
         'name',
-        'memo',
+        'genre',
+        'type',
+        'reference_url',
     ];
 }

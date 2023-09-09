@@ -25,6 +25,8 @@ Route::resource('menu', MenuController::class);
 
 // Route::get('/random', [RandomController::class, 'random']);
 
+Route::post('/submitform', [MenuController::class, 'submitform']);
+
 Route::get('/syusai', [RandomController::class, 'syusai']);
 Route::get('/fukusai', [RandomController::class, 'fukusai']);
 Route::get('/soup', [RandomController::class, 'soup']);
