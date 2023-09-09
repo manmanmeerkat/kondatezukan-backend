@@ -37,3 +37,15 @@ Route::get('/others', [GenreController::class, 'others']);
 Route::get('/japanese_syusai', [TypeController::class, 'japanese_syusai']);
 Route::get('/japanese_fukusai', [TypeController::class, 'japanese_fukusai']);
 Route::get('/japanese_soup', [TypeController::class, 'japanese_soup']);
+
+Route::get('/western_syusai', [TypeController::class, 'western_syusai']);
+Route::get('/western_fukusai', [TypeController::class, 'western_fukusai']);
+Route::get('/western_soup', [TypeController::class, 'western_soup']);
+
+Route::get('/chinese_syusai', [TypeController::class, 'chinese_syusai']);
+Route::get('/chinese_fukusai', [TypeController::class, 'chinese_fukusai']);
+Route::get('/chinese_soup', [TypeController::class, 'chinese_soup']);
+
+Route::get('/others_syusai', [TypeController::class, 'others_syusai']);
+Route::get('/others_fukusai', [TypeController::class, 'others_fukusai']);
+Route::get('/others_soup', [TypeController::class, 'others_soup']);
