@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\RandomController;
+use App\Http\Controllers\TypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,3 +33,7 @@ Route::get('/japanese', [GenreController::class, 'japanese']);
 Route::get('/western', [GenreController::class, 'western']);
 Route::get('/chinese', [GenreController::class, 'chinese']);
 Route::get('/others', [GenreController::class, 'others']);
+
+Route::get('/japanese_syusai', [TypeController::class, 'japanese_syusai']);
+Route::get('/japanese_fukusai', [TypeController::class, 'japanese_fukusai']);
+Route::get('/japanese_soup', [TypeController::class, 'japanese_soup']);
