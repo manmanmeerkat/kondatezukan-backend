@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GenreController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -51,3 +52,21 @@ Route::get('/chinese_soup', [TypeController::class, 'chinese_soup']);
 Route::get('/others_syusai', [TypeController::class, 'others_syusai']);
 Route::get('/others_fukusai', [TypeController::class, 'others_fukusai']);
 Route::get('/others_soup', [TypeController::class, 'others_soup']);
+
+
+// ログインフォームを表示する
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+
+// ログイン処理を実行する
+Route::post('/login', [AuthController::class, 'login'])->middleware('api');
+
+// ログアウトを実行する
+// Route::get('/logout', [AuthController::class, 'logout'])->middleware('api');
+Route::get('/logout', [AuthController::class, 'logout'])->middleware('web');
+
+
+// ユーザー登録フォームを表示する
+Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
+
+// ユーザー登録処理を実行する
+Route::post('/register', [AuthController::class, 'register']);
