@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Menu;
+use App\Models\Recipe;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -20,9 +21,12 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        
-        Menu::factory(100)->create();
 
-       
+        $this->call([
+            RecipeSeeder::class,
+        ]);
+
+        // Menu::factory(100)->create();
+        // \App\Models\Recipe::factory(100)->create();
     }
 }

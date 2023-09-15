@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Schema::create('menus', function (Blueprint $table) {
-        //     $table->id();
-        //     $table->string('name');
-        //     $table->string('genre');
-        //     $table->string('type');
-        //     $table->string('reference_url');
-        //     $table->timestamps();
-        // });
+        Schema::create('genres', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -26,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('menus');
+        Schema::dropIfExists('genres');
     }
 };
