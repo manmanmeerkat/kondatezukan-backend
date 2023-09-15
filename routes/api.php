@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\RandomController;
-use App\Http\Controllers\TypeController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,21 +37,21 @@ Route::get('/western', [GenreController::class, 'western']);
 Route::get('/chinese', [GenreController::class, 'chinese']);
 Route::get('/others', [GenreController::class, 'others']);
 
-Route::get('/japanese_syusai', [TypeController::class, 'japanese_syusai']);
-Route::get('/japanese_fukusai', [TypeController::class, 'japanese_fukusai']);
-Route::get('/japanese_soup', [TypeController::class, 'japanese_soup']);
+Route::get('/japanese_syusai', [CategoryController::class, 'japanese_syusai']);
+Route::get('/japanese_fukusai', [CategoryController::class, 'japanese_fukusai']);
+Route::get('/japanese_soup', [CategoryController::class, 'japanese_soup']);
 
-Route::get('/western_syusai', [TypeController::class, 'western_syusai']);
-Route::get('/western_fukusai', [TypeController::class, 'western_fukusai']);
-Route::get('/western_soup', [TypeController::class, 'western_soup']);
+Route::get('/western_syusai', [CategoryController::class, 'western_syusai']);
+Route::get('/western_fukusai', [CategoryController::class, 'western_fukusai']);
+Route::get('/western_soup', [CategoryController::class, 'western_soup']);
 
-Route::get('/chinese_syusai', [TypeController::class, 'chinese_syusai']);
-Route::get('/chinese_fukusai', [TypeController::class, 'chinese_fukusai']);
-Route::get('/chinese_soup', [TypeController::class, 'chinese_soup']);
+Route::get('/chinese_syusai', [CategoryController::class, 'chinese_syusai']);
+Route::get('/chinese_fukusai', [CategoryController::class, 'chinese_fukusai']);
+Route::get('/chinese_soup', [CategoryController::class, 'chinese_soup']);
 
-Route::get('/others_syusai', [TypeController::class, 'others_syusai']);
-Route::get('/others_fukusai', [TypeController::class, 'others_fukusai']);
-Route::get('/others_soup', [TypeController::class, 'others_soup']);
+Route::get('/others_syusai', [CategoryController::class, 'others_syusai']);
+Route::get('/others_fukusai', [CategoryController::class, 'others_fukusai']);
+Route::get('/others_soup', [CategoryController::class, 'others_soup']);
 
 
 // ログインフォームを表示する

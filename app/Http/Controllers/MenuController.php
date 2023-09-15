@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Menu;
+use App\Models\Recipe;
 use Illuminate\Http\Request;
 
 class MenuController extends Controller
@@ -13,8 +14,8 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $menu = Menu::all();
-        return response()->json($menu);
+        $recipe = Recipe::all();
+        return response()->json($recipe);
     }
 
     /**
@@ -37,7 +38,7 @@ class MenuController extends Controller
 
         $menu = new Menu;
         $menu->name = $request->input('name');
-        $menu->memo = $request->input('memo');
+        // $menu->memo = $request->input('memo');
         $menu->save();
     }
 
@@ -66,7 +67,7 @@ class MenuController extends Controller
         $menu = Menu::find($id);
 
         $menu->name = $request->name;
-        $menu->memo = $request->memo;
+        // $menu->memo = $request->memo;
         $menu->save();
 
         return response()->json($menu);

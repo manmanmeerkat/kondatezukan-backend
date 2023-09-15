@@ -4,31 +4,32 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Menu;
+use App\Models\Recipe;
 use Illuminate\Http\Request;
 
 class RandomController extends Controller
 {
     public function random()
     {
-        $menu = Menu::inRandomOrder()->first();
-        return response()->json($menu);
+        $recipe = Recipe::inRandomOrder()->first();
+        return response()->json($recipe);
     }
 
     public function syusai()
     {
-        $syusai = Menu::where('type', '主菜')->inRandomOrder()->first();
+        $syusai = Recipe::where('category', '主菜')->inRandomOrder()->first();
         return response()->json($syusai);
     }
 
     public function fukusai()
     {
-        $fukusai = Menu::where('type', '副菜')->inRandomOrder()->first();
+        $fukusai = Recipe::where('category', '副菜')->inRandomOrder()->first();
         return response()->json($fukusai);
     }
 
     public function soup()
     {
-        $soup = Menu::where('type', '汁物')->inRandomOrder()->first();
+        $soup = Recipe::where('category', '汁物')->inRandomOrder()->first();
         return response()->json($soup);
     }
 }
