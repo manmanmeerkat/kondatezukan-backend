@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Menu;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MenuController extends Controller
 {
@@ -14,8 +15,27 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $recipe = Recipe::all();
-        return response()->json($recipe);
+        // $recipe = Recipe::all();
+        // return response()->json($recipe);
+
+        // ユーザーがログインしているかを確認
+        if (Auth::check()) {
+            // ログイン中のユーザーのIDを取得
+            $userId = Auth::id();
+
+            // ログイン中のユーザーが登録したレシピを取得
+            $recipes = Recipe::where('user_id', $userId)->get();
+
+            // レシピが存在しない場合
+            if ($recipes->isEmpty()) {
+                return response()->json(['message' => 'レシピが見つかりません'], 404);
+            }
+
+            return response()->json($recipes);
+        } else {
+            // ユーザーがログインしていない場合の処理を追加
+            return response()->json(['message' => 'ログインしていません'], 401);
+        }
     }
 
     /**

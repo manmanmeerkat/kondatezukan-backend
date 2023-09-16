@@ -38,7 +38,6 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        // ユーザーの認証を試みる
         $credentials = $request->only('email', 'password');
 
         if (!Auth::attempt($credentials)) {
@@ -46,9 +45,17 @@ class AuthController extends Controller
             return response()->json(['message' => '認証に失敗しました'], 401);
         }
 
-        // ユーザーの認証に成功した場合の処理
-        return response()->json(['message' => 'ログイン成功']);
+        // ユーザーの認証に成功した場合
+        $user = Auth::user();
+        $userId = $user->id; // ユーザーのuserIdを取得
+
+        // トークンを生成
+        $token = $user->createToken('auth-token')->plainTextToken;
+
+        // レスポンスにuserIdも含める
+        return response()->json(['message' => 'ログイン成功', 'userId' => $userId, 'token' => $token]);
     }
+
 
     public function logout(Request $request)
     {

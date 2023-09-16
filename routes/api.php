@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\RandomController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,3 +71,9 @@ Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('
 
 // ユーザー登録処理を実行する
 Route::post('/register', [AuthController::class, 'register']);
+
+Route::middleware('auth:sanctum')->get('/user', [UserController::class, 'getUserData']);
+
+Route::get('/user/{userId}', [UserController::class, 'getUserById']);
+
+Route::get('/user/{userId}/recipes', [RecipeController::class, 'getUserRecipes']);
