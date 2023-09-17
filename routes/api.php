@@ -76,10 +76,34 @@ Route::middleware('auth:sanctum')->get('/user', [UserController::class, 'getUser
 
 Route::get('/user/{userId}', [UserController::class, 'getUserById']);
 
-Route::get('/user/{userId}/recipes', [RecipeController::class, 'getUserRecipes']);
 
 Route::get('/csrf-cookie', [AuthController::class, 'csrfCookie'])->middleware('web');
 
-// Route::get('/csrf-cookie', function (Request $request) {
-//     return response()->json(['csrfToken' => csrf_token()]);
-// });
+
+Route::get('user/{userId}/all-my-japanese-recipes', [GenreController::class, 'getAllMyJapaneseRecipes']);
+
+Route::get('user/{userId}/all-my-japanese-syusai', [GenreController::class, 'getAllMyJapaneseSyusai']);
+
+Route::get('user/{userId}/all-my-japanese-fukusai', [GenreController::class, 'getAllMyJapaneseFukusai']);
+
+Route::get('user/{userId}/all-my-japanese-shirumono', [GenreController::class, 'getAllMyJapaneseShirumono']);
+
+
+
+
+Route::get('user/{userId}/all-my-western-recipes', [GenreController::class, 'getAllMyWesternRecipes']);
+
+Route::get('user/{userId}/all-my-western-syusai', [GenreController::class, 'getAllMyWesternSyusai']);
+
+Route::get('user/{userId}/all-my-western-fukusai', [GenreController::class, 'getAllMyWesternFukusai']);
+
+Route::get('user/{userId}/all-my-western-shirumono', [GenreController::class, 'getAllMyWesternShirumono']);
+
+
+Route::get('user/{userId}/all-my-chinese-recipes', [GenreController::class, 'getAllMyChineseRecipes']);
+
+Route::get('user/{userId}/all-my-chinese-syusai', [GenreController::class, 'getAllMyChineseSyusai']);
+
+Route::get('user/{userId}/all-my-chinese-fukusai', [GenreController::class, 'getAllMyChineseFukusai']);
+
+Route::get('user/{userId}/all-my-chinese-shirumono', [GenreController::class, 'getAllMyChineseShirumono']);
