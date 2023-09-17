@@ -56,6 +56,13 @@ class AuthController extends Controller
         return response()->json(['message' => 'ログイン成功', 'userId' => $userId, 'token' => $token]);
     }
 
+    public function csrfCookie()
+    {
+        $csrfToken = csrf_token();
+        // CSRFトークンを確認するためのデバッグステートメント
+        // dd(['csrfToken' => $csrfToken]);
+        return response()->json(['csrfToken' => $csrfToken]);
+    }
 
     public function logout(Request $request)
     {

@@ -77,3 +77,9 @@ Route::middleware('auth:sanctum')->get('/user', [UserController::class, 'getUser
 Route::get('/user/{userId}', [UserController::class, 'getUserById']);
 
 Route::get('/user/{userId}/recipes', [RecipeController::class, 'getUserRecipes']);
+
+Route::get('/csrf-cookie', [AuthController::class, 'csrfCookie'])->middleware('web');
+
+// Route::get('/csrf-cookie', function (Request $request) {
+//     return response()->json(['csrfToken' => csrf_token()]);
+// });
