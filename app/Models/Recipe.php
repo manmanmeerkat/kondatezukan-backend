@@ -16,7 +16,7 @@ class Recipe extends Model
     // レシピに関連する食材の多対多のリレーションシップ
     public function ingredients()
     {
-        return $this->belongsToMany(Ingredient::class);
+        return $this->belongsToMany(Ingredient::class, 'ingredient_recipe');
     }
 
     // レシピに関連するジャンルのリレーションシップ

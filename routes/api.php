@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\RandomController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\UserController;
 
 /*
@@ -107,3 +108,5 @@ Route::get('user/{userId}/all-my-chinese-syusai', [GenreController::class, 'getA
 Route::get('user/{userId}/all-my-chinese-fukusai', [GenreController::class, 'getAllMyChineseFukusai']);
 
 Route::get('user/{userId}/all-my-chinese-shirumono', [GenreController::class, 'getAllMyChineseShirumono']);
+
+Route::get('/recipes/{recipeId}/ingredients', [RecipeController::class, 'getIngredientsForRecipe']);

@@ -12,6 +12,6 @@ class Ingredient extends Model
     // 食材に関連するレシピのリレーションシップ
     public function recipes()
     {
-        return $this->belongsToMany(Recipe::class);
+        return $this->belongsToMany(Recipe::class, 'ingredient_recipe');
     }
 }
