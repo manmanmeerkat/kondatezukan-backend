@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\RandomController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\UserController;
 
@@ -24,11 +25,25 @@ use App\Http\Controllers\UserController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::resource('menu', MenuController::class);
+// Route::resource('menu', MenuController::class);
 
 // Route::get('/random', [RandomController::class, 'random']);
 
-Route::post('/submitform', [MenuController::class, 'submitform']);
+// Route::post('/submitform', [MenuController::class, 'submitform']);
+
+// Route::middleware(['cors'])->group(function () {
+//     Route::post('/submitform', 'MenuController@submitform');
+//     // 他のAPIルートも追加できます
+// });
+
+Route::group(['middleware' => 'cors'], function () {
+    // ここにAPIルートを定義
+    Route::post('/submitform', [MenuController::class, 'submitform'])->name('submitform');
+    // 他のAPIルートもここに追加
+});
+
+
+
 
 Route::get('/syusai', [RandomController::class, 'syusai']);
 Route::get('/fukusai', [RandomController::class, 'fukusai']);
@@ -110,3 +125,8 @@ Route::get('user/{userId}/all-my-chinese-fukusai', [GenreController::class, 'get
 Route::get('user/{userId}/all-my-chinese-shirumono', [GenreController::class, 'getAllMyChineseShirumono']);
 
 Route::get('/recipes/{recipeId}/ingredients', [RecipeController::class, 'getIngredientsForRecipe']);
+
+
+Route::post('/ingredients', [IngredientController::class, 'store']);
+
+Route::get('image/{filename}', [ImageController::class, 'getImage']);

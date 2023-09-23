@@ -8,8 +8,6 @@ use App\Models\Recipe;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class MenuController extends Controller
 {
@@ -105,24 +103,24 @@ class MenuController extends Controller
         $menu->delete();
     }
 
-
-
     public function submitform(Request $request)
     {
+        // フォームデータの検証
+        $this->validate($request, [
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'genre' => 'required|string|max:255',
+            'category' => 'required|string|max:255',
+            'reference_url' => 'nullable|url',
+            'image' => 'nullable|image|mimes:jpeg,png,gif|max:2048',
+            'user_id' => 'required|integer', // ユーザーIDのバリデーションを追加
+        ]);
+
         // ファイルのアップロード処理
         $imagePath = null;
-        if ($request->hasFile('image_file')) {
-            try {
-                // アップロードされたファイルを保存
-                $imagePath = $request->file('image_file')->store('uploads', 'public');
-            } catch (\Exception $e) {
-                // ファイルの保存中にエラーが発生した場合の処理
-                return response()->json(['error' => 'Failed to upload the image'], 500);
-            }
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('uploads');
         }
-
-        // トランザクションを開始
-        DB::beginTransaction();
 
         try {
             // レシピの保存
@@ -133,22 +131,19 @@ class MenuController extends Controller
             $recipe->category = $request->input('category');
             $recipe->reference_url = $request->input('reference_url');
             $recipe->image_path = $imagePath;
-            $recipe->user_id = $request->input('user_id');
+            $recipe->user_id = $request->input('user_id'); // ユーザーIDを設定
 
             $recipe->save(); // データベースに保存
 
-            // トランザクションをコミット
-            DB::commit();
-
             return response()->json(['message' => 'Recipe created successfully'], 201);
-        } catch (\Exception $e) {
-            // Laravelのエラーログにエラーメッセージを記録
-            Log::error('Exception: ' . $e->getMessage());
-
-            // トランザクションをロールバック
-            DB::rollback();
-
+        } catch (QueryException $e) {
+            // データベースエラーが発生した場合の例外処理
+            \Illuminate\Support\Facades\Log::error('QueryException: ' . $e->getMessage());
             return response()->json(['error' => 'Failed to save data to the database'], 500);
+        } catch (\Exception $e) {
+            // その他の例外が発生した場合の例外処理
+            \Illuminate\Support\Facades\Log::error('Exception: ' . $e->getMessage());
+            return response()->json(['error' => 'An error occurred'], 500);
         }
     }
 }

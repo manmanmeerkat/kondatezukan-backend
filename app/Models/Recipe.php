@@ -11,7 +11,8 @@ class Recipe extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'genre', 'category'];
+    protected $fillable = ['name', 'description', 'genre', 'category', 'reference_url', 'image_path'];
+
 
     // レシピに関連する食材の多対多のリレーションシップ
     public function ingredients()
