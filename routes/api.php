@@ -129,4 +129,7 @@ Route::get('/recipes/{recipeId}/ingredients', [RecipeController::class, 'getIngr
 
 Route::post('/ingredients', [IngredientController::class, 'store']);
 
-Route::get('image/{filename}', [ImageController::class, 'getImage']);
+// Route::get('image/{filename}', [ImageController::class, 'getImage']);
+
+Route::post('/upload-image', 'ImageController@uploadImage');
+Route::get('/get-image/{filename}', [ImageController::class, 'getImage']);
