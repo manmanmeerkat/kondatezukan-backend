@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+
+
     public function register(Request $request)
     {
         // バリデーションを実行
@@ -26,9 +28,23 @@ class AuthController extends Controller
         ]);
         $user->save();
 
-        // レスポンスを返してユーザー登録の成功を通知
-        return response()->json(['message' => 'ユーザー登録に成功しました'], 201);
+        // ユーザーの認証
+        Auth::login($user);
+
+        // トークンを生成
+        $token = $user->createToken('auth-token')->plainTextToken;
+
+        // ユーザーIDを取得
+        $userId = $user->id;
+
+        // レスポンスにトークンとユーザーIDを含めて返す
+        return response()->json([
+            'message' => 'ユーザー登録に成功しました',
+            'token' => $token, // トークンを含める
+            'userId' => $userId, // ユーザーIDを含める
+        ], 201);
     }
+
 
     public function login(Request $request)
     {
