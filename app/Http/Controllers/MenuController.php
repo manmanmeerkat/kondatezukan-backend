@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class MenuController extends Controller
 {
@@ -113,11 +115,20 @@ class MenuController extends Controller
         $imagePath = null;
         if ($request->hasFile('image_file')) {
             try {
-                // アップロードされたファイルを保存
-                $imagePath = $request->file('image_file')->store('uploads', 'public');
+                $uploadedImage = $request->file('image_file');
+
+                // 画像をリサイズ
+                $resizedImage = Image::make($uploadedImage)
+                    ->fit(260, 260, function ($constraint) {
+                        $constraint->upsize(); // 縦横比を保持
+                    });
+
+                // リサイズした画像を保存
+                $imagePath = 'uploads/' . uniqid() . '.' . $uploadedImage->getClientOriginalExtension();
+                Storage::disk('public')->put($imagePath, (string) $resizedImage->encode());
             } catch (\Exception $e) {
                 // ファイルの保存中にエラーが発生した場合の処理
-                return response()->json(['error' => 'Failed to upload the image'], 500);
+                return response()->json(['error' => 'Failed to upload and resize the image'], 500);
             }
         }
 
