@@ -13,12 +13,8 @@ return new class extends Migration
     {
         Schema::create('ingredient_recipe', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('ingredient_id');
-            $table->unsignedBigInteger('recipe_id');
-            $table->decimal('quantity', 8, 2)->nullable();;
-
-            $table->foreign('ingredient_id')->references('id')->on('ingredients');
-            $table->foreign('recipe_id')->references('id')->on('recipes');
+            $table->foreignId('ingredient_id')->constrained('ingredients');
+            $table->foreignId('recipe_id')->constrained('recipes');
         });
     }
 

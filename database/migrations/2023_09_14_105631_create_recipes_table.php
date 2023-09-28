@@ -15,14 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->string('genre')->nullable(); // ジャンルを格納するカラムを追加
-            $table->string('category')->nullable(); // カテゴリーを格納するカラムを追加
             $table->string('image_path')->nullable(); // 画像を格納するカラムを追加
             $table->string('reference_url')->nullable(); // 参考URLを追加
-            $table->unsignedBigInteger('user_id')->default(1);
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreignId('genre_id')->constrained('genres');
+            $table->foreignId('category_id')->constrained('categories');
+            $table->foreignId('user_id')->constrained('users')->default(1);
         });
     }
 
