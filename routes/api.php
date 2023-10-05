@@ -10,6 +10,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CsrfCookieController;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,12 +75,22 @@ Route::get('/others_soup', [CategoryController::class, 'others_soup']);
 // ログインフォームを表示する
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 
-// ログイン処理を実行する
+// // ログイン処理を実行する
 Route::post('/login', [AuthController::class, 'login'])->middleware('api');
+// 
+// // ログアウトを実行する
+// Route::post('/logout', [AuthController::class, 'logout'])->middleware('api');
+// Route::post('/logout', [AuthController::class, 'logout'])->middleware('web');
 
-// ログアウトを実行する
-// Route::get('/logout', [AuthController::class, 'logout'])->middleware('api');
-Route::get('/logout', [AuthController::class, 'logout'])->middleware('web');
+
+use App\Http\Controllers\Auth\LoginController; //追記部分
+use App\Http\Controllers\Auth\LogoutController; //追記部分
+// Route::post('/login', LoginController::class)->name('login'); //追記部分
+Route::post('/logout', LogoutController::class)->name('logout'); //追記部分
+
+Route::group(['middleware' => 'api'], function () {
+    Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'show']);
+});
 
 
 // ユーザー登録フォームを表示する
@@ -93,7 +104,7 @@ Route::middleware('auth:sanctum')->get('/user', [UserController::class, 'getUser
 Route::get('/user/{userId}', [UserController::class, 'getUserById']);
 
 
-Route::get('/csrf-cookie', [AuthController::class, 'csrfCookie'])->middleware('web');
+// Route::get('/csrf-cookie', [AuthController::class, 'csrfCookie'])->middleware('web');
 
 
 Route::get('user/{userId}/all-my-japanese-recipes', [GenreController::class, 'getAllMyJapaneseRecipes']);

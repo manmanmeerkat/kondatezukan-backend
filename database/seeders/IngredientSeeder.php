@@ -16,7 +16,7 @@ class IngredientSeeder extends Seeder
         for ($i = 1; $i <= 100; $i++) {
             DB::table('ingredients')->insert([
                 'name' => 'Ingredient ' . $i,
-                'category' => 'Category ' . $i,
+                'user_id' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ingredient extends Model
 {
-    protected $fillable = ['name', 'category'];
+    protected $fillable = ['recipe_id', 'name'];
 
     // 食材に関連するレシピのリレーションシップ
     public function recipes()
     {
-        return $this->belongsToMany(Recipe::class, 'ingredient_recipe');
+        // return $this->belongsToMany(Recipe::class, 'ingredient_recipe');
+        return $this->belongsTo(Recipe::class);
     }
 }

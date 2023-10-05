@@ -16,8 +16,7 @@ class IngredientRecipeSeeder extends Seeder
         for ($i = 1; $i <= 200; $i++) {
             DB::table('ingredient_recipe')->insert([
                 'ingredient_id' => rand(1, 100), // Replace with actual ingredient IDs.
-                'recipe_id' => rand(1, 100), // Replace with actual recipe IDs.
-                'quantity' => rand(1, 10) + (rand(0, 99) / 100), // Random quantity with 2 decimal places.
+                'recipe_id' => rand(2, 100), // Replace with actual recipe IDs.
             ]);
         }
     }

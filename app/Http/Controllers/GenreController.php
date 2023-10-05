@@ -11,8 +11,14 @@ class GenreController extends Controller
 {
     public function japanese()
     {
-        $japanese = Recipe::where('genre', '和食')->get();
-        return response()->json($japanese);
+        try {
+            $japaneseRecipes = Recipe::where('genre_id', 1)
+                ->get();
+
+            return response()->json($japaneseRecipes);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'An error occurred while fetching Japanese recipes.'], 500);
+        }
     }
 
     public function western()
@@ -36,7 +42,7 @@ class GenreController extends Controller
     public function getAllMyJapaneseRecipes($userId)
     {
         // ユーザーIDを使用して和食のレシピ情報を取得
-        $japaneseRecipes = Recipe::where('genre', '和食')
+        $japaneseRecipes = Recipe::where('genre_id', 1)
             ->where('user_id', $userId) // ユーザーIDでフィルタリング
             ->get();
 
@@ -46,40 +52,40 @@ class GenreController extends Controller
     public function getAllMyJapaneseSyusai($userId)
     {
         // ユーザーIDを使用して和食のレシピ情報を取得
-        $japaneseRecipes = Recipe::where('genre', '和食')
+        $japaneseSyusai = Recipe::where('genre_id', 1)
             ->where('user_id', $userId) // ユーザーIDでフィルタリング
-            ->where('category', '主菜')
+            ->where('category_id', 1)
             ->get();
 
-        return response()->json($japaneseRecipes);
+        return response()->json($japaneseSyusai);
     }
 
     public function getAllMyJapaneseFukusai($userId)
     {
         // ユーザーIDを使用して和食のレシピ情報を取得
-        $japaneseRecipes = Recipe::where('genre', '和食')
+        $japaneseFukusai = Recipe::where('genre_id', 1)
             ->where('user_id', $userId) // ユーザーIDでフィルタリング
-            ->where('category', '副菜')
+            ->where('category_id', 2)
             ->get();
-        return response()->json($japaneseRecipes);
+        return response()->json($japaneseFukusai);
     }
 
     public function getAllMyJapaneseShirumono($userId)
     {
         // ユーザーIDを使用して和食のレシピ情報を取得
-        $japaneseRecipes = Recipe::where('genre', '和食')
+        $japaneseShirumono = Recipe::where('genre_id', 1)
             ->where('user_id', $userId) // ユーザーIDでフィルタリング
-            ->where('category', '汁物')
+            ->where('category_id', 3)
             ->get();
-        return response()->json($japaneseRecipes);
+        return response()->json($japaneseShirumono);
     }
 
 
 
     public function getAllMyWesternRecipes($userId)
     {
-        // ユーザーIDを使用して和食のレシピ情報を取得
-        $allMyWesternRecipes = Recipe::where('genre', '洋食')
+        // ユーザーIDを使用して洋食のレシピ情報を取得
+        $allMyWesternRecipes = Recipe::where('genre_id', 2)
             ->where('user_id', $userId) // ユーザーIDでフィルタリング
             ->get();
 
@@ -88,39 +94,39 @@ class GenreController extends Controller
 
     public function getAllMyWesternSyusai($userId)
     {
-        // ユーザーIDを使用して和食のレシピ情報を取得
-        $westernRecipes = Recipe::where('genre', '洋食')
+        // ユーザーIDを使用して洋食のレシピ情報を取得
+        $westernSyusai = Recipe::where('genre_id', 2)
             ->where('user_id', $userId) // ユーザーIDでフィルタリング
-            ->where('category', '主菜')
+            ->where('category_id', 1)
             ->get();
 
-        return response()->json($westernRecipes);
+        return response()->json($westernSyusai);
     }
 
     public function getAllMyWesternFukusai($userId)
     {
-        // ユーザーIDを使用して和食のレシピ情報を取得
-        $westernRecipes = Recipe::where('genre', '洋食')
+        // ユーザーIDを使用して洋食のレシピ情報を取得
+        $westernFukusai = Recipe::where('genre_id', 2)
             ->where('user_id', $userId) // ユーザーIDでフィルタリング
-            ->where('category', '副菜')
+            ->where('category_id', 2)
             ->get();
-        return response()->json($westernRecipes);
+        return response()->json($westernFukusai);
     }
 
     public function getAllMyWesternShirumono($userId)
     {
-        // ユーザーIDを使用して和食のレシピ情報を取得
-        $westernRecipes = Recipe::where('genre', '洋食')
+        // ユーザーIDを使用して洋食のレシピ情報を取得
+        $westernShirumono = Recipe::where('genre_id', 2)
             ->where('user_id', $userId) // ユーザーIDでフィルタリング
-            ->where('category', '汁物')
+            ->where('category_id', 3)
             ->get();
-        return response()->json($westernRecipes);
+        return response()->json($westernShirumono);
     }
 
     public function getAllMyChineseRecipes($userId)
     {
-        // ユーザーIDを使用して和食のレシピ情報を取得
-        $allMyChineseRecipes = Recipe::where('genre', '中華')
+        // ユーザーIDを使用して中華のレシピ情報を取得
+        $allMyChineseRecipes = Recipe::where('genre_id', 3)
             ->where('user_id', $userId) // ユーザーIDでフィルタリング
             ->get();
 
@@ -129,32 +135,32 @@ class GenreController extends Controller
 
     public function getAllMyChineseSyusai($userId)
     {
-        // ユーザーIDを使用して和食のレシピ情報を取得
-        $chineseRecipes = Recipe::where('genre', '洋食')
+        // ユーザーIDを使用して中華のレシピ情報を取得
+        $chineseSyusai = Recipe::where('genre_id', 3)
             ->where('user_id', $userId) // ユーザーIDでフィルタリング
-            ->where('category', '主菜')
+            ->where('category_id', '1')
             ->get();
 
-        return response()->json($chineseRecipes);
+        return response()->json($chineseSyusai);
     }
 
     public function getAllMyChineseFukusai($userId)
     {
-        // ユーザーIDを使用して和食のレシピ情報を取得
-        $chineseRecipes = Recipe::where('genre', '中華')
+        // ユーザーIDを使用して中華のレシピ情報を取得
+        $chineseFukusai = Recipe::where('genre_id', 3)
             ->where('user_id', $userId) // ユーザーIDでフィルタリング
-            ->where('category', '副菜')
+            ->where('category_id', 2)
             ->get();
-        return response()->json($chineseRecipes);
+        return response()->json($chineseFukusai);
     }
 
     public function getAllMyChineseShirumono($userId)
     {
         // ユーザーIDを使用して和食のレシピ情報を取得
-        $chineseRecipes = Recipe::where('genre', '中華')
+        $chineseShirumono = Recipe::where('genre_id', 3)
             ->where('user_id', $userId) // ユーザーIDでフィルタリング
-            ->where('category', '汁物')
+            ->where('category_id', 3)
             ->get();
-        return response()->json($chineseRecipes);
+        return response()->json($chineseShirumono);
     }
 }

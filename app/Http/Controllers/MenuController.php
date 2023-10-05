@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Ingredient;
 use App\Models\Menu;
 use App\Models\Recipe;
 use Illuminate\Database\QueryException;
@@ -109,6 +110,8 @@ class MenuController extends Controller
 
 
 
+
+
     public function submitform(Request $request)
     {
         // ファイルのアップロード処理
@@ -140,13 +143,27 @@ class MenuController extends Controller
             $recipe = new Recipe();
             $recipe->name = $request->input('name');
             $recipe->description = $request->input('description');
-            $recipe->genre = $request->input('genre');
-            $recipe->category = $request->input('category');
+            $recipe->genre_id = $request->input('genre_id');
+            $recipe->category_id = $request->input('category_id');
             $recipe->reference_url = $request->input('reference_url');
             $recipe->image_path = $imagePath;
             $recipe->user_id = $request->input('user_id');
 
             $recipe->save(); // データベースに保存
+
+            // 材料の保存
+            // $ingredientsData = $request->input('ingredients');
+            $ingredientsData = json_decode($request->input('ingredients'), true);
+            // dd($ingredientsData);
+            foreach ($ingredientsData as $ingredientName) {
+                $ingredient = new Ingredient();
+                $ingredient->user_id = $request->input('user_id');
+                $ingredient->name = $ingredientName;
+                $ingredient->save();
+
+                // 中間テーブルに保存
+                $recipe->ingredients()->attach($ingredient->id);
+            }
 
             // トランザクションをコミット
             DB::commit();
