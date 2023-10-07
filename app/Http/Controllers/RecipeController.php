@@ -36,4 +36,15 @@ class RecipeController extends Controller
 
         return response()->json(['ingredients' => $ingredients], 200);
     }
+
+    public function edit($dishId)
+    {
+        $dish = Recipe::find($dishId);
+
+        if (!$dish) {
+            return response()->json(['error' => 'Dish not found'], 404);
+        }
+
+        return response()->json($dish);
+    }
 }

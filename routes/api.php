@@ -37,11 +37,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     // 他のAPIルートも追加できます
 // });
 
+
 Route::group(['middleware' => 'cors'], function () {
     // ここにAPIルートを定義
     Route::post('/submitform', [MenuController::class, 'submitform'])->name('submitform');
     // 他のAPIルートもここに追加
 });
+
+Route::get('/edit/{dishId}', [RecipeController::class, 'edit']);
 
 
 
@@ -104,7 +107,7 @@ Route::middleware('auth:sanctum')->get('/user', [UserController::class, 'getUser
 Route::get('/user/{userId}', [UserController::class, 'getUserById']);
 
 
-// Route::get('/csrf-cookie', [AuthController::class, 'csrfCookie'])->middleware('web');
+Route::get('/csrf-cookie', [AuthController::class, 'csrfCookie'])->middleware('web');
 
 
 Route::get('user/{userId}/all-my-japanese-recipes', [GenreController::class, 'getAllMyJapaneseRecipes']);
