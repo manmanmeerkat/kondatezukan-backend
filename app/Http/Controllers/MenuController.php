@@ -152,9 +152,21 @@ class MenuController extends Controller
             $recipe->save(); // データベースに保存
 
             // 材料の保存
-            // $ingredientsData = $request->input('ingredients');
-            $ingredientsData = json_decode($request->input('ingredients'), true);
-            // dd($ingredientsData);
+            // 材料の保存
+            $ingredientsData = $request->input('ingredients');
+
+            // $ingredientsData が JSON 文字列でない場合、配列に変換
+            if (is_array($ingredientsData)) {
+                $ingredientsData = json_encode($ingredientsData);
+            }
+
+            $ingredientsData = json_decode($ingredientsData, true);
+
+            if (!is_array($ingredientsData)) {
+                $ingredientsData = [];
+            }
+
+
             foreach ($ingredientsData as $ingredientName) {
                 $ingredient = new Ingredient();
                 $ingredient->user_id = $request->input('user_id');
@@ -172,6 +184,7 @@ class MenuController extends Controller
         } catch (\Exception $e) {
             // Laravelのエラーログにエラーメッセージを記録
             Log::error('Exception: ' . $e->getMessage());
+            Log::info('Ingredients from Request:', [$request->input('ingredients')]);
 
             // トランザクションをロールバック
             DB::rollback();

@@ -11,7 +11,7 @@ class Recipe extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'genre', 'category', 'reference_url', 'image_path'];
+    protected $fillable = ['name', 'description', 'genre_id', 'category_id', 'reference_url', 'image_path'];
 
 
     // レシピに関連する食材の多対多のリレーションシップ
@@ -23,13 +23,13 @@ class Recipe extends Model
     // レシピに関連するジャンルのリレーションシップ
     public function genre()
     {
-        return $this->belongsTo(Genre::class);
+        return $this->belongsTo(Genre::class, 'genre_id');
     }
 
     // レシピに関連するカテゴリーのリレーションシップ
     public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class, 'category_id');
     }
 
     public function user()

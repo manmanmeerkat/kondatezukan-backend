@@ -11,6 +11,8 @@ use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CsrfCookieController;
+use App\Http\Controllers\ImageController;
+use App\Models\Recipe;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,8 +48,9 @@ Route::group(['middleware' => 'cors'], function () {
 
 Route::get('/edit/{dishId}', [RecipeController::class, 'edit']);
 
+Route::put('/update/{dishId}', [RecipeController::class, 'update'])->middleware('api');
 
-
+Route::post('/upload-image', [ImageController::class, 'uploadImage']);
 
 Route::get('/syusai', [RandomController::class, 'syusai']);
 Route::get('/fukusai', [RandomController::class, 'fukusai']);
