@@ -152,7 +152,6 @@ class MenuController extends Controller
             $recipe->save(); // データベースに保存
 
             // 材料の保存
-            // 材料の保存
             $ingredientsData = $request->input('ingredients');
 
             // $ingredientsData が JSON 文字列でない場合、配列に変換
