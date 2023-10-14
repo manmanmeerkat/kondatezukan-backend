@@ -91,6 +91,8 @@ Route::post('/login', [AuthController::class, 'login'])->middleware('api');
 
 use App\Http\Controllers\Auth\LoginController; //追記部分
 use App\Http\Controllers\Auth\LogoutController; //追記部分
+use App\Http\Controllers\DishSearchController;
+
 // Route::post('/login', LoginController::class)->name('login'); //追記部分
 Route::post('/logout', LogoutController::class)->name('logout'); //追記部分
 
@@ -145,3 +147,5 @@ Route::get('/recipes/{recipeId}/ingredients', [RecipeController::class, 'getIngr
 
 
 Route::post('/ingredients', [IngredientController::class, 'store']);
+
+Route::get('/recipes/search', [DishSearchController::class, 'searchByIngredient']);
