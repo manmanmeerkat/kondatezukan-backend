@@ -23,19 +23,19 @@ class GenreController extends Controller
 
     public function western()
     {
-        $western = Recipe::where('genre', '洋食')->get();
+        $western = Recipe::where('genre_id', '2')->get();
         return response()->json($western);
     }
 
     public function chinese()
     {
-        $chinese = Recipe::where('genre', '中華')->get();
+        $chinese = Recipe::where('genre_id', '3')->get();
         return response()->json($chinese);
     }
 
     public function others()
     {
-        $others = Recipe::where('genre', 'その他')->get();
+        $others = Recipe::where('genre_id', '4')->get();
         return response()->json($others);
     }
 

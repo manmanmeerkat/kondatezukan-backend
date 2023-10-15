@@ -52,6 +52,8 @@ Route::put('/update/{dishId}', [RecipeController::class, 'update'])->middleware(
 
 Route::post('/upload-image', [ImageController::class, 'uploadImage']);
 
+Route::delete('/delete/{id}', [RecipeController::class, 'destroy']);
+
 Route::get('/syusai', [RandomController::class, 'syusai']);
 Route::get('/fukusai', [RandomController::class, 'fukusai']);
 Route::get('/soup', [RandomController::class, 'soup']);
@@ -63,19 +65,19 @@ Route::get('/others', [GenreController::class, 'others']);
 
 Route::get('/japanese_syusai', [CategoryController::class, 'japanese_syusai']);
 Route::get('/japanese_fukusai', [CategoryController::class, 'japanese_fukusai']);
-Route::get('/japanese_soup', [CategoryController::class, 'japanese_soup']);
+Route::get('/japanese_shirumono', [CategoryController::class, 'japanese_shirumono']);
 
 Route::get('/western_syusai', [CategoryController::class, 'western_syusai']);
 Route::get('/western_fukusai', [CategoryController::class, 'western_fukusai']);
-Route::get('/western_soup', [CategoryController::class, 'western_soup']);
+Route::get('/western_shirumono', [CategoryController::class, 'western_shirumono']);
 
 Route::get('/chinese_syusai', [CategoryController::class, 'chinese_syusai']);
 Route::get('/chinese_fukusai', [CategoryController::class, 'chinese_fukusai']);
-Route::get('/chinese_soup', [CategoryController::class, 'chinese_soup']);
+Route::get('/chinese_shirumono', [CategoryController::class, 'chinese_shirumono']);
 
 Route::get('/others_syusai', [CategoryController::class, 'others_syusai']);
 Route::get('/others_fukusai', [CategoryController::class, 'others_fukusai']);
-Route::get('/others_soup', [CategoryController::class, 'others_soup']);
+Route::get('/others_shirumono', [CategoryController::class, 'others_shirumono']);
 
 
 // ログインフォームを表示する
@@ -148,4 +150,21 @@ Route::get('/recipes/{recipeId}/ingredients', [RecipeController::class, 'getIngr
 
 Route::post('/ingredients', [IngredientController::class, 'store']);
 
-Route::get('/recipes/search', [DishSearchController::class, 'searchByIngredient']);
+Route::get('/all-dish/search', [DishSearchController::class, 'searchByIngredient']);
+
+Route::get('/japanese-food/search', [DishSearchController::class, 'searchJapaneseFoodByIngredient']);
+Route::get('/western-food/search', [DishSearchController::class, 'searchWesternFoodByIngredient']);
+Route::get('/chinese-food/search', [DishSearchController::class, 'searchChineseFoodByIngredient']);
+// Route::get('/others', [DishSearchController::class, 'searchOtherFoodByIngredient']);
+
+Route::get('/japanese-syusai/search', [DishSearchController::class, 'searchJapaneseSyusaiByIngredient']);
+Route::get('/japanese-fukusai/search', [DishSearchController::class, 'searchJapaneseFukusaiByIngredient']);
+Route::get('/japanese-shirumono/search', [DishSearchController::class, 'searchJapaneseShirumonoByIngredient']);
+
+Route::get('/western-syusai/search', [DishSearchController::class, 'searchWesternSyusaiByIngredient']);
+Route::get('/western-fukusai/search', [DishSearchController::class, 'searchWesternFukusaiByIngredient']);
+Route::get('/western-shirumono/search', [DishSearchController::class, 'searchWesternShirumonoByIngredient']);
+
+Route::get('/chinese-syusai/search', [DishSearchController::class, 'searchChineseSyusaiByIngredient']);
+Route::get('/chinese-fukusai/search', [DishSearchController::class, 'searchChineseFukusaiByIngredient']);
+Route::get('/chinese-shirumono/search', [DishSearchController::class, 'searchChineseShirumonoByIngredient']);

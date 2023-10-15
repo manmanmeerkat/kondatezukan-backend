@@ -114,26 +114,6 @@ class MenuController extends Controller
 
     public function submitform(Request $request)
     {
-        // ファイルのアップロード処理
-        $imagePath = null;
-        if ($request->hasFile('image_file')) {
-            try {
-                $uploadedImage = $request->file('image_file');
-
-                // 画像をリサイズ
-                $resizedImage = Image::make($uploadedImage)
-                    ->fit(260, 260, function ($constraint) {
-                        $constraint->upsize(); // 縦横比を保持
-                    });
-
-                // リサイズした画像を保存
-                $imagePath = 'uploads/' . uniqid() . '.' . $uploadedImage->getClientOriginalExtension();
-                Storage::disk('public')->put($imagePath, (string) $resizedImage->encode());
-            } catch (\Exception $e) {
-                // ファイルの保存中にエラーが発生した場合の処理
-                return response()->json(['error' => 'Failed to upload and resize the image'], 500);
-            }
-        }
 
         // トランザクションを開始
         DB::beginTransaction();
@@ -146,7 +126,7 @@ class MenuController extends Controller
             $recipe->genre_id = $request->input('genre_id');
             $recipe->category_id = $request->input('category_id');
             $recipe->reference_url = $request->input('reference_url');
-            $recipe->image_path = $imagePath;
+            $recipe->image_path = $request->input('image_path');
             $recipe->user_id = $request->input('user_id');
 
             $recipe->save(); // データベースに保存

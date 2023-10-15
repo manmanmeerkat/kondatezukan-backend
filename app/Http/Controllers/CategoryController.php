@@ -8,87 +8,87 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    //genreが"和食"でtypeが"汁物"のデータを取得
+    //genreが"1"でcategoryが"1"のデータを取得
     public function japanese_syusai()
     {
-        $japanese_syusai = Recipe::where('genre', '和食')->where('category', '主菜')->get();
+        $japanese_syusai = Recipe::where('genre_id', '1')->where('category_id', '1')->get();
         return response()->json($japanese_syusai);
     }
 
-    //genreが"和食"でcategoryが"副菜"のデータを取得
+    //genreが"1"でcategoryが"2"のデータを取得
     public function japanese_fukusai()
     {
-        $japanese_fukusai = Recipe::where('genre', '和食')->where('category', '副菜')->get();
+        $japanese_fukusai = Recipe::where('genre_id', '1')->where('category_id', '2')->get();
         return response()->json($japanese_fukusai);
     }
 
-    //genreが"和食"でcategoryが"汁物"のデータを取得
-    public function japanese_soup()
+    //genre_idが"1"でcategoryが"3"のデータを取得
+    public function japanese_shirumono()
     {
-        $japanese_soup = Recipe::where('genre', '和食')->where('category', '汁物')->get();
-        return response()->json($japanese_soup);
+        $japanese_shirumono = Recipe::where('genre_id', '1')->where('category_id', '3')->get();
+        return response()->json($japanese_shirumono);
     }
 
-    //genreが"洋食"でcategoryが"汁物"のデータを取得
+    //genre_idが"2"でcategoryが"3"のデータを取得
     public function western_syusai()
     {
-        $western_syusai = Recipe::where('genre', '洋食')->where('category', '主菜')->get();
+        $western_syusai = Recipe::where('genre_id', '2')->where('category_id', '1')->get();
         return response()->json($western_syusai);
     }
 
-    //genreが"洋食"でcategoryが"副菜"のデータを取得
+    //genre_idが"2"でcategory_idが"2"のデータを取得
     public function western_fukusai()
     {
-        $western_fukusai = Recipe::where('genre', '洋食')->where('category', '副菜')->get();
+        $western_fukusai = Recipe::where('genre_id', '2')->where('category_id', '2')->get();
         return response()->json($western_fukusai);
     }
 
-    //genreが"洋食"でcategoryが"汁物"のデータを取得
-    public function western_soup()
+    //genre_idが"2"でcategory_idが"3"のデータを取得
+    public function western_shirumono()
     {
-        $western_soup = Recipe::where('genre', '洋食')->where('category', '汁物')->get();
-        return response()->json($western_soup);
+        $western_shirumono = Recipe::where('genre_id', '2')->where('category_id', '3')->get();
+        return response()->json($western_shirumono);
     }
 
-    //genreが"中華"でcategoryが"汁物"のデータを取得
+    //genre_idが"3"でcategory_idが"3"のデータを取得
     public function chinese_syusai()
     {
-        $chinese_syusai = Recipe::where('genre', '中華')->where('category', '主菜')->get();
+        $chinese_syusai = Recipe::where('genre_id', '3')->where('category_id', '1')->get();
         return response()->json($chinese_syusai);
     }
 
-    //genreが"中華"でcategoryが"副菜"のデータを取得
+    //genre_idが"3"でcategory_idが"2"のデータを取得
     public function chinese_fukusai()
     {
-        $chinese_fukusai = Recipe::where('genre', '中華')->where('category', '副菜')->get();
+        $chinese_fukusai = Recipe::where('genre_id', '3')->where('category_id', '2')->get();
         return response()->json($chinese_fukusai);
     }
 
-    //genreが"中華"でcategoryが"汁物"のデータを取得
-    public function chinese_soup()
+    //genre_idが"3"でcategory_idが"3"のデータを取得
+    public function chinese_shirumono()
     {
-        $chinese_soup = Recipe::where('genre', '中華')->where('category', '汁物')->get();
-        return response()->json($chinese_soup);
+        $chinese_shirumono = Recipe::where('genre_id', '3')->where('category_id', '3')->get();
+        return response()->json($chinese_shirumono);
     }
 
-    //genreが"その他"でcategoryが"汁物"のデータを取得
+    //genre_idが"4"でcategory_idが"3"のデータを取得
     public function others_syusai()
     {
-        $others_syusai = Recipe::where('genre', 'その他')->where('category', '主菜')->get();
+        $others_syusai = Recipe::where('genre_id', '4')->where('category_id', '1')->get();
         return response()->json($others_syusai);
     }
 
-    //genreが"その他"でcategoryが"副菜"のデータを取得
+    //genre_idが"4"でcategory_idが"2"のデータを取得
     public function others_fukusai()
     {
-        $others_fukusai = Recipe::where('genre', 'その他')->where('category', '副菜')->get();
+        $others_fukusai = Recipe::where('genre_id', '4')->where('category_id', '2')->get();
         return response()->json($others_fukusai);
     }
 
-    //genreが"その他"でcategoryが"汁物"のデータを取得
-    public function others_soup()
+    //genre_idが"4"でcategory_idが"3"のデータを取得
+    public function others_shirumono()
     {
-        $others_soup = Recipe::where('genre', 'その他')->where('category', '汁物')->get();
-        return response()->json($others_soup);
+        $others_shirumono = Recipe::where('genre_id', '4')->where('category_id', '3')->get();
+        return response()->json($others_shirumono);
     }
 }

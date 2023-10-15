@@ -144,4 +144,25 @@ class RecipeController extends Controller
             return response()->json(['error' => 'Failed to update data in the database'], 500);
         }
     }
+
+    public function destroy($id)
+    {
+        try {
+            // レシピを取得
+            $dish = Recipe::findOrFail($id);
+
+            // 関連する材料も削除
+            $dish->ingredients()->detach();
+
+            // レシピを削除
+            $dish->delete();
+
+            return response()->json(['message' => '削除が成功しました'], 200);
+        } catch (\Exception $e) {
+            // エラーメッセージをログに残す
+            Log::error('削除エラー: ' . $e->getMessage());
+
+            return response()->json(['error' => '削除が失敗しました'], 500);
+        }
+    }
 }
