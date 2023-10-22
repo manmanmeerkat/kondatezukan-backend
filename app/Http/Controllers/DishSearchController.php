@@ -11,11 +11,12 @@ class DishSearchController extends Controller
     public function searchByIngredient(Request $request)
     {
         $ingredient = $request->input('ingredient');
+        $user_id = $request->input('user_id');
 
         // 材料からの検索ロジックを実装
         $recipes = Recipe::whereHas('ingredients', function ($query) use ($ingredient) {
             $query->where('name', 'like', '%' . $ingredient . '%');
-        })->get();
+        })->where('user_id', $user_id)->get();
 
         return response()->json(['recipes' => $recipes]);
     }
@@ -23,11 +24,12 @@ class DishSearchController extends Controller
     public function searchJapaneseFoodByIngredient(Request $request)
     {
         $ingredient = $request->input('ingredient');
+        $user_id = $request->input('user_id');
 
         // 材料とジャンルからの検索ロジックを実装
         $recipes = Recipe::whereHas('ingredients', function ($query) use ($ingredient) {
             $query->where('name', 'like', '%' . $ingredient . '%');
-        })->where('genre_id', 1)->get();
+        })->where('genre_id', 1)->where('user_id', $user_id)->get();
 
         return response()->json(['recipes' => $recipes]);
     }
@@ -35,11 +37,12 @@ class DishSearchController extends Controller
     public function searchJapaneseSyusaiByIngredient(Request $request)
     {
         $ingredient = $request->input('ingredient');
+        $user_id = $request->input('user_id');
 
         // 材料とジャンル、カテゴリーからの検索ロジックを実装
         $recipes = Recipe::whereHas('ingredients', function ($query) use ($ingredient) {
             $query->where('name', 'like', '%' . $ingredient . '%');
-        })->where('genre_id', 1)->where('category_id', 1)->get();
+        })->where('genre_id', 1)->where('category_id', 1)->where('user_id', $user_id)->get();
 
         return response()->json(['recipes' => $recipes]);
     }
@@ -47,11 +50,12 @@ class DishSearchController extends Controller
     public function searchJapaneseFukusaiByIngredient(Request $request)
     {
         $ingredient = $request->input('ingredient');
+        $user_id = $request->input('user_id');
 
         // 材料とジャンル、カテゴリーからの検索ロジックを実装
         $recipes = Recipe::whereHas('ingredients', function ($query) use ($ingredient) {
             $query->where('name', 'like', '%' . $ingredient . '%');
-        })->where('genre_id', 1)->where('category_id', 2)->get();
+        })->where('genre_id', 1)->where('category_id', 2)->where('user_id', $user_id)->get();
 
         return response()->json(['recipes' => $recipes]);
     }
@@ -59,23 +63,24 @@ class DishSearchController extends Controller
     public function searchJapaneseShirumonoByIngredient(Request $request)
     {
         $ingredient = $request->input('ingredient');
+        $user_id = $request->input('user_id');
 
         // 材料とジャンル、カテゴリーからの検索ロジックを実装
         $recipes = Recipe::whereHas('ingredients', function ($query) use ($ingredient) {
             $query->where('name', 'like', '%' . $ingredient . '%');
-        })->where('genre_id', 1)->where('category_id', 3)->get();
-
+        })->where('genre_id', 1)->where('category_id', 3)->where('user_id', $user_id)->get();
         return response()->json(['recipes' => $recipes]);
     }
 
     public function searchWesternFoodByIngredient(Request $request)
     {
         $ingredient = $request->input('ingredient');
+        $user_id = $request->input('user_id');
 
         // 材料とジャンルからの検索ロジックを実装
         $recipes = Recipe::whereHas('ingredients', function ($query) use ($ingredient) {
             $query->where('name', 'like', '%' . $ingredient . '%');
-        })->where('genre_id', 2)->get();
+        })->where('genre_id', 2)->where('user_id', $user_id)->get();
 
         return response()->json(['recipes' => $recipes]);
     }
@@ -83,23 +88,29 @@ class DishSearchController extends Controller
     public function searchWesternSyusaiByIngredient(Request $request)
     {
         $ingredient = $request->input('ingredient');
+        $user_id = $request->input('user_id');
 
         // 材料とジャンル、カテゴリーからの検索ロジックを実装
         $recipes = Recipe::whereHas('ingredients', function ($query) use ($ingredient) {
             $query->where('name', 'like', '%' . $ingredient . '%');
-        })->where('genre_id', 2)->where('category_id', 1)->get();
+        })->where('genre_id', 2)->where('category_id', 1)->where('user_id', $user_id)->get();
+
+        // user_idが指定されている場合、それに一致するもののみを取得
+
 
         return response()->json(['recipes' => $recipes]);
     }
 
+
     public function searchWesternFukusaiByIngredient(Request $request)
     {
         $ingredient = $request->input('ingredient');
+        $user_id = $request->input('user_id');
 
         // 材料とジャンル、カテゴリーからの検索ロジックを実装
         $recipes = Recipe::whereHas('ingredients', function ($query) use ($ingredient) {
             $query->where('name', 'like', '%' . $ingredient . '%');
-        })->where('genre_id', 2)->where('category_id', 2)->get();
+        })->where('genre_id', 2)->where('category_id', 2)->where('user_id', $user_id)->get();
 
         return response()->json(['recipes' => $recipes]);
     }
@@ -107,11 +118,12 @@ class DishSearchController extends Controller
     public function searchWesternShirumonoByIngredient(Request $request)
     {
         $ingredient = $request->input('ingredient');
+        $user_id = $request->input('user_id');
 
         // 材料とジャンル、カテゴリーからの検索ロジックを実装
         $recipes = Recipe::whereHas('ingredients', function ($query) use ($ingredient) {
             $query->where('name', 'like', '%' . $ingredient . '%');
-        })->where('genre_id', 2)->where('category_id', 3)->get();
+        })->where('genre_id', 2)->where('category_id', 3)->where('user_id', $user_id)->get();
 
         return response()->json(['recipes' => $recipes]);
     }
@@ -119,11 +131,12 @@ class DishSearchController extends Controller
     public function searchChineseFoodByIngredient(Request $request)
     {
         $ingredient = $request->input('ingredient');
+        $user_id = $request->input('user_id');
 
         // 材料とジャンル、カテゴリーからの検索ロジックを実装
         $recipes = Recipe::whereHas('ingredients', function ($query) use ($ingredient) {
             $query->where('name', 'like', '%' . $ingredient . '%');
-        })->where('genre_id', 3)->get();
+        })->where('genre_id', 3)->where('user_id', $user_id)->get();
 
         return response()->json(['recipes' => $recipes]);
     }
@@ -131,11 +144,12 @@ class DishSearchController extends Controller
     public function searchChineseSyusaiByIngredient(Request $request)
     {
         $ingredient = $request->input('ingredient');
+        $user_id = $request->input('user_id');
 
         // 材料とジャンル、カテゴリーからの検索ロジックを実装
         $recipes = Recipe::whereHas('ingredients', function ($query) use ($ingredient) {
             $query->where('name', 'like', '%' . $ingredient . '%');
-        })->where('genre_id', 3)->where('category_id', 1)->get();
+        })->where('genre_id', 3)->where('category_id', 1)->where('user_id', $user_id)->get();
 
         return response()->json(['recipes' => $recipes]);
     }
@@ -143,23 +157,24 @@ class DishSearchController extends Controller
     public function searchChineseFukusaiByIngredient(Request $request)
     {
         $ingredient = $request->input('ingredient');
+        $user_id = $request->input('user_id');
 
         // 材料とジャンル、カテゴリーからの検索ロジックを実装
         $recipes = Recipe::whereHas('ingredients', function ($query) use ($ingredient) {
             $query->where('name', 'like', '%' . $ingredient . '%');
-        })->where('genre_id', 3)->where('category_id', 2)->get();
-
+        })->where('genre_id', 3)->where('category_id', 2)->where('user_id', $user_id)->get();
         return response()->json(['recipes' => $recipes]);
     }
 
     public function searchChineseShirumonoByIngredient(Request $request)
     {
         $ingredient = $request->input('ingredient');
+        $user_id = $request->input('user_id');
 
         // 材料とジャンル、カテゴリーからの検索ロジックを実装
         $recipes = Recipe::whereHas('ingredients', function ($query) use ($ingredient) {
             $query->where('name', 'like', '%' . $ingredient . '%');
-        })->where('genre_id', 3)->where('category_id', 3)->get();
+        })->where('genre_id', 3)->where('category_id', 3)->where('user_id', $user_id)->get();
 
         return response()->json(['recipes' => $recipes]);
     }

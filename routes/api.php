@@ -13,6 +13,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CsrfCookieController;
 use App\Http\Controllers\ImageController;
 use App\Models\Recipe;
+use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\DishSearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +47,7 @@ Route::group(['middleware' => 'cors'], function () {
     Route::post('/submitform', [MenuController::class, 'submitform'])->name('submitform');
     // 他のAPIルートもここに追加
 });
+Route::get('/all-my-dish', [RecipeController::class, 'getUserRecipes']);
 
 Route::get('/edit/{dishId}', [RecipeController::class, 'edit']);
 
@@ -91,9 +94,7 @@ Route::post('/login', [AuthController::class, 'login'])->middleware('api');
 // Route::post('/logout', [AuthController::class, 'logout'])->middleware('web');
 
 
-use App\Http\Controllers\Auth\LoginController; //追記部分
-use App\Http\Controllers\Auth\LogoutController; //追記部分
-use App\Http\Controllers\DishSearchController;
+
 
 // Route::post('/login', LoginController::class)->name('login'); //追記部分
 Route::post('/logout', LogoutController::class)->name('logout'); //追記部分
@@ -109,7 +110,7 @@ Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('
 // ユーザー登録処理を実行する
 Route::post('/register', [AuthController::class, 'register']);
 
-Route::middleware('auth:sanctum')->get('/user', [UserController::class, 'getUserData']);
+// Route::middleware('auth:sanctum')->get('/user', [UserController::class, 'getUserData']);
 
 Route::get('/user/{userId}', [UserController::class, 'getUserById']);
 

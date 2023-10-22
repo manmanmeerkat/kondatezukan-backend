@@ -7,6 +7,7 @@ use App\Models\Ingredient;
 use App\Models\Recipe;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -16,20 +17,22 @@ use Intervention\Image\Facades\Image;
 
 class RecipeController extends Controller
 {
-    public function getUserRecipes($userId)
+    public function getUserRecipes()
     {
-        // ユーザーを取得
-        $user = User::find($userId);
+        // 認証済みのユーザーを取得
+        $user = Auth::user();
 
-        if ($user) {
-            // ユーザーに関連付けられたレシピを取得
-            $recipes = $user->recipes;
-
-            return response()->json(['recipes' => $recipes], 200);
-        } else {
-            return response()->json(['message' => 'ユーザーが見つかりませんでした。'], 404);
+        if (!$user) {
+            // 認証されていない場合の処理
+            return response()->json(['message' => 'ユーザーが認証されていません。'], 401);
         }
+
+        // ユーザーに関連付けられたレシピを取得
+        $recipes = Recipe::where('user_id', $user->id)->get();
+
+        return response()->json(['recipes' => $recipes], 200);
     }
+
 
     public function getIngredientsForRecipe($recipeId)
     {
