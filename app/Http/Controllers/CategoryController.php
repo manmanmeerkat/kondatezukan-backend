@@ -29,6 +29,13 @@ class CategoryController extends Controller
         return response()->json($japanese_shirumono);
     }
 
+    //genre_idが"1"でcategoryが"4"のデータを取得
+    public function japanese_others()
+    {
+        $japanese_others = Recipe::where('genre_id', '1')->where('category_id', '4')->get();
+        return response()->json($japanese_others);
+    }
+
     //genre_idが"2"でcategoryが"3"のデータを取得
     public function western_syusai()
     {
@@ -50,6 +57,13 @@ class CategoryController extends Controller
         return response()->json($western_shirumono);
     }
 
+    //genre_idが"2"でcategoryが"4"のデータを取得
+    public function western_others()
+    {
+        $western_others = Recipe::where('genre_id', '2')->where('category_id', '4')->get();
+        return response()->json($western_others);
+    }
+
     //genre_idが"3"でcategory_idが"3"のデータを取得
     public function chinese_syusai()
     {
@@ -69,6 +83,13 @@ class CategoryController extends Controller
     {
         $chinese_shirumono = Recipe::where('genre_id', '3')->where('category_id', '3')->get();
         return response()->json($chinese_shirumono);
+    }
+
+    //genre_idが"1"でcategoryが"4"のデータを取得
+    public function chinese_others()
+    {
+        $chinese_others = Recipe::where('genre_id', '3')->where('category_id', '4')->get();
+        return response()->json($chinese_others);
     }
 
     //genre_idが"4"でcategory_idが"3"のデータを取得

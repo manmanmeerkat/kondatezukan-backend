@@ -80,6 +80,16 @@ class GenreController extends Controller
         return response()->json($japaneseShirumono);
     }
 
+    public function getAllMyJapaneseOthers($userId)
+    {
+        // ユーザーIDを使用して和食のレシピ情報を取得
+        $japaneseOthers = Recipe::where('genre_id', 1)
+            ->where('user_id', $userId) // ユーザーIDでフィルタリング
+            ->where('category_id', 4)
+            ->get();
+        return response()->json($japaneseOthers);
+    }
+
 
 
     public function getAllMyWesternRecipes($userId)
@@ -123,6 +133,16 @@ class GenreController extends Controller
         return response()->json($westernShirumono);
     }
 
+    public function getAllMyWesternOthers($userId)
+    {
+        // ユーザーIDを使用して洋食のレシピ情報を取得
+        $westernOthers = Recipe::where('genre_id', 2)
+            ->where('user_id', $userId) // ユーザーIDでフィルタリング
+            ->where('category_id', 4)
+            ->get();
+        return response()->json($westernOthers);
+    }
+
     public function getAllMyChineseRecipes($userId)
     {
         // ユーザーIDを使用して中華のレシピ情報を取得
@@ -162,5 +182,15 @@ class GenreController extends Controller
             ->where('category_id', 3)
             ->get();
         return response()->json($chineseShirumono);
+    }
+
+    public function getAllMyChineseOthers($userId)
+    {
+        // ユーザーIDを使用して和食のレシピ情報を取得
+        $chineseOthers = Recipe::where('genre_id', 3)
+            ->where('user_id', $userId) // ユーザーIDでフィルタリング
+            ->where('category_id', 4)
+            ->get();
+        return response()->json($chineseOthers);
     }
 }

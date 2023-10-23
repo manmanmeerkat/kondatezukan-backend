@@ -69,14 +69,17 @@ Route::get('/others', [GenreController::class, 'others']);
 Route::get('/japanese_syusai', [CategoryController::class, 'japanese_syusai']);
 Route::get('/japanese_fukusai', [CategoryController::class, 'japanese_fukusai']);
 Route::get('/japanese_shirumono', [CategoryController::class, 'japanese_shirumono']);
+Route::get('/japanese_others', [CategoryController::class, 'japanese_others']);
 
 Route::get('/western_syusai', [CategoryController::class, 'western_syusai']);
 Route::get('/western_fukusai', [CategoryController::class, 'western_fukusai']);
 Route::get('/western_shirumono', [CategoryController::class, 'western_shirumono']);
+Route::get('/western_others', [CategoryController::class, 'western_others']);
 
 Route::get('/chinese_syusai', [CategoryController::class, 'chinese_syusai']);
 Route::get('/chinese_fukusai', [CategoryController::class, 'chinese_fukusai']);
 Route::get('/chinese_shirumono', [CategoryController::class, 'chinese_shirumono']);
+Route::get('/chinese_others', [CategoryController::class, 'chinese_others']);
 
 Route::get('/others_syusai', [CategoryController::class, 'others_syusai']);
 Route::get('/others_fukusai', [CategoryController::class, 'others_fukusai']);
@@ -126,6 +129,9 @@ Route::get('user/{userId}/all-my-japanese-fukusai', [GenreController::class, 'ge
 
 Route::get('user/{userId}/all-my-japanese-shirumono', [GenreController::class, 'getAllMyJapaneseShirumono']);
 
+Route::get('user/{userId}/all-my-japanese-others', [GenreController::class, 'getAllMyJapaneseOthers']);
+
+
 
 
 
@@ -137,6 +143,8 @@ Route::get('user/{userId}/all-my-western-fukusai', [GenreController::class, 'get
 
 Route::get('user/{userId}/all-my-western-shirumono', [GenreController::class, 'getAllMyWesternShirumono']);
 
+Route::get('user/{userId}/all-my-western-others', [GenreController::class, 'getAllMyWesternOthers']);
+
 
 Route::get('user/{userId}/all-my-chinese-recipes', [GenreController::class, 'getAllMyChineseRecipes']);
 
@@ -145,6 +153,8 @@ Route::get('user/{userId}/all-my-chinese-syusai', [GenreController::class, 'getA
 Route::get('user/{userId}/all-my-chinese-fukusai', [GenreController::class, 'getAllMyChineseFukusai']);
 
 Route::get('user/{userId}/all-my-chinese-shirumono', [GenreController::class, 'getAllMyChineseShirumono']);
+
+Route::get('user/{userId}/all-my-chinese-others', [GenreController::class, 'getAllMyChineseOthers']);
 
 Route::get('/recipes/{recipeId}/ingredients', [RecipeController::class, 'getIngredientsForRecipe']);
 
@@ -161,11 +171,14 @@ Route::get('/chinese-food/search', [DishSearchController::class, 'searchChineseF
 Route::get('/japanese-syusai/search', [DishSearchController::class, 'searchJapaneseSyusaiByIngredient']);
 Route::get('/japanese-fukusai/search', [DishSearchController::class, 'searchJapaneseFukusaiByIngredient']);
 Route::get('/japanese-shirumono/search', [DishSearchController::class, 'searchJapaneseShirumonoByIngredient']);
+Route::get('/japanese-others/search', [DishSearchController::class, 'searchJapaneseOthersByIngredient']);
 
 Route::get('/western-syusai/search', [DishSearchController::class, 'searchWesternSyusaiByIngredient']);
 Route::get('/western-fukusai/search', [DishSearchController::class, 'searchWesternFukusaiByIngredient']);
 Route::get('/western-shirumono/search', [DishSearchController::class, 'searchWesternShirumonoByIngredient']);
+Route::get('/western-others/search', [DishSearchController::class, 'searchWesternOthersoByIngredient']);
 
 Route::get('/chinese-syusai/search', [DishSearchController::class, 'searchChineseSyusaiByIngredient']);
 Route::get('/chinese-fukusai/search', [DishSearchController::class, 'searchChineseFukusaiByIngredient']);
 Route::get('/chinese-shirumono/search', [DishSearchController::class, 'searchChineseShirumonoByIngredient']);
+Route::get('/chinese-others/search', [DishSearchController::class, 'searchChineseOthersByIngredient']);
