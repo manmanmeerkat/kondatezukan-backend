@@ -57,9 +57,9 @@ Route::post('/upload-image', [ImageController::class, 'uploadImage']);
 
 Route::delete('/delete/{id}', [RecipeController::class, 'destroy']);
 
-Route::get('/syusai', [RandomController::class, 'syusai']);
-Route::get('/fukusai', [RandomController::class, 'fukusai']);
-Route::get('/soup', [RandomController::class, 'soup']);
+// Route::get('/syusai', [RandomController::class, 'syusai']);
+// Route::get('/fukusai', [RandomController::class, 'fukusai']);
+// Route::get('/soup', [RandomController::class, 'soup']);
 
 Route::get('/japanese', [GenreController::class, 'japanese']);
 Route::get('/western', [GenreController::class, 'western']);
@@ -84,6 +84,8 @@ Route::get('/chinese_others', [CategoryController::class, 'chinese_others']);
 Route::get('/others_syusai', [CategoryController::class, 'others_syusai']);
 Route::get('/others_fukusai', [CategoryController::class, 'others_fukusai']);
 Route::get('/others_shirumono', [CategoryController::class, 'others_shirumono']);
+Route::get('/others_others', [CategoryController::class, 'others_others']);
+
 
 
 // ログインフォームを表示する
@@ -132,9 +134,6 @@ Route::get('user/{userId}/all-my-japanese-shirumono', [GenreController::class, '
 Route::get('user/{userId}/all-my-japanese-others', [GenreController::class, 'getAllMyJapaneseOthers']);
 
 
-
-
-
 Route::get('user/{userId}/all-my-western-recipes', [GenreController::class, 'getAllMyWesternRecipes']);
 
 Route::get('user/{userId}/all-my-western-syusai', [GenreController::class, 'getAllMyWesternSyusai']);
@@ -156,6 +155,18 @@ Route::get('user/{userId}/all-my-chinese-shirumono', [GenreController::class, 'g
 
 Route::get('user/{userId}/all-my-chinese-others', [GenreController::class, 'getAllMyChineseOthers']);
 
+
+Route::get('user/{userId}/all-my-others-recipes', [GenreController::class, 'getAllMyOthersRecipes']);
+
+Route::get('user/{userId}/all-my-others-syusai', [GenreController::class, 'getAllMyOthersSyusai']);
+
+Route::get('user/{userId}/all-my-others-fukusai', [GenreController::class, 'getAllMyOthersFukusai']);
+
+Route::get('user/{userId}/all-my-others-shirumono', [GenreController::class, 'getAllMyOthersShirumono']);
+
+Route::get('user/{userId}/all-my-others-others', [GenreController::class, 'getAllMyOthersOthers']);
+
+
 Route::get('/recipes/{recipeId}/ingredients', [RecipeController::class, 'getIngredientsForRecipe']);
 
 
@@ -166,6 +177,8 @@ Route::get('/all-dish/search', [DishSearchController::class, 'searchByIngredient
 Route::get('/japanese-food/search', [DishSearchController::class, 'searchJapaneseFoodByIngredient']);
 Route::get('/western-food/search', [DishSearchController::class, 'searchWesternFoodByIngredient']);
 Route::get('/chinese-food/search', [DishSearchController::class, 'searchChineseFoodByIngredient']);
+Route::get('/others-food/search', [DishSearchController::class, 'searchOthersFoodByIngredient']);
+
 // Route::get('/others', [DishSearchController::class, 'searchOtherFoodByIngredient']);
 
 Route::get('/japanese-syusai/search', [DishSearchController::class, 'searchJapaneseSyusaiByIngredient']);
@@ -182,3 +195,8 @@ Route::get('/chinese-syusai/search', [DishSearchController::class, 'searchChines
 Route::get('/chinese-fukusai/search', [DishSearchController::class, 'searchChineseFukusaiByIngredient']);
 Route::get('/chinese-shirumono/search', [DishSearchController::class, 'searchChineseShirumonoByIngredient']);
 Route::get('/chinese-others/search', [DishSearchController::class, 'searchChineseOthersByIngredient']);
+
+Route::get('/others-syusai/search', [DishSearchController::class, 'searchOthersSyusaiByIngredient']);
+Route::get('/others-fukusai/search', [DishSearchController::class, 'searchOthersFukusaiByIngredient']);
+Route::get('/others-shirumono/search', [DishSearchController::class, 'searchOthersShirumonoByIngredient']);
+Route::get('/others-others/search', [DishSearchController::class, 'searchOthersOthersByIngredient']);

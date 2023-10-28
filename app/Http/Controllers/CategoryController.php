@@ -112,4 +112,11 @@ class CategoryController extends Controller
         $others_shirumono = Recipe::where('genre_id', '4')->where('category_id', '3')->get();
         return response()->json($others_shirumono);
     }
+
+    //genre_idが"4"でcategory_idが"3"のデータを取得
+    public function others_others()
+    {
+        $others_others = Recipe::where('genre_id', '4')->where('category_id', '4')->get();
+        return response()->json($others_others);
+    }
 }

@@ -193,4 +193,55 @@ class GenreController extends Controller
             ->get();
         return response()->json($chineseOthers);
     }
+
+    public function getAllMyOthersRecipes($userId)
+    {
+        // ユーザーIDを使用して中華のレシピ情報を取得
+        $allMyOthersRecipes = Recipe::where('genre_id', 4)
+            ->where('user_id', $userId) // ユーザーIDでフィルタリング
+            ->get();
+
+        return response()->json($allMyOthersRecipes);
+    }
+
+    public function getAllMyOthersSyusai($userId)
+    {
+        // ユーザーIDを使用して中華のレシピ情報を取得
+        $othersSyusai = Recipe::where('genre_id', 4)
+            ->where('user_id', $userId) // ユーザーIDでフィルタリング
+            ->where('category_id', '1')
+            ->get();
+
+        return response()->json($othersSyusai);
+    }
+
+    public function getAllMyOthersFukusai($userId)
+    {
+        // ユーザーIDを使用して中華のレシピ情報を取得
+        $othersFukusai = Recipe::where('genre_id', 4)
+            ->where('user_id', $userId) // ユーザーIDでフィルタリング
+            ->where('category_id', 2)
+            ->get();
+        return response()->json($othersFukusai);
+    }
+
+    public function getAllMyOthersShirumono($userId)
+    {
+        // ユーザーIDを使用して和食のレシピ情報を取得
+        $othersShirumono = Recipe::where('genre_id', 4)
+            ->where('user_id', $userId) // ユーザーIDでフィルタリング
+            ->where('category_id', 3)
+            ->get();
+        return response()->json($othersShirumono);
+    }
+
+    public function getAllMyOthersOthers($userId)
+    {
+        // ユーザーIDを使用して和食のレシピ情報を取得
+        $othersOthers = Recipe::where('genre_id', 4)
+            ->where('user_id', $userId) // ユーザーIDでフィルタリング
+            ->where('category_id', 4)
+            ->get();
+        return response()->json($othersOthers);
+    }
 }
