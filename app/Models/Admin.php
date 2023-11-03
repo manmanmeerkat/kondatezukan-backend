@@ -2,17 +2,18 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+class Admin extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
     use HasRoles;
+
+    protected $guard = 'admin'; // ガードを指定
 
     /**
      * The attributes that are mass assignable.
@@ -23,8 +24,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role',
-        'email_verified_token',
     ];
 
     /**
@@ -47,15 +46,6 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function recipes()
-    {
-        return $this->hasMany(Recipe::class);
-    }
-
-    // public function hasPermissionTo($permission)
-    // {
-    //     return $this->can($permission);
-    // }
     public function isAdmin()
     {
         return $this->hasRole('admin');

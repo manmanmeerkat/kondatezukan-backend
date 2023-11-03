@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -36,12 +37,11 @@ class AuthController extends Controller
         ], 201);
     }
 
+    // AuthController.php
+
     public function login(Request $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+        // ... ログインのバリデーション等
 
         $credentials = $request->only('email', 'password');
 
@@ -51,11 +51,16 @@ class AuthController extends Controller
 
         $user = Auth::user();
         $userId = $user->id;
+        $role = $user->role;
 
+        // 通常のトークンを生成
         $token = $user->createToken('auth-token', ['expires_in' => 60 * 60])->plainTextToken;
 
-        return response()->json(['message' => 'ログイン成功', 'userId' => $userId, 'token' => $token]);
+        return response()->json(['message' => 'ユーザーとしてログイン成功', 'userId' => $userId, 'token' => $token, 'role' => $role]);
     }
+
+
+
 
     public function csrfCookie()
     {
@@ -72,5 +77,10 @@ class AuthController extends Controller
         Auth::logout();
 
         return response()->json(['message' => 'ログアウトしました']);
+    }
+
+    public function showLoginForm()
+    {
+        return; // または適切なビュー名
     }
 }

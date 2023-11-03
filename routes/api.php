@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\Auth\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GenreController;
 use Illuminate\Http\Request;
@@ -15,6 +16,8 @@ use App\Http\Controllers\ImageController;
 use App\Models\Recipe;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\DishSearchController;
+use App\Models\Admin;
+use App\Http\Middleware\AdminMiddleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +30,7 @@ use App\Http\Controllers\DishSearchController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth:sanctum', 'admin')->get('/user', function (Request $request) {
     return $request->user();
 });
 // Route::resource('menu', MenuController::class);
@@ -40,7 +43,22 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     Route::post('/submitform', 'MenuController@submitform');
 //     // 他のAPIルートも追加できます
 // });
+// Route::middleware(['auth:api', 'can:manage-users'])->group(function () {
+//     Route::get('/admin/users', [AdminController::class, 'index']);
+// });
 
+// Route::middleware('auth:sanctum')->group(function () {
+//     // 管理者のみがアクセスできるように制限
+//     Route::get('/admin', [AdminController::class, 'index']);
+// });
+// Route::post('/admin/login', [AdminController::class, 'adminLogin']);
+
+
+
+Route::middleware(['auth:sanctum', 'admin'])->group(function () {
+    Route::get('/getuser', [UserController::class, 'getUser']);
+    Route::get('/admin/getallusers', [UserController::class, 'getAllUsers']);
+});
 
 Route::group(['middleware' => 'cors'], function () {
     // ここにAPIルートを定義

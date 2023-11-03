@@ -20,4 +20,23 @@ class UserController extends Controller
             return response()->json(['message' => 'ユーザーが見つかりませんでした。'], 404);
         }
     }
+
+    public function getUser(Request $request)
+    {
+        $user = $request->user(); // ユーザー情報を取得
+        // ユーザー情報が正しく取得できているか確認
+        if ($user) {
+            return response()->json(['user' => $user]);
+        } else {
+            return response()->json(['error' => 'Unauthenticated.'], 401);
+        }
+    }
+
+    public function getAllUsers()
+    {
+        // すべてのユーザーデータを取得
+        $users = User::all();
+
+        return response()->json(['users' => $users]);
+    }
 }
