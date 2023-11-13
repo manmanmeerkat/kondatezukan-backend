@@ -30,31 +30,12 @@ use App\Http\Middleware\AdminMiddleware;
 |
 */
 
-Route::middleware('auth:sanctum', 'admin')->get('/user', function (Request $request) {
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-// Route::resource('menu', MenuController::class);
-
-// Route::get('/random', [RandomController::class, 'random']);
-
-// Route::post('/submitform', [MenuController::class, 'submitform']);
-
-// Route::middleware(['cors'])->group(function () {
-//     Route::post('/submitform', 'MenuController@submitform');
-//     // 他のAPIルートも追加できます
-// });
-// Route::middleware(['auth:api', 'can:manage-users'])->group(function () {
-//     Route::get('/admin/users', [AdminController::class, 'index']);
-// });
-
-// Route::middleware('auth:sanctum')->group(function () {
-//     // 管理者のみがアクセスできるように制限
-//     Route::get('/admin', [AdminController::class, 'index']);
-// });
-// Route::post('/admin/login', [AdminController::class, 'adminLogin']);
 
 
-
+Route::get('/admin/getdish', [AdminController::class, 'adminGetAllDish']);
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::get('/getuser', [UserController::class, 'getUser']);
     Route::get('/admin/getallusers', [UserController::class, 'getAllUsers']);
@@ -136,6 +117,7 @@ Route::post('/register', [AuthController::class, 'register']);
 // Route::middleware('auth:sanctum')->get('/user', [UserController::class, 'getUserData']);
 
 Route::get('/user/{userId}', [UserController::class, 'getUserById']);
+
 
 
 Route::get('/csrf-cookie', [AuthController::class, 'csrfCookie'])->middleware('web');

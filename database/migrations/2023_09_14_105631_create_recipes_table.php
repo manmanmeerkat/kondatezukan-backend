@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('recipes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description');
-            $table->string('image_path')->nullable(); // 画像を格納するカラムを追加
-            $table->string('reference_url')->nullable(); // 参考URLを追加
+            $table->text('description')->nullable();
+            $table->string('image_path')->nullable();
+            $table->string('reference_url')->nullable();
             $table->timestamps();
 
             $table->foreignId('genre_id')->constrained('genres');

@@ -56,7 +56,7 @@ class AuthController extends Controller
         // 通常のトークンを生成
         $token = $user->createToken('auth-token', ['expires_in' => 60 * 60])->plainTextToken;
 
-        return response()->json(['message' => 'ユーザーとしてログイン成功', 'userId' => $userId, 'token' => $token, 'role' => $role]);
+        return response()->json(['message' => 'ログイン成功', 'userId' => $userId, 'token' => $token, 'role' => $role]);
     }
 
 
