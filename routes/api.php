@@ -92,15 +92,7 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 
 // // ログイン処理を実行する
 Route::post('/login', [AuthController::class, 'login'])->middleware('api');
-// 
-// // ログアウトを実行する
-// Route::post('/logout', [AuthController::class, 'logout'])->middleware('api');
-// Route::post('/logout', [AuthController::class, 'logout'])->middleware('web');
 
-
-
-
-// Route::post('/login', LoginController::class)->name('login'); //追記部分
 Route::post('/logout', LogoutController::class)->name('logout'); //追記部分
 
 Route::group(['middleware' => 'api'], function () {

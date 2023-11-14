@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ingredient extends Model
 {
+    use HasFactory;
+    
     protected $fillable = ['recipe_id', 'name', 'user_id'];
 
     // 食材に関連するレシピのリレーションシップ
