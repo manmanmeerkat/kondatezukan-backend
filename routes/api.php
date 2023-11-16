@@ -90,9 +90,9 @@ Route::get('/others_others', [CategoryController::class, 'others_others']);
 // ログインフォームを表示する
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 
-// // ログイン処理を実行する
+// ログイン処理を実行する
 Route::post('/login', [AuthController::class, 'login'])->middleware('api');
-
+// ログアウト処理を実行する
 Route::post('/logout', LogoutController::class)->name('logout'); //追記部分
 
 Route::group(['middleware' => 'api'], function () {
@@ -105,8 +105,6 @@ Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('
 
 // ユーザー登録処理を実行する
 Route::post('/register', [AuthController::class, 'register']);
-
-// Route::middleware('auth:sanctum')->get('/user', [UserController::class, 'getUserData']);
 
 Route::get('/user/{userId}', [UserController::class, 'getUserById']);
 
@@ -171,7 +169,6 @@ Route::get('/western-food/search', [DishSearchController::class, 'searchWesternF
 Route::get('/chinese-food/search', [DishSearchController::class, 'searchChineseFoodByIngredient']);
 Route::get('/others-food/search', [DishSearchController::class, 'searchOthersFoodByIngredient']);
 
-// Route::get('/others', [DishSearchController::class, 'searchOtherFoodByIngredient']);
 
 Route::get('/japanese-syusai/search', [DishSearchController::class, 'searchJapaneseSyusaiByIngredient']);
 Route::get('/japanese-fukusai/search', [DishSearchController::class, 'searchJapaneseFukusaiByIngredient']);
