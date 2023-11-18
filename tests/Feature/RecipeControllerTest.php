@@ -20,8 +20,8 @@ class RecipeControllerTest extends TestCase
     public function test_ユーザーに関連付けられた料理をすべて取得できる()
     {
         // ジャンルIDが1のデータをデータベースに挿入
-        Genre::create(['id' => 1, 'name' => '和食']);
-        Category::create(['id' => 1, 'name' => '主菜']);
+        Genre::create(['name' => '和食']);
+        Category::create(['name' => '主菜']);
 
         // テストユーザーを作成
         $user = User::factory()->create();
@@ -31,7 +31,7 @@ class RecipeControllerTest extends TestCase
 
 
         // テスト用のレシピを作成
-        $recipe = Recipe::factory(3)->create(['user_id' => $user->id, 'genre_id' => 1, 'category_id' => 1]);
+        $recipe = Recipe::factory(3)->create(['user_id' => $user->id]);
 
         // レシピ取得エンドポイントを呼び出し
         $response = $this->json('GET', '/api/all-my-dish');
