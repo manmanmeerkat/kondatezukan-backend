@@ -12,10 +12,10 @@ class GenreController extends Controller
     public function japanese()
     {
         try {
-            $japaneseRecipes = Recipe::where('genre_id', 1)
+            $japanese = Recipe::where('genre_id', 1)
                 ->get();
 
-            return response()->json($japaneseRecipes);
+            return response()->json($japanese);
         } catch (\Exception $e) {
             return response()->json(['error' => 'An error occurred while fetching Japanese recipes.'], 500);
         }
