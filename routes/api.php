@@ -160,7 +160,7 @@ Route::get('user/{userId}/all-my-others-others', [GenreController::class, 'getAl
 Route::get('/recipes/{recipeId}/ingredients', [RecipeController::class, 'getIngredientsForRecipe']);
 
 
-Route::post('/ingredients', [IngredientController::class, 'store']);
+// Route::post('/ingredients', [IngredientController::class, 'store']);
 
 Route::get('/all-dish/search', [DishSearchController::class, 'searchByIngredient']);
 

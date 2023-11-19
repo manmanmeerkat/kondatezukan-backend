@@ -548,7 +548,6 @@ class CategoryControllerTest extends TestCase
                 ]
             ]);
 
-        // テストが完了したらトランザクションをロールバック
         $this->artisan('migrate:refresh');
     }
 }

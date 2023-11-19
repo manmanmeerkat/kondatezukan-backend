@@ -888,5 +888,7 @@ class GenreControllerTest extends TestCase
                     'image_path',
                 ]
             ]);
+
+        $this->artisan('migrate:refresh');
     }
 }
