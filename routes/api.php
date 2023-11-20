@@ -42,9 +42,7 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
 });
 
 Route::group(['middleware' => 'cors'], function () {
-    // ここにAPIルートを定義
-    Route::post('/submitform', [MenuController::class, 'submitform'])->name('submitform');
-    // 他のAPIルートもここに追加
+    Route::post('/submitform', [RecipeController::class, 'submitform'])->name('submitform');
 });
 Route::get('/all-my-dish', [RecipeController::class, 'getUserRecipes']);
 
@@ -93,7 +91,7 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 // ログイン処理を実行する
 Route::post('/login', [AuthController::class, 'login'])->middleware('api');
 // ログアウト処理を実行する
-Route::post('/logout', LogoutController::class)->name('logout'); //追記部分
+Route::post('/logout', LogoutController::class)->name('logout');
 
 Route::group(['middleware' => 'api'], function () {
     Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'show']);
@@ -159,8 +157,6 @@ Route::get('user/{userId}/all-my-others-others', [GenreController::class, 'getAl
 
 Route::get('/recipes/{recipeId}/ingredients', [RecipeController::class, 'getIngredientsForRecipe']);
 
-
-// Route::post('/ingredients', [IngredientController::class, 'store']);
 
 Route::get('/all-dish/search', [DishSearchController::class, 'searchByIngredient']);
 

@@ -168,4 +168,64 @@ class RecipeController extends Controller
             return response()->json(['error' => '削除が失敗しました'], 500);
         }
     }
+
+    public function submitform(Request $request)
+    {
+
+        // トランザクションを開始
+        DB::beginTransaction();
+
+        try {
+            // レシピの保存
+            $recipe = new Recipe();
+            $recipe->name = $request->input('name');
+            $recipe->description = $request->input('description');
+            $recipe->genre_id = $request->input('genre_id');
+            $recipe->category_id = $request->input('category_id');
+            $recipe->reference_url = $request->input('reference_url');
+            $recipe->image_path = $request->input('image_path');
+            $recipe->user_id = $request->input('user_id');
+
+            $recipe->save(); // データベースに保存
+
+            // 材料の保存
+            $ingredientsData = $request->input('ingredients');
+
+            // $ingredientsData が JSON 文字列でない場合、配列に変換
+            if (is_array($ingredientsData)) {
+                $ingredientsData = json_encode($ingredientsData);
+            }
+
+            $ingredientsData = json_decode($ingredientsData, true);
+
+            if (!is_array($ingredientsData)) {
+                $ingredientsData = [];
+            }
+
+
+            foreach ($ingredientsData as $ingredientName) {
+                $ingredient = new Ingredient();
+                $ingredient->user_id = $request->input('user_id');
+                $ingredient->name = $ingredientName;
+                $ingredient->save();
+
+                // 中間テーブルに保存
+                $recipe->ingredients()->attach($ingredient->id);
+            }
+
+            // トランザクションをコミット
+            DB::commit();
+
+            return response()->json(['message' => 'Recipe created successfully'], 201);
+        } catch (\Exception $e) {
+            // Laravelのエラーログにエラーメッセージを記録
+            Log::error('Exception: ' . $e->getMessage());
+            Log::info('Ingredients from Request:', [$request->input('ingredients')]);
+
+            // トランザクションをロールバック
+            DB::rollback();
+
+            return response()->json(['error' => 'Failed to save data to the database'], 500);
+        }
+    }
 }
