@@ -36,6 +36,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::get('/admin/getdish', [AdminController::class, 'adminGetAllDish']);
+
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::get('/getuser', [UserController::class, 'getUser']);
     Route::get('/admin/getallusers', [UserController::class, 'getAllUsers']);
