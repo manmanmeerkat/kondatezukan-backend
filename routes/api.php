@@ -112,48 +112,35 @@ Route::get('/user/{userId}', [UserController::class, 'getUserById']);
 Route::get('/csrf-cookie', [AuthController::class, 'csrfCookie'])->middleware('web');
 
 
-Route::get('user/{userId}/all-my-japanese-recipes', [GenreController::class, 'getAllMyJapaneseRecipes']);
+Route::prefix('user/{userId}')->group(function () {
+    // Japanese recipes
+    Route::get('all-my-japanese-recipes', [GenreController::class, 'getAllMyJapaneseRecipes']);
+    Route::get('all-my-japanese-syusai', [GenreController::class, 'getAllMyJapaneseSyusai']);
+    Route::get('all-my-japanese-fukusai', [GenreController::class, 'getAllMyJapaneseFukusai']);
+    Route::get('all-my-japanese-shirumono', [GenreController::class, 'getAllMyJapaneseShirumono']);
+    Route::get('all-my-japanese-others', [GenreController::class, 'getAllMyJapaneseOthers']);
 
-Route::get('user/{userId}/all-my-japanese-syusai', [GenreController::class, 'getAllMyJapaneseSyusai']);
+    // Western recipes
+    Route::get('all-my-western-recipes', [GenreController::class, 'getAllMyWesternRecipes']);
+    Route::get('all-my-western-syusai', [GenreController::class, 'getAllMyWesternSyusai']);
+    Route::get('all-my-western-fukusai', [GenreController::class, 'getAllMyWesternFukusai']);
+    Route::get('all-my-western-shirumono', [GenreController::class, 'getAllMyWesternShirumono']);
+    Route::get('all-my-western-others', [GenreController::class, 'getAllMyWesternOthers']);
 
-Route::get('user/{userId}/all-my-japanese-fukusai', [GenreController::class, 'getAllMyJapaneseFukusai']);
+    // Chinese recipes
+    Route::get('all-my-chinese-recipes', [GenreController::class, 'getAllMyChineseRecipes']);
+    Route::get('all-my-chinese-syusai', [GenreController::class, 'getAllMyChineseSyusai']);
+    Route::get('all-my-chinese-fukusai', [GenreController::class, 'getAllMyChineseFukusai']);
+    Route::get('all-my-chinese-shirumono', [GenreController::class, 'getAllMyChineseShirumono']);
+    Route::get('all-my-chinese-others', [GenreController::class, 'getAllMyChineseOthers']);
 
-Route::get('user/{userId}/all-my-japanese-shirumono', [GenreController::class, 'getAllMyJapaneseShirumono']);
-
-Route::get('user/{userId}/all-my-japanese-others', [GenreController::class, 'getAllMyJapaneseOthers']);
-
-
-Route::get('user/{userId}/all-my-western-recipes', [GenreController::class, 'getAllMyWesternRecipes']);
-
-Route::get('user/{userId}/all-my-western-syusai', [GenreController::class, 'getAllMyWesternSyusai']);
-
-Route::get('user/{userId}/all-my-western-fukusai', [GenreController::class, 'getAllMyWesternFukusai']);
-
-Route::get('user/{userId}/all-my-western-shirumono', [GenreController::class, 'getAllMyWesternShirumono']);
-
-Route::get('user/{userId}/all-my-western-others', [GenreController::class, 'getAllMyWesternOthers']);
-
-
-Route::get('user/{userId}/all-my-chinese-recipes', [GenreController::class, 'getAllMyChineseRecipes']);
-
-Route::get('user/{userId}/all-my-chinese-syusai', [GenreController::class, 'getAllMyChineseSyusai']);
-
-Route::get('user/{userId}/all-my-chinese-fukusai', [GenreController::class, 'getAllMyChineseFukusai']);
-
-Route::get('user/{userId}/all-my-chinese-shirumono', [GenreController::class, 'getAllMyChineseShirumono']);
-
-Route::get('user/{userId}/all-my-chinese-others', [GenreController::class, 'getAllMyChineseOthers']);
-
-
-Route::get('user/{userId}/all-my-others-recipes', [GenreController::class, 'getAllMyOthersRecipes']);
-
-Route::get('user/{userId}/all-my-others-syusai', [GenreController::class, 'getAllMyOthersSyusai']);
-
-Route::get('user/{userId}/all-my-others-fukusai', [GenreController::class, 'getAllMyOthersFukusai']);
-
-Route::get('user/{userId}/all-my-others-shirumono', [GenreController::class, 'getAllMyOthersShirumono']);
-
-Route::get('user/{userId}/all-my-others-others', [GenreController::class, 'getAllMyOthersOthers']);
+    // Others recipes
+    Route::get('all-my-others-recipes', [GenreController::class, 'getAllMyOthersRecipes']);
+    Route::get('all-my-others-syusai', [GenreController::class, 'getAllMyOthersSyusai']);
+    Route::get('all-my-others-fukusai', [GenreController::class, 'getAllMyOthersFukusai']);
+    Route::get('all-my-others-shirumono', [GenreController::class, 'getAllMyOthersShirumono']);
+    Route::get('all-my-others-others', [GenreController::class, 'getAllMyOthersOthers']);
+});
 
 
 Route::get('/recipes/{recipeId}/ingredients', [RecipeController::class, 'getIngredientsForRecipe']);

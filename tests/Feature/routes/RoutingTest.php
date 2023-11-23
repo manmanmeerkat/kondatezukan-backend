@@ -34,9 +34,103 @@ class RoutingTest extends TestCase
             $response = $this->get($route);
 
             $response->assertStatus(200);
-            // ここに各ルートごとの特定のテキストを確認するアサーションを追加
-
-            // 他にも必要なアサーションがあれば追加
         }
+    }
+
+    public function testCsrfCookieEndpoint()
+    {
+        $response = $this->get('/api/csrf-cookie');
+
+        $response->assertStatus(200)
+            ->assertCookie(config('session.cookie'));
+    }
+
+    public function testJapaneseRecipesRoutes()
+    {
+        $userId = 1;
+
+        $response = $this->get("/api/user/{$userId}/all-my-japanese-recipes");
+        $response->assertStatus(200);
+
+        $response = $this->get("/api/user/{$userId}/all-my-japanese-syusai");
+        $response->assertStatus(200);
+
+        $response = $this->get("/api/user/{$userId}/all-my-japanese-fukusai");
+        $response->assertStatus(200);
+
+        $response = $this->get("/api/user/{$userId}/all-my-japanese-shirumono");
+        $response->assertStatus(200);
+
+        $response = $this->get("/api/user/{$userId}/all-my-japanese-others");
+        $response->assertStatus(200);
+    }
+
+    /**
+     * Test Western recipes routes
+     */
+    public function testWesternRecipesRoutes()
+    {
+        $userId = 1;
+
+        $response = $this->get("/api/user/{$userId}/all-my-western-recipes");
+        $response->assertStatus(200);
+
+        $response = $this->get("/api/user/{$userId}/all-my-western-syusai");
+        $response->assertStatus(200);
+
+        $response = $this->get("/api/user/{$userId}/all-my-western-fukusai");
+        $response->assertStatus(200);
+
+        $response = $this->get("/api/user/{$userId}/all-my-western-shirumono");
+        $response->assertStatus(200);
+
+        $response = $this->get("/api/user/{$userId}/all-my-western-others");
+        $response->assertStatus(200);
+    }
+
+    /**
+     * Test Chinese recipes routes
+     */
+    public function testChineseRecipesRoutes()
+    {
+        $userId = 1;
+
+        $response = $this->get("/api/user/{$userId}/all-my-chinese-recipes");
+        $response->assertStatus(200);
+
+        $response = $this->get("/api/user/{$userId}/all-my-chinese-syusai");
+        $response->assertStatus(200);
+
+        $response = $this->get("/api/user/{$userId}/all-my-chinese-fukusai");
+        $response->assertStatus(200);
+
+        $response = $this->get("/api/user/{$userId}/all-my-chinese-shirumono");
+        $response->assertStatus(200);
+
+        $response = $this->get("/api/user/{$userId}/all-my-chinese-others");
+        $response->assertStatus(200);
+    }
+
+    /**
+     * Test Others recipes routes
+     */
+    public function testOthersRecipesRoutes()
+    {
+        $userId = 1;
+
+        $response = $this->get("/api/user/{$userId}/all-my-others-recipes");
+        $response->assertStatus(200);
+
+        $response = $this->get("/api/user/{$userId}/all-my-others-syusai");
+        $response->assertStatus(200);
+
+        $response = $this->get("/api/user/{$userId}/all-my-others-fukusai");
+        $response->assertStatus(200);
+
+        $response = $this->get("/api/user/{$userId}/all-my-others-shirumono");
+        $response->assertStatus(200);
+
+        $response = $this->get("/api/user/{$userId}/all-my-others-others");
+        $response->assertStatus(200);
     }
 }
