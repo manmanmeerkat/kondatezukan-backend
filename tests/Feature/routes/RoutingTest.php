@@ -3,6 +3,8 @@
 use Tests\TestCase;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\CategoryController;
+use App\Models\Recipe;
+use App\Models\User;
 
 class RoutingTest extends TestCase
 {
@@ -35,6 +37,40 @@ class RoutingTest extends TestCase
 
             $response->assertStatus(200);
         }
+    }
+
+    // public function testGetUserByIdEndpoint()
+    // {
+    //     // Create a user in the database
+    //     $user = User::factory()->create();
+
+    //     // Make a GET request to the endpoint
+    //     $response = $this->get("/api/user/{$user->id}");
+    //     // Assert the response status is 200 OK
+    //     $response->assertStatus(200)
+    //         ->assertJson([
+    //             'recipes' => [],
+    //         ]);
+
+
+    //     // Additional assertions as needed
+    // }
+
+    public function testDeleteRecipe()
+    {
+        // テスト用のレシピをデータベースに作成
+        $recipe = Recipe::factory()->create();
+
+
+
+        // レシピを削除するエンドポイントにDELETEリクエストを送信
+        $response = $this->delete("/api/delete/{$recipe->id}");
+
+        // レスポンスが正常であることを検証
+        $response->assertStatus(200);
+
+        // レシピが削除されたことを確認
+        $this->assertDatabaseMissing('recipes', ['id' => $recipe->id]);
     }
 
     public function testCsrfCookieEndpoint()
