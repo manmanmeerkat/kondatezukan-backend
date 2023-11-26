@@ -43,7 +43,7 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
 });
 
 Route::group(['middleware' => 'cors'], function () {
-    Route::post('/submitform', [RecipeController::class, 'submitform'])->name('submitform');
+    Route::post('/submitform', [RecipeController::class, 'create'])->name('create');
 });
 Route::get('/all-my-dish', [RecipeController::class, 'getUserRecipes']);
 

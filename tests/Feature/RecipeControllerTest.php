@@ -10,12 +10,44 @@ use App\Models\Category;
 use App\Models\User;
 use App\Models\Recipe;
 use App\Models\Ingredient;
-
-
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class RecipeControllerTest extends TestCase
 {
     use RefreshDatabase;
+
+    private $genres;
+    private $categories;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        // テストデータを作成する前にIDカウンタをリセット
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        Genre::query()->truncate();
+        Category::query()->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
+
+        // ジャンルを作成
+        $this->genres = Genre::factory()->createMany([
+            ['name' => '和食'],
+            ['name' => '洋食'],
+            ['name' => '中華'],
+            ['name' => 'その他'],
+        ]);
+
+        // カテゴリーを作成
+        $this->categories = Category::factory()->createMany([
+            ['name' => '主菜'],
+            ['name' => '副菜'],
+            ['name' => '汁物'],
+            ['name' => 'その他'],
+        ]);
+    }
 
     public function test_ユーザーに関連付けられた料理をすべて取得できる()
     {
@@ -107,6 +139,7 @@ class RecipeControllerTest extends TestCase
 
 
 
+
     public function test_有効なIDでレシピを削除()
     {
 
@@ -140,5 +173,53 @@ class RecipeControllerTest extends TestCase
         // レスポンスが期待通りのステータスコードとエラーメッセージを持っていることを検証
         $response->assertStatus(500)
             ->assertJson(['error' => '削除が失敗しました']);
+    }
+
+    public function test_料理の更新()
+    {
+        // テスト用のデータを作成（必要に応じて変更してください）
+        $user = User::factory()->create();
+        $dish = Recipe::factory()->create(['user_id' => $user->id]);
+        $genre = Genre::factory()->create();
+        $category = Category::factory()->create();
+
+        // 画像ファイルを作成
+        $image = UploadedFile::fake()->image('test_image.jpg');
+
+        // テスト用のリクエストデータを作成
+        $requestData = [
+            'user_id' => $user->id,
+            'genre_id' => $genre->id,
+            'category_id' => $category->id,
+            'ingredients' => json_encode(['Ingredient 1', 'Ingredient 2']),
+            'image_file' => $image,
+            // 他のリクエストデータも追加
+        ];
+
+        // テスト用のリクエストを送信
+        $response = $this->json('PUT', 'api/update/' . $dish->id, $requestData);
+
+        // レスポンスが正常であることを確認
+        $response->assertStatus(200);
+
+        // 再取得
+        $dish = Recipe::find($dish->id);
+
+        // 画像のパスが正しく生成されているかを確認
+        $this->assertNotNull($dish->image_path);
+
+        // ファイルが存在するかどうかを確認
+        $this->assertTrue(Storage::disk('public')->exists($dish->image_path));
+
+        // データベースにデータが正しく保存されているかを確認
+        $this->assertDatabaseHas('recipes', [
+            'id' => $dish->id,
+            'name' => $dish->name,
+            'user_id' => $user->id,
+            'description' => $dish->description,
+            'genre_id' => $genre->id,
+            'category_id' => $category->id,
+            'image_path' => $dish->image_path,
+        ]);
     }
 }

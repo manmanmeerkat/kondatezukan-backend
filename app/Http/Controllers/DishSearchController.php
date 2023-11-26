@@ -13,10 +13,14 @@ class DishSearchController extends Controller
         $ingredient = $request->input('ingredient');
         $user_id = $request->input('user_id');
 
+        logger("Search request received. Ingredient: $ingredient, User ID: $user_id");
+
         // 材料からの検索ロジックを実装
         $recipes = Recipe::whereHas('ingredients', function ($query) use ($ingredient) {
             $query->where('name', 'like', '%' . $ingredient . '%');
         })->where('user_id', $user_id)->get();
+
+        logger($recipes);
 
         return response()->json(['recipes' => $recipes]);
     }
