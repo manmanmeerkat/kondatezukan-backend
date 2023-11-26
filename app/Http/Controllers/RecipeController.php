@@ -169,7 +169,7 @@ class RecipeController extends Controller
         }
     }
 
-    public function submitform(Request $request)
+    public function create(Request $request)
     {
 
         // トランザクションを開始

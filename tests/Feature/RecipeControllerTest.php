@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Storage;
 class RecipeControllerTest extends TestCase
 {
     use RefreshDatabase;
+    // use DatabaseTransactions;
 
     private $genres;
     private $categories;
@@ -138,6 +139,83 @@ class RecipeControllerTest extends TestCase
     }
 
 
+
+
+    public function test_料理の作成()
+    {
+        try {
+            // ジャンルIDが1のデータをデータベースに挿入
+            Genre::create(['id' => 1, 'name' => '和食']);
+            Category::create(['id' => 1, 'name' => '主菜']);
+
+            // テストユーザーを作成
+            $user = User::factory()->create();
+
+            // 認証済みのユーザーとしてログイン
+            Auth::login($user);
+
+            // 画像ファイルを作成
+            $image = UploadedFile::fake()->image('test_image.jpg');
+
+            // テスト用のリクエストデータを作成
+            $requestData = [
+                'user_id' => $user->id,
+                'name' => 'Test Dish',
+                'genre_id' => 1,
+                'category_id' => 1,
+                'ingredients' => json_encode(['Ingredient 1', 'Ingredient 2']),
+                'image_file' => $image,
+                // 他のリクエストデータも追加
+            ];
+
+            // テスト用のリクエストを送信
+            $response = $this->json('POST', '/api/submitform', $requestData);
+
+            // レスポンスが正常であることを確認
+            $response->assertStatus(201);
+
+            // レスポンスの内容を表示
+            Log::info($response->content());
+
+            // レスポンスにレシピが含まれていることを確認
+            // レスポンスのJSON構造を確認
+            $response->assertJson(
+                [
+                    'message' => 'Recipe created successfully',
+                ]
+            );
+
+            // データベースにデータが正しく保存されているかを確認
+            $recipe = Recipe::where('name', 'Test Dish')->first();
+
+            // recipes テーブルにデータが存在するか確認
+            $this->assertDatabaseHas('recipes', [
+                'id' => $recipe->id,
+                'name' => 'Test Dish',
+                'user_id' => $user->id,
+                'genre_id' => 1,
+                'category_id' => 1,
+            ]);
+
+            // recipe_ingredients テーブルにデータが存在するか確認
+            $this->assertDatabaseHas('ingredient_recipe', [
+                'recipe_id' => $recipe->id,
+                // 他の条件も必要に応じて追加
+            ]);
+
+            // ストレージに画像が存在するか確認
+            $imagePath = 'images/' . $image->hashName();
+            $this->assertTrue(
+                Storage::disk('public')->exists($imagePath),
+                'Image not found at ' . $imagePath
+            );
+        } catch (\Exception $e) {
+            // エラーメッセージをログに残す
+            Log::error('作成エラー: ' . $e->getMessage());
+
+            return response()->json(['error' => '作成が失敗しました'], 500);
+        }
+    }
 
 
     public function test_有効なIDでレシピを削除()
