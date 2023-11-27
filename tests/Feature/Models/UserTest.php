@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
-use App\Models\Recipe;
+use App\Models\Dish;
 use Illuminate\Support\Facades\DB;
 
 class UserTest extends TestCase
@@ -48,11 +48,11 @@ class UserTest extends TestCase
     public function test_ユーザーは複数のレシピを持つことができる()
     {
         $user = User::factory()->create();
-        $recipe1 = Recipe::factory()->create(['user_id' => $user->id]);
-        $recipe2 = Recipe::factory()->create(['user_id' => $user->id]);
+        $dish1 = Dish::factory()->create(['user_id' => $user->id]);
+        $dish2 = Dish::factory()->create(['user_id' => $user->id]);
 
-        $this->assertCount(2, $user->recipes);
-        $this->assertInstanceOf(Recipe::class, $user->recipes->first());
+        $this->assertCount(2, $user->dishes);
+        $this->assertInstanceOf(Dish::class, $user->dishes->first());
     }
 
     public function test_ユーザーが管理者かどうかを確認できる()

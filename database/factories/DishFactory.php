@@ -2,16 +2,16 @@
 
 namespace Database\Factories;
 
-// database/factories/RecipeFactory.php
+// database/factories/DishFactory.php
 
-// database/factories/RecipeFactory.php
+// database/factories/DishFactory.php
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
-class RecipeFactory extends Factory
+class DishFactory extends Factory
 {
-    protected $model = \App\Models\Recipe::class;
+    protected $model = \App\Models\Dish::class;
 
     public function definition()
     {

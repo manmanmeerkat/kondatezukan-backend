@@ -6,7 +6,7 @@ use App\Models\Category;
 use App\Models\Genre;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use App\Models\Recipe;
+use App\Models\Dish;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
@@ -51,7 +51,7 @@ class CategoryControllerTest extends TestCase
         $user = User::factory()->create();
 
         // テスト用の複数のデータを作成
-        $recipes = Recipe::factory()->count(3)->create([
+        $dishes = Dish::factory()->count(3)->create([
             'user_id' => $user->id,
             'genre_id' => 1,
             'category_id' => 1,
@@ -65,13 +65,13 @@ class CategoryControllerTest extends TestCase
             ->assertJsonCount(3)
             ->assertJson([
                 [
-                    'id' => $recipes[0]->id,
-                    'name' => $recipes[0]->name,
-                    'description' => $recipes[0]->description,
-                    'genre_id' => $recipes[0]->genre_id,
-                    'category_id' => $recipes[0]->category_id,
-                    'reference_url' => $recipes[0]->reference_url,
-                    'image_path' => $recipes[0]->image_path,
+                    'id' => $dishes[0]->id,
+                    'name' => $dishes[0]->name,
+                    'description' => $dishes[0]->description,
+                    'genre_id' => $dishes[0]->genre_id,
+                    'category_id' => $dishes[0]->category_id,
+                    'reference_url' => $dishes[0]->reference_url,
+                    'image_path' => $dishes[0]->image_path,
                 ]
             ]);
     }
@@ -83,7 +83,7 @@ class CategoryControllerTest extends TestCase
         $user = User::factory()->create();
 
         // テスト用の複数のデータを作成
-        $recipes = Recipe::factory()->count(3)->create([
+        $dishes = Dish::factory()->count(3)->create([
             'user_id' => $user->id,
             'genre_id' => 1,
             'category_id' => 2,
@@ -99,13 +99,13 @@ class CategoryControllerTest extends TestCase
             ->assertJsonCount(3)
             ->assertJson([
                 [
-                    'id' => $recipes[0]->id,
-                    'name' => $recipes[0]->name,
-                    'description' => $recipes[0]->description,
-                    'genre_id' => $recipes[0]->genre_id,
-                    'category_id' => $recipes[0]->category_id,
-                    'reference_url' => $recipes[0]->reference_url,
-                    'image_path' => $recipes[0]->image_path,
+                    'id' => $dishes[0]->id,
+                    'name' => $dishes[0]->name,
+                    'description' => $dishes[0]->description,
+                    'genre_id' => $dishes[0]->genre_id,
+                    'category_id' => $dishes[0]->category_id,
+                    'reference_url' => $dishes[0]->reference_url,
+                    'image_path' => $dishes[0]->image_path,
                 ]
             ]);
     }
@@ -117,7 +117,7 @@ class CategoryControllerTest extends TestCase
         $user = User::factory()->create();
 
         // テスト用の複数のデータを作成
-        $recipes = Recipe::factory()->count(3)->create([
+        $dishes = Dish::factory()->count(3)->create([
             'user_id' => $user->id,
             'genre_id' => 1,
             'category_id' => 3,
@@ -132,13 +132,13 @@ class CategoryControllerTest extends TestCase
             ->assertJsonCount(3)
             ->assertJson([
                 [
-                    'id' => $recipes[0]->id,
-                    'name' => $recipes[0]->name,
-                    'description' => $recipes[0]->description,
-                    'genre_id' => $recipes[0]->genre_id,
-                    'category_id' => $recipes[0]->category_id,
-                    'reference_url' => $recipes[0]->reference_url,
-                    'image_path' => $recipes[0]->image_path,
+                    'id' => $dishes[0]->id,
+                    'name' => $dishes[0]->name,
+                    'description' => $dishes[0]->description,
+                    'genre_id' => $dishes[0]->genre_id,
+                    'category_id' => $dishes[0]->category_id,
+                    'reference_url' => $dishes[0]->reference_url,
+                    'image_path' => $dishes[0]->image_path,
                 ]
             ]);
     }
@@ -150,7 +150,7 @@ class CategoryControllerTest extends TestCase
         $user = User::factory()->create();
 
         // テスト用の複数のデータを作成
-        $recipes = Recipe::factory()->count(3)->create([
+        $dishes = Dish::factory()->count(3)->create([
             'user_id' => $user->id,
             'genre_id' => 1,
             'category_id' => 4,
@@ -165,13 +165,13 @@ class CategoryControllerTest extends TestCase
             ->assertJsonCount(3)
             ->assertJson([
                 [
-                    'id' => $recipes[0]->id,
-                    'name' => $recipes[0]->name,
-                    'description' => $recipes[0]->description,
-                    'genre_id' => $recipes[0]->genre_id,
-                    'category_id' => $recipes[0]->category_id,
-                    'reference_url' => $recipes[0]->reference_url,
-                    'image_path' => $recipes[0]->image_path,
+                    'id' => $dishes[0]->id,
+                    'name' => $dishes[0]->name,
+                    'description' => $dishes[0]->description,
+                    'genre_id' => $dishes[0]->genre_id,
+                    'category_id' => $dishes[0]->category_id,
+                    'reference_url' => $dishes[0]->reference_url,
+                    'image_path' => $dishes[0]->image_path,
                 ]
             ]);
     }
@@ -183,7 +183,7 @@ class CategoryControllerTest extends TestCase
         $user = User::factory()->create();
 
         // テスト用の複数のデータを作成
-        $recipes = Recipe::factory()->count(3)->create([
+        $dishes = Dish::factory()->count(3)->create([
             'user_id' => $user->id,
             'genre_id' => 2,
             'category_id' => 1,
@@ -198,13 +198,13 @@ class CategoryControllerTest extends TestCase
             ->assertJsonCount(3)
             ->assertJson([
                 [
-                    'id' => $recipes[0]->id,
-                    'name' => $recipes[0]->name,
-                    'description' => $recipes[0]->description,
-                    'genre_id' => $recipes[0]->genre_id,
-                    'category_id' => $recipes[0]->category_id,
-                    'reference_url' => $recipes[0]->reference_url,
-                    'image_path' => $recipes[0]->image_path,
+                    'id' => $dishes[0]->id,
+                    'name' => $dishes[0]->name,
+                    'description' => $dishes[0]->description,
+                    'genre_id' => $dishes[0]->genre_id,
+                    'category_id' => $dishes[0]->category_id,
+                    'reference_url' => $dishes[0]->reference_url,
+                    'image_path' => $dishes[0]->image_path,
                 ]
             ]);
     }
@@ -216,7 +216,7 @@ class CategoryControllerTest extends TestCase
         $user = User::factory()->create();
 
         // テスト用の複数のデータを作成
-        $recipes = Recipe::factory()->count(3)->create([
+        $dishes = Dish::factory()->count(3)->create([
             'user_id' => $user->id,
             'genre_id' => 2,
             'category_id' => 2,
@@ -231,13 +231,13 @@ class CategoryControllerTest extends TestCase
             ->assertJsonCount(3)
             ->assertJson([
                 [
-                    'id' => $recipes[0]->id,
-                    'name' => $recipes[0]->name,
-                    'description' => $recipes[0]->description,
-                    'genre_id' => $recipes[0]->genre_id,
-                    'category_id' => $recipes[0]->category_id,
-                    'reference_url' => $recipes[0]->reference_url,
-                    'image_path' => $recipes[0]->image_path,
+                    'id' => $dishes[0]->id,
+                    'name' => $dishes[0]->name,
+                    'description' => $dishes[0]->description,
+                    'genre_id' => $dishes[0]->genre_id,
+                    'category_id' => $dishes[0]->category_id,
+                    'reference_url' => $dishes[0]->reference_url,
+                    'image_path' => $dishes[0]->image_path,
                 ]
             ]);
     }
@@ -248,7 +248,7 @@ class CategoryControllerTest extends TestCase
         // テストユーザーを作成
         $user = User::factory()->create();
         // テスト用の複数のデータを作成
-        $recipes = Recipe::factory()->count(3)->create([
+        $dishes = Dish::factory()->count(3)->create([
             'user_id' => $user->id,
             'genre_id' => 2,
             'category_id' => 3,
@@ -262,13 +262,13 @@ class CategoryControllerTest extends TestCase
             ->assertJsonCount(3)
             ->assertJson([
                 [
-                    'id' => $recipes[0]->id,
-                    'name' => $recipes[0]->name,
-                    'description' => $recipes[0]->description,
-                    'genre_id' => $recipes[0]->genre_id,
-                    'category_id' => $recipes[0]->category_id,
-                    'reference_url' => $recipes[0]->reference_url,
-                    'image_path' => $recipes[0]->image_path,
+                    'id' => $dishes[0]->id,
+                    'name' => $dishes[0]->name,
+                    'description' => $dishes[0]->description,
+                    'genre_id' => $dishes[0]->genre_id,
+                    'category_id' => $dishes[0]->category_id,
+                    'reference_url' => $dishes[0]->reference_url,
+                    'image_path' => $dishes[0]->image_path,
                 ]
             ]);
     }
@@ -279,7 +279,7 @@ class CategoryControllerTest extends TestCase
         // テストユーザーを作成
         $user = User::factory()->create();
         // テスト用の複数のデータを作成
-        $recipes = Recipe::factory()->count(3)->create([
+        $dishes = Dish::factory()->count(3)->create([
             'user_id' => $user->id,
             'genre_id' => 2,
             'category_id' => 4,
@@ -293,13 +293,13 @@ class CategoryControllerTest extends TestCase
             ->assertJsonCount(3)
             ->assertJson([
                 [
-                    'id' => $recipes[0]->id,
-                    'name' => $recipes[0]->name,
-                    'description' => $recipes[0]->description,
-                    'genre_id' => $recipes[0]->genre_id,
-                    'category_id' => $recipes[0]->category_id,
-                    'reference_url' => $recipes[0]->reference_url,
-                    'image_path' => $recipes[0]->image_path,
+                    'id' => $dishes[0]->id,
+                    'name' => $dishes[0]->name,
+                    'description' => $dishes[0]->description,
+                    'genre_id' => $dishes[0]->genre_id,
+                    'category_id' => $dishes[0]->category_id,
+                    'reference_url' => $dishes[0]->reference_url,
+                    'image_path' => $dishes[0]->image_path,
                 ]
             ]);
     }
@@ -311,7 +311,7 @@ class CategoryControllerTest extends TestCase
         // テストユーザーを作成
         $user = User::factory()->create();
         // テスト用の複数のデータを作成
-        $recipes = Recipe::factory()->count(3)->create([
+        $dishes = Dish::factory()->count(3)->create([
             'user_id' => $user->id,
             'genre_id' => 3,
             'category_id' => 1,
@@ -325,13 +325,13 @@ class CategoryControllerTest extends TestCase
             ->assertJsonCount(3)
             ->assertJson([
                 [
-                    'id' => $recipes[0]->id,
-                    'name' => $recipes[0]->name,
-                    'description' => $recipes[0]->description,
-                    'genre_id' => $recipes[0]->genre_id,
-                    'category_id' => $recipes[0]->category_id,
-                    'reference_url' => $recipes[0]->reference_url,
-                    'image_path' => $recipes[0]->image_path,
+                    'id' => $dishes[0]->id,
+                    'name' => $dishes[0]->name,
+                    'description' => $dishes[0]->description,
+                    'genre_id' => $dishes[0]->genre_id,
+                    'category_id' => $dishes[0]->category_id,
+                    'reference_url' => $dishes[0]->reference_url,
+                    'image_path' => $dishes[0]->image_path,
                 ]
             ]);
     }
@@ -343,7 +343,7 @@ class CategoryControllerTest extends TestCase
         // テストユーザーを作成
         $user = User::factory()->create();
         // テスト用の複数のデータを作成
-        $recipes = Recipe::factory()->count(3)->create([
+        $dishes = Dish::factory()->count(3)->create([
             'user_id' => $user->id,
             'genre_id' => 3,
             'category_id' => 2,
@@ -357,13 +357,13 @@ class CategoryControllerTest extends TestCase
             ->assertJsonCount(3)
             ->assertJson([
                 [
-                    'id' => $recipes[0]->id,
-                    'name' => $recipes[0]->name,
-                    'description' => $recipes[0]->description,
-                    'genre_id' => $recipes[0]->genre_id,
-                    'category_id' => $recipes[0]->category_id,
-                    'reference_url' => $recipes[0]->reference_url,
-                    'image_path' => $recipes[0]->image_path,
+                    'id' => $dishes[0]->id,
+                    'name' => $dishes[0]->name,
+                    'description' => $dishes[0]->description,
+                    'genre_id' => $dishes[0]->genre_id,
+                    'category_id' => $dishes[0]->category_id,
+                    'reference_url' => $dishes[0]->reference_url,
+                    'image_path' => $dishes[0]->image_path,
                 ]
             ]);
     }
@@ -374,7 +374,7 @@ class CategoryControllerTest extends TestCase
         // テストユーザーを作成
         $user = User::factory()->create();
         // テスト用の複数のデータを作成
-        $recipes = Recipe::factory()->count(3)->create([
+        $dishes = Dish::factory()->count(3)->create([
             'user_id' => $user->id,
             'genre_id' => 3,
             'category_id' => 3,
@@ -388,13 +388,13 @@ class CategoryControllerTest extends TestCase
             ->assertJsonCount(3)
             ->assertJson([
                 [
-                    'id' => $recipes[0]->id,
-                    'name' => $recipes[0]->name,
-                    'description' => $recipes[0]->description,
-                    'genre_id' => $recipes[0]->genre_id,
-                    'category_id' => $recipes[0]->category_id,
-                    'reference_url' => $recipes[0]->reference_url,
-                    'image_path' => $recipes[0]->image_path,
+                    'id' => $dishes[0]->id,
+                    'name' => $dishes[0]->name,
+                    'description' => $dishes[0]->description,
+                    'genre_id' => $dishes[0]->genre_id,
+                    'category_id' => $dishes[0]->category_id,
+                    'reference_url' => $dishes[0]->reference_url,
+                    'image_path' => $dishes[0]->image_path,
                 ]
             ]);
     }
@@ -406,7 +406,7 @@ class CategoryControllerTest extends TestCase
         // テストユーザーを作成
         $user = User::factory()->create();
         // テスト用の複数のデータを作成
-        $recipes = Recipe::factory()->count(3)->create([
+        $dishes = Dish::factory()->count(3)->create([
             'user_id' => $user->id,
             'genre_id' => 3,
             'category_id' => 4,
@@ -420,13 +420,13 @@ class CategoryControllerTest extends TestCase
             ->assertJsonCount(3)
             ->assertJson([
                 [
-                    'id' => $recipes[0]->id,
-                    'name' => $recipes[0]->name,
-                    'description' => $recipes[0]->description,
-                    'genre_id' => $recipes[0]->genre_id,
-                    'category_id' => $recipes[0]->category_id,
-                    'reference_url' => $recipes[0]->reference_url,
-                    'image_path' => $recipes[0]->image_path,
+                    'id' => $dishes[0]->id,
+                    'name' => $dishes[0]->name,
+                    'description' => $dishes[0]->description,
+                    'genre_id' => $dishes[0]->genre_id,
+                    'category_id' => $dishes[0]->category_id,
+                    'reference_url' => $dishes[0]->reference_url,
+                    'image_path' => $dishes[0]->image_path,
                 ]
             ]);
     }
@@ -438,7 +438,7 @@ class CategoryControllerTest extends TestCase
         // テストユーザーを作成
         $user = User::factory()->create();
         // テスト用の複数のデータを作成
-        $recipes = Recipe::factory()->count(3)->create([
+        $dishes = Dish::factory()->count(3)->create([
             'user_id' => $user->id,
             'genre_id' => 4,
             'category_id' => 1,
@@ -459,7 +459,7 @@ class CategoryControllerTest extends TestCase
         // テストユーザーを作成
         $user = User::factory()->create();
         // テスト用の複数のデータを作成
-        $recipes = Recipe::factory()->count(3)->create([
+        $dishes = Dish::factory()->count(3)->create([
             'user_id' => $user->id,
             'genre_id' => 4,
             'category_id' => 2,
@@ -473,13 +473,13 @@ class CategoryControllerTest extends TestCase
             ->assertJsonCount(3)
             ->assertJson([
                 [
-                    'id' => $recipes[0]->id,
-                    'name' => $recipes[0]->name,
-                    'description' => $recipes[0]->description,
-                    'genre_id' => $recipes[0]->genre_id,
-                    'category_id' => $recipes[0]->category_id,
-                    'reference_url' => $recipes[0]->reference_url,
-                    'image_path' => $recipes[0]->image_path,
+                    'id' => $dishes[0]->id,
+                    'name' => $dishes[0]->name,
+                    'description' => $dishes[0]->description,
+                    'genre_id' => $dishes[0]->genre_id,
+                    'category_id' => $dishes[0]->category_id,
+                    'reference_url' => $dishes[0]->reference_url,
+                    'image_path' => $dishes[0]->image_path,
                 ]
             ]);
     }
@@ -491,7 +491,7 @@ class CategoryControllerTest extends TestCase
         // テストユーザーを作成
         $user = User::factory()->create();
         // テスト用の複数のデータを作成
-        $recipes = Recipe::factory()->count(3)->create([
+        $dishes = Dish::factory()->count(3)->create([
             'user_id' => $user->id,
             'genre_id' => 4,
             'category_id' => 3,
@@ -505,13 +505,13 @@ class CategoryControllerTest extends TestCase
             ->assertJsonCount(3)
             ->assertJson([
                 [
-                    'id' => $recipes[0]->id,
-                    'name' => $recipes[0]->name,
-                    'description' => $recipes[0]->description,
-                    'genre_id' => $recipes[0]->genre_id,
-                    'category_id' => $recipes[0]->category_id,
-                    'reference_url' => $recipes[0]->reference_url,
-                    'image_path' => $recipes[0]->image_path,
+                    'id' => $dishes[0]->id,
+                    'name' => $dishes[0]->name,
+                    'description' => $dishes[0]->description,
+                    'genre_id' => $dishes[0]->genre_id,
+                    'category_id' => $dishes[0]->category_id,
+                    'reference_url' => $dishes[0]->reference_url,
+                    'image_path' => $dishes[0]->image_path,
                 ]
             ]);
     }
@@ -523,7 +523,7 @@ class CategoryControllerTest extends TestCase
         // テストユーザーを作成
         $user = User::factory()->create();
         // テスト用の複数のデータを作成
-        $recipes = Recipe::factory()->count(3)->create([
+        $dishes = Dish::factory()->count(3)->create([
             'user_id' => $user->id,
             'genre_id' => 4,
             'category_id' => 4,
@@ -538,13 +538,13 @@ class CategoryControllerTest extends TestCase
             ->assertJsonCount(3)
             ->assertJson([
                 [
-                    'id' => $recipes[0]->id,
-                    'name' => $recipes[0]->name,
-                    'description' => $recipes[0]->description,
-                    'genre_id' => $recipes[0]->genre_id,
-                    'category_id' => $recipes[0]->category_id,
-                    'reference_url' => $recipes[0]->reference_url,
-                    'image_path' => $recipes[0]->image_path,
+                    'id' => $dishes[0]->id,
+                    'name' => $dishes[0]->name,
+                    'description' => $dishes[0]->description,
+                    'genre_id' => $dishes[0]->genre_id,
+                    'category_id' => $dishes[0]->category_id,
+                    'reference_url' => $dishes[0]->reference_url,
+                    'image_path' => $dishes[0]->image_path,
                 ]
             ]);
 

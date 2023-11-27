@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\Category;
 use App\Models\Genre;
-use App\Models\Recipe;
+use App\Models\Dish;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
@@ -50,10 +50,10 @@ class CategoryTest extends TestCase
     public function test_カテゴリーは複数のレシピを持つことができる()
     {
         $category = Category::factory()->create();
-        $recipe1 = Recipe::factory()->create(['category_id' => $category->id]);
-        $recipe2 = Recipe::factory()->create(['category_id' => $category->id]);
+        $dish1 = Dish::factory()->create(['category_id' => $category->id]);
+        $dish2 = Dish::factory()->create(['category_id' => $category->id]);
 
-        $this->assertCount(2, $category->recipes);
-        $this->assertInstanceOf(Recipe::class, $category->recipes->first());
+        $this->assertCount(2, $category->dishes);
+        $this->assertInstanceOf(Dish::class, $category->dishes->first());
     }
 }

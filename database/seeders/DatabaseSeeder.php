@@ -5,7 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Menu;
-use App\Models\Recipe;
+use App\Models\Dish;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -23,10 +23,10 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
-            RecipeSeeder::class,
+            DishSeeder::class,
         ]);
 
         // Menu::factory(100)->create();
-        // \App\Models\Recipe::factory(100)->create();
+        // \App\Models\Dish::factory(100)->create();
     }
 }

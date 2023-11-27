@@ -13,9 +13,9 @@ class UserController extends Controller
         $user = User::find($userId);
         if ($user) {
             // ユーザーに関連付けられたレシピを取得
-            $recipes = $user->recipes;
+            $dishes = $user->dishes;
 
-            return response()->json(['recipes' => $recipes], 200);
+            return response()->json(['dishes' => $dishes], 200);
         } else {
             return response()->json(['message' => 'ユーザーが見つかりませんでした。'], 404);
         }

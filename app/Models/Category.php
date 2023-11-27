@@ -12,8 +12,8 @@ class Category extends Model
     protected $fillable = ['name'];
 
     // カテゴリーに関連するレシピのリレーションシップ
-    public function recipes()
+    public function dishes()
     {
-        return $this->hasMany(Recipe::class);
+        return $this->hasMany(Dish::class);
     }
 }

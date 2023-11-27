@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\Genre;
-use App\Models\Recipe;
+use App\Models\Dish;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
@@ -50,10 +50,10 @@ class GenreTest extends TestCase
     public function test_ジャンルは複数のレシピを持つことができる()
     {
         $genre = Genre::factory()->create();
-        $recipe1 = Recipe::factory()->create(['genre_id' => $genre->id]);
-        $recipe2 = Recipe::factory()->create(['genre_id' => $genre->id]);
+        $dish1 = Dish::factory()->create(['genre_id' => $genre->id]);
+        $dish2 = Dish::factory()->create(['genre_id' => $genre->id]);
 
-        $this->assertCount(2, $genre->recipes);
-        $this->assertInstanceOf(Recipe::class, $genre->recipes->first());
+        $this->assertCount(2, $genre->dishes);
+        $this->assertInstanceOf(Dish::class, $genre->dishes->first());
     }
 }

@@ -2,7 +2,7 @@
 
 use App\Models\Category;
 use App\Models\Genre;
-use App\Models\Recipe;
+use App\Models\Dish;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
@@ -49,7 +49,7 @@ class GenreControllerTest extends TestCase
         $user = User::factory()->create();
 
         // テスト用のデータを作成する
-        Recipe::factory(3)->create([
+        Dish::factory(3)->create([
             'genre_id' => 1,
             // 他の必要なデータをここに追加する
         ]);
@@ -82,7 +82,7 @@ class GenreControllerTest extends TestCase
         $user = User::factory()->create();
 
         // テスト用のデータを作成する
-        Recipe::factory(3)->create([
+        Dish::factory(3)->create([
             'genre_id' => 2,
             // 他の必要なデータをここに追加する
         ]);
@@ -115,7 +115,7 @@ class GenreControllerTest extends TestCase
         $user = User::factory()->create();
 
         // テスト用のデータを作成する
-        Recipe::factory(3)->create([
+        Dish::factory(3)->create([
             'genre_id' => 3,
             // 他の必要なデータをここに追加する
         ]);
@@ -148,7 +148,7 @@ class GenreControllerTest extends TestCase
         $user = User::factory()->create();
 
         // テスト用のデータを作成する
-        Recipe::factory(3)->create([
+        Dish::factory(3)->create([
             'genre_id' => 4,
             // 他の必要なデータをここに追加する
         ]);
@@ -180,13 +180,13 @@ class GenreControllerTest extends TestCase
         $user = User::factory()->create();
 
         // テスト用のデータを作成する
-        Recipe::factory(3)->create([
+        Dish::factory(3)->create([
             'genre_id' => 1,
             'user_id' => $user->id, // 作成したユーザーに紐づける
         ]);
 
         // テスト用のエンドポイントにリクエストを送信
-        $response = $this->actingAs($user)->get("/api/user/{$user->id}/all-my-japanese-recipes");
+        $response = $this->actingAs($user)->get("/api/user/{$user->id}/all-my-japanese-foods");
 
         // レスポンスが正常であることを確認
         $response->assertStatus(200);
@@ -213,7 +213,7 @@ class GenreControllerTest extends TestCase
         $user = User::factory()->create();
 
         // テスト用のデータを作成する
-        Recipe::factory(3)->create([
+        Dish::factory(3)->create([
             'genre_id' => 1,
             'category_id' => 1,
             'user_id' => $user->id, // 作成したユーザーに紐づける
@@ -247,7 +247,7 @@ class GenreControllerTest extends TestCase
         $user = User::factory()->create();
 
         // テスト用のデータを作成する
-        Recipe::factory(3)->create([
+        Dish::factory(3)->create([
             'genre_id' => 1,
             'category_id' => 2,
             'user_id' => $user->id, // 作成したユーザーに紐づける
@@ -281,7 +281,7 @@ class GenreControllerTest extends TestCase
         $user = User::factory()->create();
 
         // テスト用のデータを作成する
-        Recipe::factory(3)->create([
+        Dish::factory(3)->create([
             'genre_id' => 1,
             'category_id' => 3,
             'user_id' => $user->id, // 作成したユーザーに紐づける
@@ -315,7 +315,7 @@ class GenreControllerTest extends TestCase
         $user = User::factory()->create();
 
         // テスト用のデータを作成する
-        Recipe::factory(3)->create([
+        Dish::factory(3)->create([
             'genre_id' => 1,
             'category_id' => 4,
             'user_id' => $user->id, // 作成したユーザーに紐づける
@@ -348,13 +348,13 @@ class GenreControllerTest extends TestCase
         $user = User::factory()->create();
 
         // テスト用のデータを作成する
-        Recipe::factory(3)->create([
+        Dish::factory(3)->create([
             'genre_id' => 2,
             'user_id' => $user->id, // 作成したユーザーに紐づける
         ]);
 
         // テスト用のエンドポイントにリクエストを送信
-        $response = $this->actingAs($user)->get("/api/user/{$user->id}/all-my-western-recipes");
+        $response = $this->actingAs($user)->get("/api/user/{$user->id}/all-my-western-foods");
 
         // レスポンスが正常であることを確認
         $response->assertStatus(200);
@@ -382,7 +382,7 @@ class GenreControllerTest extends TestCase
         // テストユーザーを作成
         $user = User::factory()->create();
         // テスト用のデータを作成する
-        Recipe::factory(3)->create([
+        Dish::factory(3)->create([
             'genre_id' => 2,
             'category_id' => 1,
             'user_id' => $user->id, // 作成したユーザーに紐づける
@@ -415,7 +415,7 @@ class GenreControllerTest extends TestCase
         // テストユーザーを作成
         $user = User::factory()->create();
         // テスト用のデータを作成する
-        Recipe::factory(3)->create([
+        Dish::factory(3)->create([
             'genre_id' => 2,
             'category_id' => 2,
             'user_id' => $user->id, // 作成したユーザーに紐づける
@@ -448,7 +448,7 @@ class GenreControllerTest extends TestCase
         // テストユーザーを作成
         $user = User::factory()->create();
         // テスト用のデータを作成する
-        Recipe::factory(3)->create([
+        Dish::factory(3)->create([
             'genre_id' => 2,
             'category_id' => 3,
             'user_id' => $user->id, // 作成したユーザーに紐づける
@@ -481,7 +481,7 @@ class GenreControllerTest extends TestCase
         // テストユーザーを作成
         $user = User::factory()->create();
         // テスト用のデータを作成する
-        Recipe::factory(3)->create([
+        Dish::factory(3)->create([
             'genre_id' => 2,
             'category_id' => 4,
             'user_id' => $user->id, // 作成したユーザーに紐づける
@@ -513,13 +513,13 @@ class GenreControllerTest extends TestCase
         // テストユーザーを作成
         $user = User::factory()->create();
         // テスト用のデータを作成する
-        Recipe::factory(3)->create([
+        Dish::factory(3)->create([
             'genre_id' => 3,
             'user_id' => $user->id, // 作成したユーザーに紐づける
 
         ]);
         // テスト用のエンドポイントにリクエストを送信
-        $response = $this->actingAs($user)->get("/api/user/{$user->id}/all-my-chinese-recipes");
+        $response = $this->actingAs($user)->get("/api/user/{$user->id}/all-my-chinese-foods");
         // レスポンスが正常であることを確認
         $response->assertStatus(200);
         // レスポンスが期待通りのデータを含んでいることを確認
@@ -546,7 +546,7 @@ class GenreControllerTest extends TestCase
         // テストユーザーを作成
         $user = User::factory()->create();
         // テスト用のデータを作成する
-        Recipe::factory(3)->create([
+        Dish::factory(3)->create([
             'genre_id' => 3,
             'category_id' => 1,
             'user_id' => $user->id, // 作成したユーザーに紐づける
@@ -580,7 +580,7 @@ class GenreControllerTest extends TestCase
         // テストユーザーを作成
         $user = User::factory()->create();
         // テスト用のデータを作成する
-        Recipe::factory(3)->create([
+        Dish::factory(3)->create([
             'genre_id' => 3,
             'category_id' => 2,
             'user_id' => $user->id, // 作成したユーザーに紐づける
@@ -614,7 +614,7 @@ class GenreControllerTest extends TestCase
         // テストユーザーを作成
         $user = User::factory()->create();
         // テスト用のデータを作成する
-        Recipe::factory(3)->create([
+        Dish::factory(3)->create([
             'genre_id' => 3,
             'category_id' => 3,
             'user_id' => $user->id, // 作成したユーザーに紐づける
@@ -647,7 +647,7 @@ class GenreControllerTest extends TestCase
         // テストユーザーを作成
         $user = User::factory()->create();
         // テスト用のデータを作成する
-        Recipe::factory(3)->create([
+        Dish::factory(3)->create([
             'genre_id' => 3,
             'category_id' => 4,
             'user_id' => $user->id, // 作成したユーザーに紐づける
@@ -679,7 +679,7 @@ class GenreControllerTest extends TestCase
         // テストユーザーを作成
         $user = User::factory()->create();
         // テスト用のデータを作成する
-        Recipe::factory(3)->create([
+        Dish::factory(3)->create([
 
             'genre_id' => 4,
             'user_id' => $user->id, // 作成したユーザーに紐づける
@@ -687,7 +687,7 @@ class GenreControllerTest extends TestCase
         ]);
         // テスト用のエンドポイントにリクエストを送信
 
-        $response = $this->actingAs($user)->get("/api/user/{$user->id}/all-my-others-recipes");
+        $response = $this->actingAs($user)->get("/api/user/{$user->id}/all-my-others-foods");
 
         // レスポンスが正常であることを確認
 
@@ -722,7 +722,7 @@ class GenreControllerTest extends TestCase
 
         // テスト用のデータを作成する
 
-        Recipe::factory(3)->create([
+        Dish::factory(3)->create([
 
             'genre_id' => 4,
             'category_id' => 1,
@@ -767,7 +767,7 @@ class GenreControllerTest extends TestCase
 
         // テスト用のデータを作成する
 
-        Recipe::factory(3)->create([
+        Dish::factory(3)->create([
 
             'genre_id' => 4,
             'category_id' => 2,
@@ -812,7 +812,7 @@ class GenreControllerTest extends TestCase
 
         // テスト用のデータを作成する
 
-        Recipe::factory(3)->create([
+        Dish::factory(3)->create([
 
             'genre_id' => 4,
             'category_id' => 3,
@@ -856,7 +856,7 @@ class GenreControllerTest extends TestCase
 
         // テスト用のデータを作成する
 
-        Recipe::factory(3)->create([
+        Dish::factory(3)->create([
 
             'genre_id' => 4,
             'category_id' => 4,

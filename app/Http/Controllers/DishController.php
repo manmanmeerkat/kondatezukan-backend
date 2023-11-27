@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Ingredient;
-use App\Models\Recipe;
+use App\Models\Dish;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,9 +15,9 @@ use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
 
 
-class RecipeController extends Controller
+class DishController extends Controller
 {
-    public function getUserRecipes()
+    public function getUserDishes()
     {
         // 認証済みのユーザーを取得
         $user = Auth::user();
@@ -28,28 +28,28 @@ class RecipeController extends Controller
         }
 
         // ユーザーに関連付けられたレシピを取得
-        $recipes = Recipe::where('user_id', $user->id)->get();
+        $dishes = Dish::where('user_id', $user->id)->get();
 
-        return response()->json(['recipes' => $recipes], 200);
+        return response()->json(['dishes' => $dishes], 200);
     }
 
 
-    public function getIngredientsForRecipe($recipeId)
+    public function getIngredientsForDish($dishId)
     {
-        $recipe = Recipe::find($recipeId);
+        $dish = Dish::find($dishId);
 
-        if (!$recipe) {
-            return response()->json(['message' => 'Recipe not found'], 404);
+        if (!$dish) {
+            return response()->json(['message' => 'Dish not found'], 404);
         }
 
-        $ingredients = $recipe->ingredients;
+        $ingredients = $dish->ingredients;
 
         return response()->json(['ingredients' => $ingredients], 200);
     }
 
     public function edit($dishId)
     {
-        $dish = Recipe::find($dishId);
+        $dish = Dish::find($dishId);
 
         if (!$dish) {
             return response()->json(['error' => 'Dish not found'], 404);
@@ -65,7 +65,7 @@ class RecipeController extends Controller
 
         try {
             // メインの料理詳細を更新
-            $dish = Recipe::findOrFail($dishId);
+            $dish = Dish::findOrFail($dishId);
 
             // ログにフォームデータを出力
             Log::info('Form Data:', $request->all());
@@ -152,7 +152,7 @@ class RecipeController extends Controller
     {
         try {
             // レシピを取得
-            $dish = Recipe::findOrFail($id);
+            $dish = Dish::findOrFail($id);
 
             // 関連する材料も削除
             $dish->ingredients()->detach();
@@ -177,16 +177,16 @@ class RecipeController extends Controller
 
         try {
             // レシピの保存
-            $recipe = new Recipe();
-            $recipe->name = $request->input('name');
-            $recipe->description = $request->input('description');
-            $recipe->genre_id = $request->input('genre_id');
-            $recipe->category_id = $request->input('category_id');
-            $recipe->reference_url = $request->input('reference_url');
-            $recipe->image_path = $request->input('image_path');
-            $recipe->user_id = $request->input('user_id');
+            $dish = new Dish();
+            $dish->name = $request->input('name');
+            $dish->description = $request->input('description');
+            $dish->genre_id = $request->input('genre_id');
+            $dish->category_id = $request->input('category_id');
+            $dish->reference_url = $request->input('reference_url');
+            $dish->image_path = $request->input('image_path');
+            $dish->user_id = $request->input('user_id');
 
-            $recipe->save(); // データベースに保存
+            $dish->save(); // データベースに保存
 
             // 材料の保存
             $ingredientsData = $request->input('ingredients');
@@ -210,13 +210,13 @@ class RecipeController extends Controller
                 $ingredient->save();
 
                 // 中間テーブルに保存
-                $recipe->ingredients()->attach($ingredient->id);
+                $dish->ingredients()->attach($ingredient->id);
             }
 
             // トランザクションをコミット
             DB::commit();
 
-            return response()->json(['message' => 'Recipe created successfully'], 201);
+            return response()->json(['message' => 'Dish created successfully'], 201);
         } catch (\Exception $e) {
             // Laravelのエラーログにエラーメッセージを記録
             Log::error('Exception: ' . $e->getMessage());

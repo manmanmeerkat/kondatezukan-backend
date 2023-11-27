@@ -5,7 +5,7 @@ namespace Tests\Unit\Models;
 use App\Models\Category;
 use App\Models\Genre;
 use App\Models\Ingredient;
-use App\Models\Recipe;
+use App\Models\Dish;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
@@ -50,32 +50,32 @@ class IngredientTest extends TestCase
     public function test_食材は複数のレシピに所属できること()
     {
         // レシピを作成
-        $recipe1 = Recipe::factory()->create();
-        $recipe2 = Recipe::factory()->create();
+        $dish1 = Dish::factory()->create();
+        $dish2 = Dish::factory()->create();
 
         // 食材を作成
         $ingredient = Ingredient::factory()->create();
 
-        // 中間テーブルに recipe_id を指定して挿入
-        DB::table('ingredient_recipe')->insert([
+        // 中間テーブルに dish_id を指定して挿入
+        DB::table('ingredient_dish')->insert([
             'ingredient_id' => $ingredient->id,
-            'recipe_id' => $recipe1->id,
+            'dish_id' => $dish1->id,
         ]);
-        DB::table('ingredient_recipe')->insert([
+        DB::table('ingredient_dish')->insert([
             'ingredient_id' => $ingredient->id,
-            'recipe_id' => $recipe2->id,
+            'dish_id' => $dish2->id,
         ]);
 
         // 食材を取得し直す
         $ingredient = $ingredient->fresh();
 
         // 中間テーブル経由でレシピにアクセスできることを確認
-        $recipes = $ingredient->recipes;
+        $dishes = $ingredient->dishes;
 
         // レシピが存在する場合にのみ contains を確認する
-        if ($recipes && count($recipes) > 0) {
-            $this->assertTrue($recipes->contains($recipe1));
-            $this->assertTrue($recipes->contains($recipe2));
+        if ($dishes && count($dishes) > 0) {
+            $this->assertTrue($dishes->contains($dish1));
+            $this->assertTrue($dishes->contains($dish2));
         } else {
             $this->fail('中間テーブル経由でレシピにアクセスできません。');
         }
@@ -85,15 +85,15 @@ class IngredientTest extends TestCase
     public function test_食材のインスタンスが正しく作成されること()
     {
         // レシピを作成
-        $recipe = Recipe::factory()->create();
+        $dish = Dish::factory()->create();
 
         // 食材を作成
         $ingredient = Ingredient::factory()->create();
 
-        // 中間テーブルに recipe_id を指定して挿入
-        DB::table('ingredient_recipe')->insert([
+        // 中間テーブルに dish_id を指定して挿入
+        DB::table('ingredient_dish')->insert([
             'ingredient_id' => $ingredient->id,
-            'recipe_id' => $recipe->id,
+            'dish_id' => $dish->id,
         ]);
 
         // 食材が正しく作成されていることを確認
@@ -105,9 +105,9 @@ class IngredientTest extends TestCase
         ]);
 
         // 中間テーブルのデータが正しく挿入されていることを確認
-        $this->assertDatabaseHas('ingredient_recipe', [
+        $this->assertDatabaseHas('ingredient_dish', [
             'ingredient_id' => $ingredient->id,
-            'recipe_id' => $recipe->id,
+            'dish_id' => $dish->id,
         ]);
     }
 }

@@ -3,7 +3,7 @@
 use Tests\TestCase;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\CategoryController;
-use App\Models\Recipe;
+use App\Models\Dish;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -51,7 +51,7 @@ class RoutingTest extends TestCase
     //     // Assert the response status is 200 OK
     //     $response->assertStatus(200)
     //         ->assertJson([
-    //             'recipes' => [],
+    //             'dishes' => [],
     //         ]);
 
 
@@ -59,21 +59,21 @@ class RoutingTest extends TestCase
     // }
 
 
-    public function testDeleteRecipe()
+    public function testDeleteDish()
     {
         // テスト用のレシピをデータベースに作成
-        $recipe = Recipe::factory()->create();
+        $dish = Dish::factory()->create();
 
 
 
         // レシピを削除するエンドポイントにDELETEリクエストを送信
-        $response = $this->delete("/api/delete/{$recipe->id}");
+        $response = $this->delete("/api/delete/{$dish->id}");
 
         // レスポンスが正常であることを検証
         $response->assertStatus(200);
 
         // レシピが削除されたことを確認
-        $this->assertDatabaseMissing('recipes', ['id' => $recipe->id]);
+        $this->assertDatabaseMissing('dishes', ['id' => $dish->id]);
     }
 
     public function testCsrfCookieEndpoint()
@@ -84,11 +84,11 @@ class RoutingTest extends TestCase
             ->assertCookie(config('session.cookie'));
     }
 
-    public function testJapaneseRecipesRoutes()
+    public function testJapaneseDishesRoutes()
     {
         $userId = 1;
 
-        $response = $this->get("/api/user/{$userId}/all-my-japanese-recipes");
+        $response = $this->get("/api/user/{$userId}/all-my-japanese-foods");
         $response->assertStatus(200);
 
         $response = $this->get("/api/user/{$userId}/all-my-japanese-syusai");
@@ -105,13 +105,13 @@ class RoutingTest extends TestCase
     }
 
     /**
-     * Test Western recipes routes
+     * Test Western dishes routes
      */
-    public function testWesternRecipesRoutes()
+    public function testWesternDishesRoutes()
     {
         $userId = 1;
 
-        $response = $this->get("/api/user/{$userId}/all-my-western-recipes");
+        $response = $this->get("/api/user/{$userId}/all-my-western-foods");
         $response->assertStatus(200);
 
         $response = $this->get("/api/user/{$userId}/all-my-western-syusai");
@@ -128,13 +128,13 @@ class RoutingTest extends TestCase
     }
 
     /**
-     * Test Chinese recipes routes
+     * Test Chinese dishes routes
      */
-    public function testChineseRecipesRoutes()
+    public function testChineseDishesRoutes()
     {
         $userId = 1;
 
-        $response = $this->get("/api/user/{$userId}/all-my-chinese-recipes");
+        $response = $this->get("/api/user/{$userId}/all-my-chinese-foods");
         $response->assertStatus(200);
 
         $response = $this->get("/api/user/{$userId}/all-my-chinese-syusai");
@@ -151,13 +151,13 @@ class RoutingTest extends TestCase
     }
 
     /**
-     * Test Others recipes routes
+     * Test Others dishes routes
      */
-    public function testOthersRecipesRoutes()
+    public function testOthersDishesRoutes()
     {
         $userId = 1;
 
-        $response = $this->get("/api/user/{$userId}/all-my-others-recipes");
+        $response = $this->get("/api/user/{$userId}/all-my-others-foods");
         $response->assertStatus(200);
 
         $response = $this->get("/api/user/{$userId}/all-my-others-syusai");

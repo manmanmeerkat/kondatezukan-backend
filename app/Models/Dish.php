@@ -5,9 +5,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Database\Factories\RecipeFactory; // ここに追加
+use Database\Factories\DishFactory; // ここに追加
 
-class Recipe extends Model
+class Dish extends Model
 {
     use HasFactory;
 
@@ -17,7 +17,7 @@ class Recipe extends Model
     // レシピに関連する食材の多対多のリレーションシップ
     public function ingredients()
     {
-        return $this->belongsToMany(Ingredient::class, 'ingredient_recipe');
+        return $this->belongsToMany(Ingredient::class, 'ingredient_dish');
     }
 
     // レシピに関連するジャンルのリレーションシップ

@@ -22,7 +22,7 @@ class UserControllerTest extends TestCase
 
         // レスポンスのアサート
         $response->assertStatus(200)
-            ->assertJsonStructure(['recipes']);
+            ->assertJsonStructure(['dishes']);
     }
 
     public function testGetUserByIdNotFound()

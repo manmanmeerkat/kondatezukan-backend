@@ -9,11 +9,11 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\RandomController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\IngredientController;
-use App\Http\Controllers\RecipeController;
+use App\Http\Controllers\DishController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CsrfCookieController;
 use App\Http\Controllers\ImageController;
-use App\Models\Recipe;
+use App\Models\Dish;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\DishSearchController;
 use App\Models\Admin;
@@ -43,17 +43,17 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
 });
 
 Route::group(['middleware' => 'cors'], function () {
-    Route::post('/submitform', [RecipeController::class, 'create'])->name('create');
+    Route::post('/create', [DishController::class, 'create'])->name('create');
 });
-Route::get('/all-my-dish', [RecipeController::class, 'getUserRecipes']);
+Route::get('/all-my-dish', [DishController::class, 'getUserDishes']);
 
-Route::get('/edit/{dishId}', [RecipeController::class, 'edit']);
+Route::get('/edit/{dishId}', [DishController::class, 'edit']);
 
-Route::put('/update/{dishId}', [RecipeController::class, 'update'])->middleware('api');
+Route::put('/update/{dishId}', [DishController::class, 'update'])->middleware('api');
 
 Route::post('/upload-image', [ImageController::class, 'uploadImage']);
 
-Route::delete('/delete/{id}', [RecipeController::class, 'destroy']);
+Route::delete('/delete/{id}', [DishController::class, 'destroy']);
 
 // Route::get('/syusai', [RandomController::class, 'syusai']);
 // Route::get('/fukusai', [RandomController::class, 'fukusai']);
@@ -113,29 +113,29 @@ Route::get('/csrf-cookie', [AuthController::class, 'csrfCookie'])->middleware('w
 
 
 Route::prefix('user/{userId}')->group(function () {
-    // Japanese recipes
-    Route::get('all-my-japanese-recipes', [GenreController::class, 'getAllMyJapaneseRecipes']);
+    // 和食
+    Route::get('all-my-japanese-foods', [GenreController::class, 'getAllMyJapaneseDishes']);
     Route::get('all-my-japanese-syusai', [GenreController::class, 'getAllMyJapaneseSyusai']);
     Route::get('all-my-japanese-fukusai', [GenreController::class, 'getAllMyJapaneseFukusai']);
     Route::get('all-my-japanese-shirumono', [GenreController::class, 'getAllMyJapaneseShirumono']);
     Route::get('all-my-japanese-others', [GenreController::class, 'getAllMyJapaneseOthers']);
 
-    // Western recipes
-    Route::get('all-my-western-recipes', [GenreController::class, 'getAllMyWesternRecipes']);
+    // 洋食
+    Route::get('all-my-western-foods', [GenreController::class, 'getAllMyWesternDishes']);
     Route::get('all-my-western-syusai', [GenreController::class, 'getAllMyWesternSyusai']);
     Route::get('all-my-western-fukusai', [GenreController::class, 'getAllMyWesternFukusai']);
     Route::get('all-my-western-shirumono', [GenreController::class, 'getAllMyWesternShirumono']);
     Route::get('all-my-western-others', [GenreController::class, 'getAllMyWesternOthers']);
 
-    // Chinese recipes
-    Route::get('all-my-chinese-recipes', [GenreController::class, 'getAllMyChineseRecipes']);
+    // 中華
+    Route::get('all-my-chinese-foods', [GenreController::class, 'getAllMyChineseDishes']);
     Route::get('all-my-chinese-syusai', [GenreController::class, 'getAllMyChineseSyusai']);
     Route::get('all-my-chinese-fukusai', [GenreController::class, 'getAllMyChineseFukusai']);
     Route::get('all-my-chinese-shirumono', [GenreController::class, 'getAllMyChineseShirumono']);
     Route::get('all-my-chinese-others', [GenreController::class, 'getAllMyChineseOthers']);
 
-    // Others recipes
-    Route::get('all-my-others-recipes', [GenreController::class, 'getAllMyOthersRecipes']);
+    // その他
+    Route::get('all-my-others-foods', [GenreController::class, 'getAllMyOthersDishes']);
     Route::get('all-my-others-syusai', [GenreController::class, 'getAllMyOthersSyusai']);
     Route::get('all-my-others-fukusai', [GenreController::class, 'getAllMyOthersFukusai']);
     Route::get('all-my-others-shirumono', [GenreController::class, 'getAllMyOthersShirumono']);
@@ -143,7 +143,7 @@ Route::prefix('user/{userId}')->group(function () {
 });
 
 
-Route::get('/recipes/{recipeId}/ingredients', [RecipeController::class, 'getIngredientsForRecipe']);
+Route::get('/dishes/{dishId}/ingredients', [DishController::class, 'getIngredientsForDish']);
 
 
 Route::get('/all-dish/search', [DishSearchController::class, 'searchByIngredient']);

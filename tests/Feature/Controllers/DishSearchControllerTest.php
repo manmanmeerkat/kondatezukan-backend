@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Category;
 use App\Models\Genre;
-use App\Models\Recipe;
+use App\Models\Dish;
 use App\Models\Ingredient;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -60,11 +60,11 @@ class DishSearchControllerTest extends TestCase
         //     $user = User::factory()->create();
 
         //     // テスト用のデータ作成部分
-        //     $recipe1 = Recipe::factory()->create(['user_id' => $user->id]);
-        //     $recipe1->ingredients()->create(['name' => 'Ingredient1', 'user_id' => $user->id]);
+        //     $dish1 = Dish::factory()->create(['user_id' => $user->id]);
+        //     $dish1->ingredients()->create(['name' => 'Ingredient1', 'user_id' => $user->id]);
 
-        //     $recipe2 = Recipe::factory()->create(['user_id' => $user->id]);
-        //     $recipe2->ingredients()->create(['name' => 'Ingredient2', 'user_id' => $user->id]);
+        //     $dish2 = Dish::factory()->create(['user_id' => $user->id]);
+        //     $dish2->ingredients()->create(['name' => 'Ingredient2', 'user_id' => $user->id]);
         //     // 検索クエリを実行
         //     // 検索クエリを実行
         //     $response = $this->get('/api/all-dish/search', [
@@ -78,9 +78,9 @@ class DishSearchControllerTest extends TestCase
         //     // レスポンスの内容を表示
 
         //     // レスポンスに検索結果が含まれているかどうかを確認
-        //     if (count($response->json()['recipes']) > 0) {
-        //         $response->assertJson(['recipes' => [$recipe1->toArray()]]);
-        //         $response->assertJsonMissing(['recipes' => [$recipe2->toArray()]]);
+        //     if (count($response->json()['dishes']) > 0) {
+        //         $response->assertJson(['dishes' => [$dish1->toArray()]]);
+        //         $response->assertJsonMissing(['dishes' => [$dish2->toArray()]]);
         //     } else {
         //         // 検索結果がない場合の処理
         //         // ここに何かしらの確認処理を追加するか、コメントで記述しておくと良いでしょう。

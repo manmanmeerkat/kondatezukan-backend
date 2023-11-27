@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Recipe;
+use App\Models\Dish;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,47 +12,47 @@ class GenreController extends Controller
     public function japanese()
     {
         try {
-            $japanese = Recipe::where('genre_id', 1)
+            $japanese = Dish::where('genre_id', 1)
                 ->get();
 
             return response()->json($japanese);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'An error occurred while fetching Japanese recipes.'], 500);
+            return response()->json(['error' => 'An error occurred while fetching Japanese dishes.'], 500);
         }
     }
 
     public function western()
     {
-        $western = Recipe::where('genre_id', '2')->get();
+        $western = Dish::where('genre_id', '2')->get();
         return response()->json($western);
     }
 
     public function chinese()
     {
-        $chinese = Recipe::where('genre_id', '3')->get();
+        $chinese = Dish::where('genre_id', '3')->get();
         return response()->json($chinese);
     }
 
     public function others()
     {
-        $others = Recipe::where('genre_id', '4')->get();
+        $others = Dish::where('genre_id', '4')->get();
         return response()->json($others);
     }
 
-    public function getAllMyJapaneseRecipes($userId)
+    public function getAllMyJapaneseDishes($userId)
     {
         // ユーザーIDを使用して和食のレシピ情報を取得
-        $japaneseRecipes = Recipe::where('genre_id', 1)
+        $japaneseDishes = Dish::where('genre_id', 1)
             ->where('user_id', $userId) // ユーザーIDでフィルタリング
             ->get();
 
-        return response()->json($japaneseRecipes);
+        return response()->json($japaneseDishes);
     }
 
     public function getAllMyJapaneseSyusai($userId)
     {
         // ユーザーIDを使用して和食のレシピ情報を取得
-        $japaneseSyusai = Recipe::where('genre_id', 1)
+        $japaneseSyusai = Dish::where('genre_id', 1)
             ->where('user_id', $userId) // ユーザーIDでフィルタリング
             ->where('category_id', 1)
             ->get();
@@ -63,7 +63,7 @@ class GenreController extends Controller
     public function getAllMyJapaneseFukusai($userId)
     {
         // ユーザーIDを使用して和食のレシピ情報を取得
-        $japaneseFukusai = Recipe::where('genre_id', 1)
+        $japaneseFukusai = Dish::where('genre_id', 1)
             ->where('user_id', $userId) // ユーザーIDでフィルタリング
             ->where('category_id', 2)
             ->get();
@@ -73,7 +73,7 @@ class GenreController extends Controller
     public function getAllMyJapaneseShirumono($userId)
     {
         // ユーザーIDを使用して和食のレシピ情報を取得
-        $japaneseShirumono = Recipe::where('genre_id', 1)
+        $japaneseShirumono = Dish::where('genre_id', 1)
             ->where('user_id', $userId) // ユーザーIDでフィルタリング
             ->where('category_id', 3)
             ->get();
@@ -83,7 +83,7 @@ class GenreController extends Controller
     public function getAllMyJapaneseOthers($userId)
     {
         // ユーザーIDを使用して和食のレシピ情報を取得
-        $japaneseOthers = Recipe::where('genre_id', 1)
+        $japaneseOthers = Dish::where('genre_id', 1)
             ->where('user_id', $userId) // ユーザーIDでフィルタリング
             ->where('category_id', 4)
             ->get();
@@ -92,20 +92,20 @@ class GenreController extends Controller
 
 
 
-    public function getAllMyWesternRecipes($userId)
+    public function getAllMyWesternDishes($userId)
     {
         // ユーザーIDを使用して洋食のレシピ情報を取得
-        $allMyWesternRecipes = Recipe::where('genre_id', 2)
+        $allMyWesternDishes = Dish::where('genre_id', 2)
             ->where('user_id', $userId) // ユーザーIDでフィルタリング
             ->get();
 
-        return response()->json($allMyWesternRecipes);
+        return response()->json($allMyWesternDishes);
     }
 
     public function getAllMyWesternSyusai($userId)
     {
         // ユーザーIDを使用して洋食のレシピ情報を取得
-        $westernSyusai = Recipe::where('genre_id', 2)
+        $westernSyusai = Dish::where('genre_id', 2)
             ->where('user_id', $userId) // ユーザーIDでフィルタリング
             ->where('category_id', 1)
             ->get();
@@ -116,7 +116,7 @@ class GenreController extends Controller
     public function getAllMyWesternFukusai($userId)
     {
         // ユーザーIDを使用して洋食のレシピ情報を取得
-        $westernFukusai = Recipe::where('genre_id', 2)
+        $westernFukusai = Dish::where('genre_id', 2)
             ->where('user_id', $userId) // ユーザーIDでフィルタリング
             ->where('category_id', 2)
             ->get();
@@ -126,7 +126,7 @@ class GenreController extends Controller
     public function getAllMyWesternShirumono($userId)
     {
         // ユーザーIDを使用して洋食のレシピ情報を取得
-        $westernShirumono = Recipe::where('genre_id', 2)
+        $westernShirumono = Dish::where('genre_id', 2)
             ->where('user_id', $userId) // ユーザーIDでフィルタリング
             ->where('category_id', 3)
             ->get();
@@ -136,27 +136,27 @@ class GenreController extends Controller
     public function getAllMyWesternOthers($userId)
     {
         // ユーザーIDを使用して洋食のレシピ情報を取得
-        $westernOthers = Recipe::where('genre_id', 2)
+        $westernOthers = Dish::where('genre_id', 2)
             ->where('user_id', $userId) // ユーザーIDでフィルタリング
             ->where('category_id', 4)
             ->get();
         return response()->json($westernOthers);
     }
 
-    public function getAllMyChineseRecipes($userId)
+    public function getAllMyChineseDishes($userId)
     {
         // ユーザーIDを使用して中華のレシピ情報を取得
-        $allMyChineseRecipes = Recipe::where('genre_id', 3)
+        $allMyChineseDishes = Dish::where('genre_id', 3)
             ->where('user_id', $userId) // ユーザーIDでフィルタリング
             ->get();
 
-        return response()->json($allMyChineseRecipes);
+        return response()->json($allMyChineseDishes);
     }
 
     public function getAllMyChineseSyusai($userId)
     {
         // ユーザーIDを使用して中華のレシピ情報を取得
-        $chineseSyusai = Recipe::where('genre_id', 3)
+        $chineseSyusai = Dish::where('genre_id', 3)
             ->where('user_id', $userId) // ユーザーIDでフィルタリング
             ->where('category_id', '1')
             ->get();
@@ -167,7 +167,7 @@ class GenreController extends Controller
     public function getAllMyChineseFukusai($userId)
     {
         // ユーザーIDを使用して中華のレシピ情報を取得
-        $chineseFukusai = Recipe::where('genre_id', 3)
+        $chineseFukusai = Dish::where('genre_id', 3)
             ->where('user_id', $userId) // ユーザーIDでフィルタリング
             ->where('category_id', 2)
             ->get();
@@ -177,7 +177,7 @@ class GenreController extends Controller
     public function getAllMyChineseShirumono($userId)
     {
         // ユーザーIDを使用して和食のレシピ情報を取得
-        $chineseShirumono = Recipe::where('genre_id', 3)
+        $chineseShirumono = Dish::where('genre_id', 3)
             ->where('user_id', $userId) // ユーザーIDでフィルタリング
             ->where('category_id', 3)
             ->get();
@@ -187,27 +187,27 @@ class GenreController extends Controller
     public function getAllMyChineseOthers($userId)
     {
         // ユーザーIDを使用して和食のレシピ情報を取得
-        $chineseOthers = Recipe::where('genre_id', 3)
+        $chineseOthers = Dish::where('genre_id', 3)
             ->where('user_id', $userId) // ユーザーIDでフィルタリング
             ->where('category_id', 4)
             ->get();
         return response()->json($chineseOthers);
     }
 
-    public function getAllMyOthersRecipes($userId)
+    public function getAllMyOthersDishes($userId)
     {
         // ユーザーIDを使用して中華のレシピ情報を取得
-        $allMyOthersRecipes = Recipe::where('genre_id', 4)
+        $allMyOthersDishes = Dish::where('genre_id', 4)
             ->where('user_id', $userId) // ユーザーIDでフィルタリング
             ->get();
 
-        return response()->json($allMyOthersRecipes);
+        return response()->json($allMyOthersDishes);
     }
 
     public function getAllMyOthersSyusai($userId)
     {
         // ユーザーIDを使用して中華のレシピ情報を取得
-        $othersSyusai = Recipe::where('genre_id', 4)
+        $othersSyusai = Dish::where('genre_id', 4)
             ->where('user_id', $userId) // ユーザーIDでフィルタリング
             ->where('category_id', '1')
             ->get();
@@ -218,7 +218,7 @@ class GenreController extends Controller
     public function getAllMyOthersFukusai($userId)
     {
         // ユーザーIDを使用して中華のレシピ情報を取得
-        $othersFukusai = Recipe::where('genre_id', 4)
+        $othersFukusai = Dish::where('genre_id', 4)
             ->where('user_id', $userId) // ユーザーIDでフィルタリング
             ->where('category_id', 2)
             ->get();
@@ -228,7 +228,7 @@ class GenreController extends Controller
     public function getAllMyOthersShirumono($userId)
     {
         // ユーザーIDを使用して和食のレシピ情報を取得
-        $othersShirumono = Recipe::where('genre_id', 4)
+        $othersShirumono = Dish::where('genre_id', 4)
             ->where('user_id', $userId) // ユーザーIDでフィルタリング
             ->where('category_id', 3)
             ->get();
@@ -238,7 +238,7 @@ class GenreController extends Controller
     public function getAllMyOthersOthers($userId)
     {
         // ユーザーIDを使用して和食のレシピ情報を取得
-        $othersOthers = Recipe::where('genre_id', 4)
+        $othersOthers = Dish::where('genre_id', 4)
             ->where('user_id', $userId) // ユーザーIDでフィルタリング
             ->where('category_id', 4)
             ->get();

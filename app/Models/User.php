@@ -49,9 +49,9 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function recipes()
+    public function dishes()
     {
-        return $this->hasMany(Recipe::class);
+        return $this->hasMany(Dish::class);
     }
 
     // public function hasPermissionTo($permission)

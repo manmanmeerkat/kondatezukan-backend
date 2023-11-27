@@ -8,14 +8,14 @@ use Tests\TestCase;
 use App\Models\Genre;
 use App\Models\Category;
 use App\Models\User;
-use App\Models\Recipe;
+use App\Models\Dish;
 use App\Models\Ingredient;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
-class RecipeControllerTest extends TestCase
+class DishControllerTest extends TestCase
 {
     use RefreshDatabase;
     // use DatabaseTransactions;
@@ -64,17 +64,17 @@ class RecipeControllerTest extends TestCase
 
 
         // テスト用のレシピを作成
-        $recipe = Recipe::factory(3)->create(['user_id' => $user->id]);
+        $dish = Dish::factory(3)->create(['user_id' => $user->id]);
 
         // レシピ取得エンドポイントを呼び出し
         $response = $this->json('GET', '/api/all-my-dish');
 
         // レスポンスの検証
         $response->assertStatus(200)
-            ->assertJson(['recipes' => $recipe->toArray()]);
+            ->assertJson(['dishes' => $dish->toArray()]);
     }
 
-    public function testGetIngredientsForRecipe()
+    public function testGetIngredientsForDish()
     {
 
         // ジャンルIDが1のデータをデータベースに挿入
@@ -88,25 +88,25 @@ class RecipeControllerTest extends TestCase
         Auth::login($user);
 
         // テスト用のレシピと材料を作成
-        $recipe = Recipe::factory()->create();
-        $ingredients = Ingredient::factory()->create(['id' => $recipe->id, 'name' => $user->name, 'user_id' => $user->id]);
+        $dish = Dish::factory()->create();
+        $ingredients = Ingredient::factory()->create(['id' => $dish->id, 'name' => $user->name, 'user_id' => $user->id]);
 
-        $recipe->ingredients()->attach($ingredients);
+        $dish->ingredients()->attach($ingredients);
         // レシピが存在する場合のテスト
-        $response = $this->json('GET', '/api/recipes/' . $recipe->id . '/ingredients');
+        $response = $this->json('GET', '/api/dishes/' . $dish->id . '/ingredients');
         $response->assertStatus(200)
             ->assertJson(['ingredients' => [
                 [
-                    'id' => $recipe->id,
+                    'id' => $dish->id,
                     'name' => $user->name,
                     'user_id' => $user->id,
                 ],
             ]]);
         // レシピが存在しない場合のテスト
-        $nonExistingRecipeId = 999;
-        $response = $this->json('GET', '/api/recipes/' . $nonExistingRecipeId . '/ingredients');
+        $nonExistingDishId = 999;
+        $response = $this->json('GET', '/api/dishes/' . $nonExistingDishId . '/ingredients');
         $response->assertStatus(404)
-            ->assertJson(['message' => 'Recipe not found']);
+            ->assertJson(['message' => 'Dish not found']);
     }
 
     public function test_Editメソッドが正しいデータでJsonレスポンスを返す()
@@ -118,7 +118,7 @@ class RecipeControllerTest extends TestCase
         // テストユーザーを作成
         $user = User::factory()->create();
         // テストデータの作成
-        $dish = Recipe::factory()->create();
+        $dish = Dish::factory()->create();
 
         // edit メソッドへのリクエスト
         $response = $this->json('GET', '/api/edit/' . $dish->id);
@@ -181,25 +181,25 @@ class RecipeControllerTest extends TestCase
             // レスポンスのJSON構造を確認
             $response->assertJson(
                 [
-                    'message' => 'Recipe created successfully',
+                    'message' => 'Dish created successfully',
                 ]
             );
 
             // データベースにデータが正しく保存されているかを確認
-            $recipe = Recipe::where('name', 'Test Dish')->first();
+            $dish = Dish::where('name', 'Test Dish')->first();
 
-            // recipes テーブルにデータが存在するか確認
-            $this->assertDatabaseHas('recipes', [
-                'id' => $recipe->id,
+            // dishs テーブルにデータが存在するか確認
+            $this->assertDatabaseHas('dishes', [
+                'id' => $dish->id,
                 'name' => 'Test Dish',
                 'user_id' => $user->id,
                 'genre_id' => 1,
                 'category_id' => 1,
             ]);
 
-            // recipe_ingredients テーブルにデータが存在するか確認
-            $this->assertDatabaseHas('ingredient_recipe', [
-                'recipe_id' => $recipe->id,
+            // dish_ingredients テーブルにデータが存在するか確認
+            $this->assertDatabaseHas('ingredient_dish', [
+                'dish_id' => $dish->id,
                 // 他の条件も必要に応じて追加
             ]);
 
@@ -229,8 +229,8 @@ class RecipeControllerTest extends TestCase
         $user = User::factory()->create();
 
         // 新しいレシピを作成してIDを取得
-        $newRecipe = Recipe::factory()->create();
-        $validId = $newRecipe->id;
+        $newDish = Dish::factory()->create();
+        $validId = $newDish->id;
 
         // `destroy`メソッドを呼び出す
         $response = $this->json('DELETE', "/api/delete/{$validId}");
@@ -257,7 +257,7 @@ class RecipeControllerTest extends TestCase
     {
         // テスト用のデータを作成（必要に応じて変更してください）
         $user = User::factory()->create();
-        $dish = Recipe::factory()->create(['user_id' => $user->id]);
+        $dish = Dish::factory()->create(['user_id' => $user->id]);
         $genre = Genre::factory()->create();
         $category = Category::factory()->create();
 
@@ -281,7 +281,7 @@ class RecipeControllerTest extends TestCase
         $response->assertStatus(200);
 
         // 再取得
-        $dish = Recipe::find($dish->id);
+        $dish = Dish::find($dish->id);
 
         // 画像のパスが正しく生成されているかを確認
         $this->assertNotNull($dish->image_path);
@@ -290,7 +290,7 @@ class RecipeControllerTest extends TestCase
         $this->assertTrue(Storage::disk('public')->exists($dish->image_path));
 
         // データベースにデータが正しく保存されているかを確認
-        $this->assertDatabaseHas('recipes', [
+        $this->assertDatabaseHas('dishes', [
             'id' => $dish->id,
             'name' => $dish->name,
             'user_id' => $user->id,
@@ -299,5 +299,7 @@ class RecipeControllerTest extends TestCase
             'category_id' => $category->id,
             'image_path' => $dish->image_path,
         ]);
+
+        $this->artisan('migrate:refresh');
     }
 }
