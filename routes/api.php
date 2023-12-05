@@ -5,8 +5,6 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GenreController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MenuController;
-use App\Http\Controllers\RandomController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\DishController;
@@ -173,3 +171,7 @@ Route::get('/others-syusai/search', [DishSearchController::class, 'searchOthersS
 Route::get('/others-fukusai/search', [DishSearchController::class, 'searchOthersFukusaiByIngredient']);
 Route::get('/others-shirumono/search', [DishSearchController::class, 'searchOthersShirumonoByIngredient']);
 Route::get('/others-others/search', [DishSearchController::class, 'searchOthersOthersByIngredient']);
+
+
+Route::get('/menus', [MenuController::class, 'index']);
+Route::post('/menus', [MenuController::class, 'store']);
