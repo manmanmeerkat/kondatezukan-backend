@@ -1,11 +1,11 @@
 <?php
 
-// app/Http/Controllers/MenuController.php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Menu;
+use App\Models\MenuIngredient;
+use Illuminate\Support\Facades\Auth;
 
 class MenuController extends Controller
 {
@@ -39,5 +39,52 @@ class MenuController extends Controller
         ]);
 
         return response()->json($menu, 201);
+    }
+
+    public function getRecipesForDate($date)
+    {
+        // ログインしているユーザーのIDを取得
+        $userId = Auth::id();
+
+        // 特定の日付に対応するログインしているユーザーのレシピの名前を取得
+        $recipes = Menu::where('date', $date)
+            ->whereHas('dish', function ($query) use ($userId) {
+                $query->where('user_id', 1);
+            })
+            ->with('dish') // 関連する料理情報も取得
+            ->get();
+
+        return response()->json($recipes);
+    }
+
+    public function destroy($id)
+    {
+        try {
+            $recipe = Menu::findOrFail($id);
+            $recipe->delete();
+
+            return response()->json([], 204); // 成功した場合は204 No Contentを返す
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+
+    public function registerMenuIngredients($menuId, Request $request)
+    {
+        $ingredientIds = $request->input('ingredient_ids', []);
+        $registrationDate = $request->input('registration_date');
+
+        $menu = Menu::findOrFail($menuId);
+
+        // 材料リストテーブルに登録
+        foreach ($ingredientIds as $ingredientId) {
+            MenuIngredient::create([
+                'menu_id' => $menu->id,
+                'ingredient_id' => $ingredientId,
+                'registration_date' => $registrationDate,
+            ]);
+        }
+
+        return response()->json(['message' => 'Menu ingredients registered successfully']);
     }
 }

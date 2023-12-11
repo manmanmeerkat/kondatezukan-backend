@@ -12,6 +12,7 @@ use App\Http\Controllers\CsrfCookieController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\DishSearchController;
+use App\Http\Controllers\MenuController;
 use App\Models\Admin;
 use App\Http\Middleware\AdminMiddleware;
 
@@ -173,3 +174,9 @@ Route::get('/others-others/search', [DishSearchController::class, 'searchOthersO
 
 Route::get('/menus', [MenuController::class, 'index']);
 Route::post('/menus', [MenuController::class, 'store']);
+
+Route::get('/recipes/{date}', [MenuController::class, 'getRecipesForDate']);
+
+Route::delete('/delete/menus/{id}', [MenuController::class, 'destroy']);
+
+Route::post('/menus/{menu}/register-ingredients', [MenuController::class, 'registerMenuIngredients']);

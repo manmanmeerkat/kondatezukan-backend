@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Dish;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class GenreController extends Controller
 {
