@@ -68,23 +68,4 @@ class MenuController extends Controller
             return response()->json(['error' => 'Internal Server Error'], 500);
         }
     }
-
-    public function registerMenuIngredients($menuId, Request $request)
-    {
-        $ingredientIds = $request->input('ingredient_ids', []);
-        $registrationDate = $request->input('registration_date');
-
-        $menu = Menu::findOrFail($menuId);
-
-        // 材料リストテーブルに登録
-        foreach ($ingredientIds as $ingredientId) {
-            MenuIngredient::create([
-                'menu_id' => $menu->id,
-                'ingredient_id' => $ingredientId,
-                'registration_date' => $registrationDate,
-            ]);
-        }
-
-        return response()->json(['message' => 'Menu ingredients registered successfully']);
-    }
 }
