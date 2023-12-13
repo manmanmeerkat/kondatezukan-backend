@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Menu;
 use App\Models\MenuIngredient;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class MenuController extends Controller
@@ -67,5 +68,41 @@ class MenuController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => 'Internal Server Error'], 500);
         }
+    }
+
+    public function getIngredientsListData(Request $request)
+    {
+        // フロントエンドからのリクエストから日付範囲を取得
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        // Carbon を使用して日付範囲を解釈
+        $startDate = Carbon::parse($startDate)->startOfDay();
+        $endDate = Carbon::parse($endDate)->endOfDay();
+
+        // 指定された日付範囲内のメニューを取得
+        $menus = Menu::with('dish.ingredients')->whereBetween('date', [$startDate, $endDate])->get();
+
+        // メニューに紐づく料理と材料を取得
+        $menuData = [];
+
+        foreach ($menus as $menu) {
+            $dish = $menu->dish;
+
+            if ($dish) {
+                $ingredients = $dish->ingredients;
+
+                // 必要な処理を行う（例: 配列にデータをまとめる）
+                $menuData[] = [
+                    'menu_id' => $menu->id,
+                    'date' => $menu->date,
+                    'dish_name' => $dish->name,
+                    'ingredients' => $ingredients->pluck('name')->toArray(),
+                ];
+            }
+        }
+
+        // JSONレスポンスとしてデータを返す
+        return response()->json(['menuData' => $menuData]);
     }
 }
