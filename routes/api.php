@@ -180,3 +180,5 @@ Route::get('/recipes/{date}', [MenuController::class, 'getRecipesForDate']);
 Route::delete('/delete/menus/{id}', [MenuController::class, 'destroy']);
 
 Route::post('/menus/{menu}/register-ingredients', [MenuController::class, 'registerMenuIngredients']);
+
+Route::get('/get-ingredients-list', [MenuController::class, 'getIngredientsListData']);
