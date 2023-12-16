@@ -78,7 +78,7 @@ class MenuController extends Controller
 
         // Carbon を使用して日付範囲を解釈
         $startDate = Carbon::parse($startDate)->startOfDay();
-        $endDate = Carbon::parse($endDate)->endOfDay();
+        $endDate = Carbon::parse($endDate)->addDay()->endOfDay();
 
         // 指定された日付範囲内のメニューを取得
         $menus = Menu::with('dish.ingredients')->whereBetween('date', [$startDate, $endDate])->get();
