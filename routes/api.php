@@ -52,10 +52,6 @@ Route::post('/upload-image', [ImageController::class, 'uploadImage']);
 
 Route::delete('/delete/{id}', [DishController::class, 'destroy']);
 
-// Route::get('/syusai', [RandomController::class, 'syusai']);
-// Route::get('/fukusai', [RandomController::class, 'fukusai']);
-// Route::get('/soup', [RandomController::class, 'soup']);
-
 Route::get('/japanese', [GenreController::class, 'japanese']);
 Route::get('/western', [GenreController::class, 'western']);
 Route::get('/chinese', [GenreController::class, 'chinese']);
@@ -104,7 +100,10 @@ Route::post('/register', [AuthController::class, 'register']);
 
 Route::get('/user/{userId}', [UserController::class, 'getUserById']);
 
-
+Route::middleware(['auth'])->group(function () {
+    // ユーザーが自分自身を削除する
+    Route::delete('/users/self', [UserController::class, 'destroySelf']);
+});
 
 Route::get('/csrf-cookie', [AuthController::class, 'csrfCookie'])->middleware('web');
 

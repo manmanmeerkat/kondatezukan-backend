@@ -7,15 +7,21 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class AuthController extends Controller
 {
+
     public function register(Request $request)
     {
         $request->validate([
             'name' => 'required|string',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|string|min:6',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users', 'email'), // 既に存在するメールアドレスかどうかを確認
+            ],
+            'password' => 'required|string|min:8', // パスワードの最小長を 8 文字に変更
         ]);
 
         $user = new User([
@@ -36,6 +42,7 @@ class AuthController extends Controller
             'userId' => $userId,
         ], 201);
     }
+
 
     // AuthController.php
 
