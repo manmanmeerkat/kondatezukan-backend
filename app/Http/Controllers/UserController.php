@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
@@ -41,7 +43,8 @@ class UserController extends Controller
         return response()->json(['users' => $users]);
     }
 
-    public function destroySelf()
+
+    public function destroySelf(Request $request)
     {
         // ログインしているユーザーのIDを取得
         $userId = Auth::id();
@@ -57,6 +60,12 @@ class UserController extends Controller
             return response()->json(['message' => 'Admin user cannot be deleted.'], 403);
         }
 
+        // パスワードが一致するか検証
+        $credentials = $request->only('password');
+        if (!Auth::attempt(['id' => $userId, 'password' => $credentials['password']])) {
+            return response()->json(['message' => 'Incorrect password.'], 401);
+        }
+
         // ユーザーを削除
         if ($user) {
             $user->delete();
@@ -68,5 +77,27 @@ class UserController extends Controller
         } else {
             return response()->json(['message' => 'User not found.'], 404);
         }
+    }
+
+
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|string|min:8',
+        ]);
+
+        $user = Auth::user();
+
+        // 現在のパスワードが正しいか確認
+        if (!password_verify($request->input('current_password'), $user->password)) {
+            throw ValidationException::withMessages(['current_password' => '現在のパスワードが正しくありません']);
+        }
+
+        // 新しいパスワードを設定
+        $user->password = bcrypt($request->input('new_password'));
+        $user->save();
+
+        return response()->json(['message' => 'パスワードが変更されました']);
     }
 }

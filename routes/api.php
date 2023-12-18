@@ -31,6 +31,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::middleware(['auth:sanctum'])->group(function () {
+    // パスワード変更ルート
+    Route::post('/change_password', [UserController::class, 'changePassword']);
+});
 
 Route::get('/admin/getdish', [AdminController::class, 'adminGetAllDish']);
 
