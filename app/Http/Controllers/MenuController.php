@@ -92,12 +92,21 @@ class MenuController extends Controller
             if ($dish) {
                 $ingredients = $dish->ingredients;
 
+                // 各材料ごとにデータをまとめる
+                $ingredientsData = [];
+                foreach ($ingredients as $ingredient) {
+                    $ingredientsData[] = [
+                        'name' => $ingredient->name,
+                        'quantity' => $ingredient->quantity, // quantity フィールドを含める
+                    ];
+                }
+
                 // 必要な処理を行う（例: 配列にデータをまとめる）
                 $menuData[] = [
                     'menu_id' => $menu->id,
                     'date' => $menu->date,
                     'dish_name' => $dish->name,
-                    'ingredients' => $ingredients->pluck('name')->toArray(),
+                    'ingredients' => $ingredientsData,
                 ];
             }
         }

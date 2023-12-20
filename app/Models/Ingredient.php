@@ -9,7 +9,7 @@ class Ingredient extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['dish_id', 'name', 'user_id'];
+    protected $fillable = ['dish_id', 'name', 'user_id', 'quantity'];
 
     // 食材に関連するレシピのリレーションシップ
     public function dishes()

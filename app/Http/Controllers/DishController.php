@@ -117,18 +117,22 @@ class DishController extends Controller
                 $ingredientsData = $ingredientsParam;
             }
 
-            Log::info('Ingredients Input:', [$request->input('ingredients')]);
-            foreach ($ingredientsData as $ingredientName) {
+            foreach ($ingredientsData as $ingredientData) {
+                $ingredientName = $ingredientData['name'];
+                $ingredientQuantity = $ingredientData['quantity'];
+
+                // 材料を検索または作成
                 $ingredient = Ingredient::firstOrCreate(
-                    ['user_id' => $request->input('user_id'), 'name' => $ingredientName]
+                    ['user_id' => $request->input('user_id'), 'name' => $ingredientName, 'quantity' => $ingredientQuantity]
                 );
 
-                // 中間テーブルに保存
+                // 中間テーブルに保存（数量も含めて保存）
                 $dish->ingredients()->attach($ingredient->id);
             }
 
             // トランザクションをコミット
             DB::commit();
+
 
             // ログにデータベースに保存した後の料理情報を出力
             Log::info('Dish After Update:', $dish->toArray());
