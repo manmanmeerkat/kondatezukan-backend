@@ -173,7 +173,6 @@ class DishController extends Controller
 
     public function create(Request $request)
     {
-
         // トランザクションを開始
         DB::beginTransaction();
 
@@ -187,28 +186,26 @@ class DishController extends Controller
             $dish->reference_url = $request->input('reference_url');
             $dish->image_path = $request->input('image_path');
             $dish->user_id = $request->input('user_id');
-
             $dish->save(); // データベースに保存
 
             // 材料の保存
             $ingredientsData = $request->input('ingredients');
 
             // $ingredientsData が JSON 文字列でない場合、配列に変換
-            if (is_array($ingredientsData)) {
-                $ingredientsData = json_encode($ingredientsData);
+            if (!is_array($ingredientsData)) {
+                $ingredientsData = json_decode($ingredientsData, true);
             }
 
-            $ingredientsData = json_decode($ingredientsData, true);
-
+            // $ingredientsData が JSON デコードできない場合、空の配列に設定
             if (!is_array($ingredientsData)) {
                 $ingredientsData = [];
             }
 
-
-            foreach ($ingredientsData as $ingredientName) {
+            foreach ($ingredientsData as $ingredientData) {
                 $ingredient = new Ingredient();
                 $ingredient->user_id = $request->input('user_id');
-                $ingredient->name = $ingredientName;
+                $ingredient->name = $ingredientData['name'];
+                $ingredient->quantity = $ingredientData['quantity'];
                 $ingredient->save();
 
                 // 中間テーブルに保存
