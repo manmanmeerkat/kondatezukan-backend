@@ -18,7 +18,9 @@ class MenuFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
-            // 'memo' => $this->faker->realText,
+            'genre' => $this->faker->randomElement(['和食', '洋食', '中華', 'その他']),
+            'type' => $this->faker->randomElement(['主菜', '副菜', '汁物']),
+            'reference_url' => $this->faker->url,
         ];
     }
 }

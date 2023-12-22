@@ -2,76 +2,116 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\Menu;
 use Illuminate\Http\Request;
+use App\Models\Menu;
+use App\Models\MenuIngredient;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class MenuController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the menus.
+     *
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $menu = Menu::all();
-        return response()->json($menu);
+        // ログイン中のユーザーのIDを取得
+        $userId = auth()->id();
+
+        // ログイン中のユーザーが作成した献立データを取得
+        $menus = Menu::where('user_id', $userId)->get();
+
+        // 取得したデータをJSON形式で返す
+        return response()->json($menus);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        $menu = Menu::create($request->all());
-        return $menu
-            ? response()->json($menu, 201)
-            : response()->json([], 500);
-        
+        $request->validate([
+            'dish_id' => 'required|exists:dishes,id',
+            'date' => 'required|date',
+        ]);
 
-        $menu = new Menu;
-        $menu->name = $request->input('name');
-        // $menu->memo = $request->input('memo');
-        $menu->save();
+        $menu = Menu::create([
+            'dish_id' => $request->input('dish_id'),
+            'date' => $request->input('date'),
+        ]);
+
+        return response()->json($menu, 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function getRecipesForDate($date)
     {
-        //
+        // ログインしているユーザーのIDを取得
+        $userId = Auth::id();
+
+        // 特定の日付に対応するログインしているユーザーのレシピの名前を取得
+        $recipes = Menu::where('date', $date)
+            ->whereHas('dish', function ($query) use ($userId) {
+                $query->where('user_id', 1);
+            })
+            ->with('dish') // 関連する料理情報も取得
+            ->get();
+
+        return response()->json($recipes);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function destroy($id)
     {
-        //
+        try {
+            $recipe = Menu::findOrFail($id);
+            $recipe->delete();
+
+            return response()->json([], 204); // 成功した場合は204 No Contentを返す
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function getIngredientsListData(Request $request)
     {
-        //
-    }
+        // フロントエンドからのリクエストから日付範囲を取得
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        $menu = Menu::find($id);
-        $menu->delete();
+        // Carbon を使用して日付範囲を解釈
+        $startDate = Carbon::parse($startDate)->addDay()->startOfDay();
+        $endDate = Carbon::parse($endDate)->addDay()->endOfDay();
+
+        // 指定された日付範囲内のメニューを取得
+        $menus = Menu::with('dish.ingredients')->whereBetween('date', [$startDate, $endDate])->get();
+
+        // メニューに紐づく料理と材料を取得
+        $menuData = [];
+
+        foreach ($menus as $menu) {
+            $dish = $menu->dish;
+
+            if ($dish) {
+                $ingredients = $dish->ingredients;
+
+                // 各材料ごとにデータをまとめる
+                $ingredientsData = [];
+                foreach ($ingredients as $ingredient) {
+                    $ingredientsData[] = [
+                        'name' => $ingredient->name,
+                        'quantity' => $ingredient->quantity, // quantity フィールドを含める
+                    ];
+                }
+
+                // 必要な処理を行う（例: 配列にデータをまとめる）
+                $menuData[] = [
+                    'menu_id' => $menu->id,
+                    'date' => $menu->date,
+                    'dish_name' => $dish->name,
+                    'ingredients' => $ingredientsData,
+                ];
+            }
+        }
+
+        // JSONレスポンスとしてデータを返す
+        return response()->json(['menuData' => $menuData]);
     }
 }
