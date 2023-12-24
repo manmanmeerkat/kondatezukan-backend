@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Menu;
-use App\Models\MenuIngredient;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class MenuController extends Controller
 {
@@ -44,19 +44,21 @@ class MenuController extends Controller
 
     public function getRecipesForDate($date)
     {
-        // ログインしているユーザーのIDを取得
-        $userId = Auth::id();
+        // ログインしているユーザーを取得
+        $user = Auth::user();
 
         // 特定の日付に対応するログインしているユーザーのレシピの名前を取得
         $recipes = Menu::where('date', $date)
-            ->whereHas('dish', function ($query) use ($userId) {
-                $query->where('user_id', 1);
+            ->whereHas('dish', function ($query) use ($user) {
+                $query->where('user_id', $user->id);
             })
             ->with('dish') // 関連する料理情報も取得
             ->get();
 
         return response()->json($recipes);
     }
+
+
 
     public function destroy($id)
     {
