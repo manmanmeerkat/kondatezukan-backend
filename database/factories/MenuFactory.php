@@ -2,25 +2,30 @@
 
 namespace Database\Factories;
 
+use App\Models\Menu;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Menu>
- */
 class MenuFactory extends Factory
 {
     /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Menu::class;
+
+    /**
      * Define the model's default state.
      *
-     * @return array<string, mixed>
+     * @return array
      */
-    public function definition(): array
+    public function definition()
     {
         return [
-            'name' => $this->faker->name,
-            'genre' => $this->faker->randomElement(['和食', '洋食', '中華', 'その他']),
-            'type' => $this->faker->randomElement(['主菜', '副菜', '汁物']),
-            'reference_url' => $this->faker->url,
+            'date' => $this->faker->date,
+            'dish_id' => function () {
+                return \App\Models\Dish::factory()->create()->id;
+            },
         ];
     }
 }
