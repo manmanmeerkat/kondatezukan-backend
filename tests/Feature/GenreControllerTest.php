@@ -523,7 +523,6 @@ class GenreControllerTest extends TestCase
         // レスポンスが正常であることを確認
         $response->assertStatus(200);
         // レスポンスが期待通りのデータを含んでいることを確認
-
         $response->assertJsonCount(3)
             ->assertJsonStructure([
 
