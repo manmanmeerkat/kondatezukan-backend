@@ -97,8 +97,9 @@ class MenuControllerTest extends TestCase
         $menu2 = Menu::factory()->create([
             'date' => '2023-12-25',
         ]);
+
         // メニューを取得するリクエストを実行
-        $response = $this->actingAs($user)->json('GET', 'api/menus' . $menu1->date);
+        $response = $this->actingAs($user)->json('GET', 'api/recipes/' . $menu1->date);
 
         // レスポンスのJSONデータを取得
         $responseData = $response->json();
@@ -130,9 +131,6 @@ class MenuControllerTest extends TestCase
             // 他のメニューレコードの期待値を設定
         ]);
 
-        // 不要ならテストデータをクリーンアップ
-        $user->delete();
-        $menu1->delete();
-        $menu2->delete();
+        $this->artisan('migrate:refresh');
     }
 }
