@@ -62,15 +62,20 @@ class MenuController extends Controller
 
     public function destroy($id)
     {
-        try {
-            $recipe = Menu::findOrFail($id);
-            $recipe->delete();
+        $recipe = Menu::find($id);
 
-            return response()->json([], 204); // 成功した場合は204 No Contentを返す
+        if (!$recipe) {
+            return response()->json(['error' => 'Not Found'], 404);
+        }
+
+        try {
+            $recipe->delete();
+            return response()->json([], 204);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Internal Server Error'], 500);
         }
     }
+
 
     public function getIngredientsListData(Request $request)
     {

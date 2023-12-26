@@ -130,7 +130,32 @@ class MenuControllerTest extends TestCase
             ],
             // 他のメニューレコードの期待値を設定
         ]);
+    }
 
-        $this->artisan('migrate:refresh');
+    public function test_指定されたIDのレシピを削除()
+    {
+        // テスト用のメニューデータを作成
+        $menu = Menu::factory()->create();
+
+        // メニューを削除するリクエストを実行
+        $response = $this->json('DELETE', 'api/delete/menus/' . $menu->id);
+
+        // レスポンスのステータスコードが204 No Contentであることを確認
+        $response->assertStatus(204);
+
+        // メニューが削除されたことを確認
+        $this->assertDatabaseMissing('menus', ['id' => $menu->id]);
+    }
+
+    public function test_存在しないIDのレシピを削除()
+    {
+        // 存在しないIDを指定してメニューを削除するリクエストを実行
+        $response = $this->json('DELETE', 'api/delete/menus/999');
+
+        // レスポンスのステータスコードが404 Not Foundであることを確認
+        $response->assertStatus(404);
+
+        // エラーメッセージが含まれていることを確認
+        $response->assertJson(['error' => 'Not Found']);
     }
 }
