@@ -267,9 +267,13 @@ class DishControllerTest extends TestCase
         // テスト用のリクエストデータを作成
         $requestData = [
             'user_id' => $user->id,
+            'name' => 'Test Dish',
             'genre_id' => $genre->id,
             'category_id' => $category->id,
-            'ingredients' => json_encode(['Ingredient 1', 'Ingredient 2']),
+            'ingredients' => json_encode([
+                ['name' => 'Ingredient 1', 'quantity' => 'Quantity 1'],
+                ['name' => 'Ingredient 2', 'quantity' => 'Quantity 2']
+            ]),
             'image_file' => $image,
             // 他のリクエストデータも追加
         ];

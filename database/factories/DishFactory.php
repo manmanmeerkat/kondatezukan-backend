@@ -27,8 +27,12 @@ class DishFactory extends Factory
                 return \App\Models\Category::inRandomOrder()->first()->id;
             },
             'user_id' => function () {
-                return \App\Models\User::inRandomOrder()->first()->id;
+                $user = \App\Models\User::inRandomOrder()->first();
+
+                // $user が null の場合、デフォルトのユーザー ID を返す
+                return optional($user)->id ?? \App\Models\User::factory()->create()->id;
             },
+
             // 他のレシピ情報を追加
         ];
     }

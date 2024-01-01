@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
@@ -88,7 +89,7 @@ class UserController extends Controller
         ]);
 
         $user = Auth::user();
-
+        Log::debug($user);
         // 現在のパスワードが正しいか確認
         if (!password_verify($request->input('current_password'), $user->password)) {
             throw ValidationException::withMessages(['current_password' => '現在のパスワードが正しくありません']);

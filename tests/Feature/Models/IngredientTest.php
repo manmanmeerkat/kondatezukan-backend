@@ -100,6 +100,7 @@ class IngredientTest extends TestCase
         $this->assertDatabaseHas('ingredients', [
             'id' => $ingredient->id,
             'name' => $ingredient->name,
+            'quantity' => $ingredient->quantity,
             'user_id' => $ingredient->user_id,
             // 他の必要なフィールドも追加してください
         ]);

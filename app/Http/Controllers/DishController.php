@@ -42,6 +42,8 @@ class DishController extends Controller
 
         $ingredients = $dish->ingredients;
 
+        Log::info('Ingredients for dish ' . $dishId . ':', $ingredients->toArray());
+
         return response()->json(['ingredients' => $ingredients], 200);
     }
 
