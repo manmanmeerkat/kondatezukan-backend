@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Cache;
 
 class AuthController extends Controller
 {
@@ -43,30 +44,40 @@ class AuthController extends Controller
         ], 201);
     }
 
-
-    // AuthController.php
-
     public function login(Request $request)
     {
-        // ... ログインのバリデーション等
+        // リクエストのバリデーション
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
+        // ユーザーをキャッシュから取得またはデータベースから取得
         $credentials = $request->only('email', 'password');
+        $user = Cache::remember("user-{$credentials['email']}", 60, function () use ($credentials) {
+            return User::where('email', $credentials['email'])->first();
+        });
 
-        if (!Auth::attempt($credentials)) {
+        // ユーザーが存在しない、またはパスワードが一致しない場合
+        if (!$user || !Hash::check($credentials['password'], $user->password)) {
             return response()->json(['message' => '認証に失敗しました'], 401);
         }
 
-        $user = Auth::user();
+        // ユーザーが認証された場合
+        Auth::login($user);
+
+        // ユーザーのIDとロールを取得
         $userId = $user->id;
         $role = $user->role;
 
         // 通常のトークンを生成
-        $token = $user->createToken('auth-token', ['expires_in' => 60 * 60])->plainTextToken;
+        $token = $user->createToken('auth-token')->plainTextToken;
+
+        // キャッシュを更新（必要な場合）
+        Cache::put("user-{$user->email}", $user, 60);
 
         return response()->json(['message' => 'ログイン成功', 'userId' => $userId, 'token' => $token, 'role' => $role]);
     }
-
-
 
 
     public function csrfCookie()
@@ -89,5 +100,17 @@ class AuthController extends Controller
     public function showLoginForm()
     {
         return; // または適切なビュー名
+    }
+
+    public function relogin(Request $request)
+    {
+        // Laravel Sanctumの認証処理を使用してユーザーを認証する
+        if ($user = $request->user()) {
+            // ログイン成功時の処理
+            return response()->json($user);
+        } else {
+            // ログイン失敗時の処理
+            return response()->json(['message' => '再ログインに失敗しました。'], 401);
+        }
     }
 }

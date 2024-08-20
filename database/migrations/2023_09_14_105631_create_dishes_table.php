@@ -21,7 +21,7 @@ return new class extends Migration
 
             $table->foreignId('genre_id')->constrained('genres');
             $table->foreignId('category_id')->constrained('categories');
-            $table->foreignId('user_id')->constrained('users')->default(1);
+            $table->foreignId('user_id')->constrained('users')->default(1)->onDelete('cascade');
         });
     }
 

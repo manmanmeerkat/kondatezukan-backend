@@ -87,8 +87,17 @@ class MenuController extends Controller
         $startDate = Carbon::parse($startDate)->addDay()->startOfDay();
         $endDate = Carbon::parse($endDate)->addDay()->endOfDay();
 
-        // 指定された日付範囲内のメニューを取得
-        $menus = Menu::with('dish.ingredients')->whereBetween('date', [$startDate, $endDate])->get();
+        // ログイン中のユーザーのIDを取得
+        $user = Auth::user();
+
+        // ログイン中のユーザーが作成したメニューに関連するデータを取得
+        $menus = Menu::whereBetween('date', [$startDate, $endDate])
+            ->whereHas('dish', function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            })
+            ->with('dish.ingredients') // 関連する料理と材料情報も取得
+
+            ->get();
 
         // メニューに紐づく料理と材料を取得
         $menuData = [];
@@ -122,3 +131,4 @@ class MenuController extends Controller
         return response()->json(['menuData' => $menuData]);
     }
 }
+

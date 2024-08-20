@@ -33,7 +33,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::middleware(['auth:sanctum'])->group(function () {
     // パスワード変更ルート
-    Route::post('/change_password', [UserController::class, 'changePassword']);
+	Route::post('/change_password', [UserController::class, 'changePassword']);
+
+	Route::get('/all-my-dish', [DishController::class, 'getUserDishes']);
+
+	Route::get('/recipes/{date}', [MenuController::class, 'getRecipesForDate']);
+
+	Route::get('/get-ingredients-list', [MenuController::class, 'getIngredientsListData']);
+
+	Route::post('/relogin', [AuthController::class, 'relogin']);
 });
 
 Route::get('/admin/getdish', [AdminController::class, 'adminGetAllDish']);
@@ -46,7 +54,6 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
 Route::group(['middleware' => 'cors'], function () {
     Route::post('/create', [DishController::class, 'create'])->name('create');
 });
-Route::get('/all-my-dish', [DishController::class, 'getUserDishes']);
 
 Route::get('/edit/{dishId}', [DishController::class, 'edit']);
 
@@ -88,8 +95,9 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 
 // ログイン処理を実行する
 Route::post('/login', [AuthController::class, 'login'])->middleware('api');
+
 // ログアウト処理を実行する
-Route::post('/logout', LogoutController::class)->name('logout');
+        Route::post('/logout', [LogoutController::class, '__invoke']);
 
 Route::group(['middleware' => 'api'], function () {
     Route::get('/sanctum/csrf-cookie', [CsrfCookieController::class, 'show']);
@@ -104,8 +112,8 @@ Route::post('/register', [AuthController::class, 'register']);
 
 Route::get('/user/{userId}', [UserController::class, 'getUserById']);
 
-Route::middleware(['auth'])->group(function () {
-    // ユーザーが自分自身を削除する
+Route::middleware(['auth:sanctum'])->group(function () {
+   // ユーザーが自分自身を削除する
     Route::delete('/users/self', [UserController::class, 'destroySelf']);
 });
 
@@ -178,10 +186,9 @@ Route::get('/others-others/search', [DishSearchController::class, 'searchOthersO
 Route::get('/menus', [MenuController::class, 'index']);
 Route::post('/menus', [MenuController::class, 'store']);
 
-Route::get('/recipes/{date}', [MenuController::class, 'getRecipesForDate']);
 
 Route::delete('/delete/menus/{id}', [MenuController::class, 'destroy']);
 
 Route::post('/menus/{menu}/register-ingredients', [MenuController::class, 'registerMenuIngredients']);
 
-Route::get('/get-ingredients-list', [MenuController::class, 'getIngredientsListData']);
+

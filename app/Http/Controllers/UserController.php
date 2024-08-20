@@ -47,38 +47,35 @@ class UserController extends Controller
 
     public function destroySelf(Request $request)
     {
-        // ログインしているユーザーのIDを取得
-        $userId = Auth::id();
+        // ログインしているユーザーを取得
+        $user = Auth::user();
 
         // ユーザーが存在しない場合
-        if (!$userId) {
+        if (!$user) {
             return response()->json(['message' => 'User not found.'], 404);
         }
 
         // 'admin' の権限を持つユーザーは削除不可
-        $user = User::find($userId);
-        if ($user && $user->role === 'admin') {
+        if ($user->role === 'admin') {
             return response()->json(['message' => 'Admin user cannot be deleted.'], 403);
         }
 
         // パスワードが一致するか検証
-        $credentials = $request->only('password');
-        if (!Auth::attempt(['id' => $userId, 'password' => $credentials['password']])) {
+        $password = $request->input('password');
+        if (!$password || !Hash::check($password, $user->password)) {
             return response()->json(['message' => 'Incorrect password.'], 401);
         }
 
         // ユーザーを削除
-        if ($user) {
-            $user->delete();
+        $user->delete();
 
-            // ログアウト
-            Auth::logout();
+        // ログアウト
+        Auth::guard('web')->logout();
 
-            return response()->json(['message' => 'User deleted successfully.']);
-        } else {
-            return response()->json(['message' => 'User not found.'], 404);
-        }
+        return response()->json(['message' => 'User deleted successfully.']);
     }
+
+
 
 
     public function changePassword(Request $request)
@@ -102,3 +99,4 @@ class UserController extends Controller
         return response()->json(['message' => 'パスワードが変更されました']);
     }
 }
+
