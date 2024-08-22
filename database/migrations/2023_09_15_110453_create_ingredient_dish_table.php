@@ -13,8 +13,12 @@ return new class extends Migration
     {
         Schema::create('ingredient_dish', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('ingredient_id')->constrained('ingredients');
-            $table->foreignId('dish_id')->constrained('dishes');
+            $table->foreignId('ingredient_id')
+                ->constrained('ingredients')
+                ->onDelete('cascade');
+            $table->foreignId('dish_id')
+                ->constrained('dishes')
+                ->onDelete('cascade');
         });
     }
 
