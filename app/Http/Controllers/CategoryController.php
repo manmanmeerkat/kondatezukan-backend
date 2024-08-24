@@ -7,112 +7,112 @@ use App\Models\Dish;
 
 class CategoryController extends Controller
 {
-    //genreが"1"でcategoryが"1"のデータを取得
+    //ジャンルが"和食"でカテゴリが"主食"のデータを取得
     public function japanese_syusai()
     {
         $japanese_syusai = Dish::where('genre_id', '1')->where('category_id', '1')->get();
         return response()->json($japanese_syusai);
     }
 
-    //genreが"1"でcategoryが"2"のデータを取得
+    //ジャンルが"和食"でカテゴリが"副菜"のデータを取得
     public function japanese_fukusai()
     {
         $japanese_fukusai = Dish::where('genre_id', '1')->where('category_id', '2')->get();
         return response()->json($japanese_fukusai);
     }
 
-    //genre_idが"1"でcategoryが"3"のデータを取得
+    //ジャンルが"和食"でカテゴリが"汁物"のデータを取得
     public function japanese_shirumono()
     {
         $japanese_shirumono = Dish::where('genre_id', '1')->where('category_id', '3')->get();
         return response()->json($japanese_shirumono);
     }
 
-    //genre_idが"1"でcategoryが"4"のデータを取得
+    //ジャンルが"和食"でカテゴリが"その他"のデータを取得
     public function japanese_others()
     {
         $japanese_others = Dish::where('genre_id', '1')->where('category_id', '4')->get();
         return response()->json($japanese_others);
     }
 
-    //genre_idが"2"でcategoryが"3"のデータを取得
+    //ジャンルが"洋食"でカテゴリが"主食"のデータを取得
     public function western_syusai()
     {
         $western_syusai = Dish::where('genre_id', '2')->where('category_id', '1')->get();
         return response()->json($western_syusai);
     }
 
-    //genre_idが"2"でcategory_idが"2"のデータを取得
+    //ジャンルが"洋食"でカテゴリが"汁物"のデータを取得
     public function western_fukusai()
     {
         $western_fukusai = Dish::where('genre_id', '2')->where('category_id', '2')->get();
         return response()->json($western_fukusai);
     }
 
-    //genre_idが"2"でcategory_idが"3"のデータを取得
+    //ジャンルが"洋食"でカテゴリが"汁物"のデータを取得
     public function western_shirumono()
     {
         $western_shirumono = Dish::where('genre_id', '2')->where('category_id', '3')->get();
         return response()->json($western_shirumono);
     }
 
-    //genre_idが"2"でcategoryが"4"のデータを取得
+    //ジャンルが"洋食"でカテゴリが"その他"のデータを取得
     public function western_others()
     {
         $western_others = Dish::where('genre_id', '2')->where('category_id', '4')->get();
         return response()->json($western_others);
     }
 
-    //genre_idが"3"でcategory_idが"3"のデータを取得
+    //ジャンルが"中華"でカテゴリが"主菜"のデータを取得
     public function chinese_syusai()
     {
         $chinese_syusai = Dish::where('genre_id', '3')->where('category_id', '1')->get();
         return response()->json($chinese_syusai);
     }
 
-    //genre_idが"3"でcategory_idが"2"のデータを取得
+    //ジャンルが"中華"でカテゴリが"副菜"のデータを取得
     public function chinese_fukusai()
     {
         $chinese_fukusai = Dish::where('genre_id', '3')->where('category_id', '2')->get();
         return response()->json($chinese_fukusai);
     }
 
-    //genre_idが"3"でcategory_idが"3"のデータを取得
+    //ジャンルが"中華"でカテゴリが"汁物"のデータを取得
     public function chinese_shirumono()
     {
         $chinese_shirumono = Dish::where('genre_id', '3')->where('category_id', '3')->get();
         return response()->json($chinese_shirumono);
     }
 
-    //genre_idが"1"でcategoryが"4"のデータを取得
+    //ジャンルが"中華"でカテゴリが"その他"のデータを取得
     public function chinese_others()
     {
         $chinese_others = Dish::where('genre_id', '3')->where('category_id', '4')->get();
         return response()->json($chinese_others);
     }
 
-    //genre_idが"4"でcategory_idが"3"のデータを取得
+    //ジャンルが"その他"でカテゴリが"主菜"のデータを取得
     public function others_syusai()
     {
         $others_syusai = Dish::where('genre_id', '4')->where('category_id', '1')->get();
         return response()->json($others_syusai);
     }
 
-    //genre_idが"4"でcategory_idが"2"のデータを取得
+    //ジャンルが"その他"でカテゴリが"副菜"のデータを取得
     public function others_fukusai()
     {
         $others_fukusai = Dish::where('genre_id', '4')->where('category_id', '2')->get();
         return response()->json($others_fukusai);
     }
 
-    //genre_idが"4"でcategory_idが"3"のデータを取得
+    //ジャンルが"その他"でカテゴリが"汁物"のデータを取得
     public function others_shirumono()
     {
         $others_shirumono = Dish::where('genre_id', '4')->where('category_id', '3')->get();
         return response()->json($others_shirumono);
     }
 
-    //genre_idが"4"でcategory_idが"3"のデータを取得
+    //ジャンルが"その他"でカテゴリが"その他"のデータを取得
     public function others_others()
     {
         $others_others = Dish::where('genre_id', '4')->where('category_id', '4')->get();

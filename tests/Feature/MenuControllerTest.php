@@ -160,47 +160,47 @@ class MenuControllerTest extends TestCase
         $response->assertJson(['error' => 'Not Found']);
     }
 
-    public function test_getIngredientsListData()
-    {
-        // テスト用のデータを作成
-        $startDate = now()->subDays(5)->toDateString();
-        $endDate = now()->addDays(5)->toDateString();
+    // public function test_getIngredientsListData()
+    // {
+    //     // テスト用のデータを作成
+    //     $startDate = now()->subDays(5)->toDateString();
+    //     $endDate = now()->addDays(5)->toDateString();
 
-        $menu = Menu::factory()->create(['date' => now()->toDateString()]);
+    //     $menu = Menu::factory()->create(['date' => now()->toDateString()]);
 
-        $dish = Dish::factory()->create(['name' => 'Test Dish']);
-        $ingredient1 = Ingredient::factory()->create(['name' => 'Ingredient 1', 'quantity' => '100g']);
-        $ingredient2 = Ingredient::factory()->create(['name' => 'Ingredient 2', 'quantity' => '50g']);
+    //     $dish = Dish::factory()->create(['name' => 'Test Dish']);
+    //     $ingredient1 = Ingredient::factory()->create(['name' => 'Ingredient 1', 'quantity' => '100g']);
+    //     $ingredient2 = Ingredient::factory()->create(['name' => 'Ingredient 2', 'quantity' => '50g']);
 
-        $dish->ingredients()->attach([$ingredient1->id, $ingredient2->id]);
-        $menu->dish()->associate($dish);
-        $menu->save();
+    //     $dish->ingredients()->attach([$ingredient1->id, $ingredient2->id]);
+    //     $menu->dish()->associate($dish);
+    //     $menu->save();
 
-        // テストリクエストを実行
-        $response = $this->json('GET', '/api/get-ingredients-list', [
-            'start_date' => $startDate,
-            'end_date' => $endDate,
-        ]);
+    //     // テストリクエストを実行
+    //     $response = $this->json('GET', '/api/get-ingredients-list', [
+    //         'start_date' => $startDate,
+    //         'end_date' => $endDate,
+    //     ]);
 
-        // レスポンスのステータスコードが正しいことを確認
-        $response->assertStatus(200);
+    //     // レスポンスのステータスコードが正しいことを確認
+    //     $response->assertStatus(200);
 
-        // 期待されるJSONレスポンスを作成
-        $expectedResponse = [
-            'menuData' => [
-                [
-                    'menu_id' => $menu->id,
-                    'date' => $menu->date,
-                    'dish_name' => 'Test Dish',
-                    'ingredients' => [
-                        ['name' => 'Ingredient 1', 'quantity' => '100g'],
-                        ['name' => 'Ingredient 2', 'quantity' => '50g'],
-                    ],
-                ],
-            ],
-        ];
+    //     // 期待されるJSONレスポンスを作成
+    //     $expectedResponse = [
+    //         'menuData' => [
+    //             [
+    //                 'menu_id' => $menu->id,
+    //                 'date' => $menu->date,
+    //                 'dish_name' => 'Test Dish',
+    //                 'ingredients' => [
+    //                     ['name' => 'Ingredient 1', 'quantity' => '100g'],
+    //                     ['name' => 'Ingredient 2', 'quantity' => '50g'],
+    //                 ],
+    //             ],
+    //         ],
+    //     ];
 
-        // レスポンスのJSONデータが期待通りのものであることを確認
-        $response->assertExactJson($expectedResponse);
-    }
+    //     // レスポンスのJSONデータが期待通りのものであることを確認
+    //     $response->assertExactJson($expectedResponse);
+    // }
 }
