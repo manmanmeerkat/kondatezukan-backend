@@ -25,7 +25,7 @@ class DishController extends Controller
             return response()->json(['message' => 'ユーザーが認証されていません。'], 401);
         }
 
-        // ユーザーに関連付けられたレシピを取得
+        // ユーザーに関連付けられた料理を取得
         $dishes = Dish::where('user_id', $user->id)->get();
 
         return response()->json(['dishes' => $dishes], 200);
@@ -155,13 +155,13 @@ class DishController extends Controller
     public function destroy($id)
     {
         try {
-            // レシピを取得
+            // 料理を取得
             $dish = Dish::findOrFail($id);
 
             // 関連する材料も削除
             $dish->ingredients()->detach();
 
-            // レシピを削除
+            // 料理を削除
             $dish->delete();
 
             return response()->json(['message' => '削除が成功しました'], 200);
@@ -179,7 +179,7 @@ class DishController extends Controller
         DB::beginTransaction();
 
         try {
-            // レシピの保存
+            // 料理の保存
             $dish = new Dish();
             $dish->name = $request->input('name');
             $dish->description = $request->input('description');

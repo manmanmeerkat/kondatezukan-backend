@@ -14,12 +14,7 @@ class Ingredient extends Model
     // 食材に関連するレシピのリレーションシップ
     public function dishes()
     {
-        // return $this->belongsToMany(Dish::class, 'ingredient_dish');
-        // Ingredient モデルの dishs メソッド
 
         return $this->belongsToMany(Dish::class, 'ingredient_dish', 'ingredient_id', 'dish_id');
-
-
-        // return $this->belongsTo(Dish::class);
     }
 }
