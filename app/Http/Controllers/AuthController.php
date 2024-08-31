@@ -4,14 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Services\AuthService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+
+    protected $authService;
+
+    public function __construct(AuthService $authService)
+    {
+        $this->authService = $authService;
+    }
 
     public function register(Request $request)
     {
@@ -47,36 +54,37 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         // リクエストのバリデーション
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required',
         ]);
 
-        // ユーザーをキャッシュから取得またはデータベースから取得
-        $credentials = $request->only('email', 'password');
-        $user = Cache::remember("user-{$credentials['email']}", 60, function () use ($credentials) {
-            return User::where('email', $credentials['email'])->first();
-        });
-
-        // ユーザーが存在しない、またはパスワードが一致しない場合
-        if (!$user || !Hash::check($credentials['password'], $user->password)) {
-            return response()->json(['message' => '認証に失敗しました'], 401);
+        if ($validator->fails()) {
+            return response()->json(['message' => 'Validation error', 'errors' => $validator->errors()], 422);
         }
 
-        // ユーザーが認証された場合
-        Auth::login($user);
+        $credentials = $request->only('email', 'password');
 
-        // ユーザーのIDとロールを取得
-        $userId = $user->id;
-        $role = $user->role;
+        try {
+            $result = $this->authService->signin($credentials['email'], $credentials['password']);
 
-        // 通常のトークンを生成
-        $token = $user->createToken('auth-token')->plainTextToken;
+            $userId = $result['userId'] ?? null;
+            $token = $result['token'] ?? null;
+            $role = $result['role'] ?? null;
 
-        // キャッシュを更新（必要な場合）
-        Cache::put("user-{$user->email}", $user, 60);
+            if ($userId === null || $token === null || $role === null) {
+                return response()->json(['message' => 'Login failed'], 401);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 401);
+        }
 
-        return response()->json(['message' => 'ログイン成功', 'userId' => $userId, 'token' => $token, 'role' => $role]);
+        return response()->json([
+            'message' => 'ログインしました',
+            'userId' => $userId,
+            'token' => $token,
+            'role' => $role
+        ]);
     }
 
 
@@ -99,7 +107,7 @@ class AuthController extends Controller
 
     public function showLoginForm()
     {
-        return; // または適切なビュー名
+        return;
     }
 
     public function relogin(Request $request)

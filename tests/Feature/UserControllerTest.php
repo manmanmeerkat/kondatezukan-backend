@@ -34,30 +34,4 @@ class UserControllerTest extends TestCase
         $response->assertStatus(404)
             ->assertJson(['message' => 'ユーザーが見つかりませんでした。']);
     }
-
-
-
-
-    // public function testGetUserUnauthenticated()
-    // {
-    //     // 認証されていない状態でのリクエスト
-    //     $response = $this->get("api/get-user");
-
-    //     // レスポンスのアサート
-    //     $response->assertStatus(401)
-    //         ->assertJson(['error' => 'Unauthenticated.']);
-    // }
-
-    // public function testGetAllUsers()
-    // {
-    //     // テスト用のユーザーを作成
-    //     User::factory()->count(3)->create();
-
-    //     // ユーザー一覧を取得するエンドポイントにリクエスト
-    //     $response = $this->get("api/get-all-users");
-
-    //     // レスポンスのアサート
-    //     $response->assertStatus(200)
-    //         ->assertJsonStructure(['users']);
-    // }
 }

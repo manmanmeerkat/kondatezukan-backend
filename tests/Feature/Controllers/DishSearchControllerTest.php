@@ -54,38 +54,4 @@ class DishSearchControllerTest extends TestCase
      *
      * @return void
      */
-    public function testSearchByIngredient()
-    {
-        // 仮のデータを作成（適切なものに変更する）
-        //     $user = User::factory()->create();
-
-        //     // テスト用のデータ作成部分
-        //     $dish1 = Dish::factory()->create(['user_id' => $user->id]);
-        //     $dish1->ingredients()->create(['name' => 'Ingredient1', 'user_id' => $user->id]);
-
-        //     $dish2 = Dish::factory()->create(['user_id' => $user->id]);
-        //     $dish2->ingredients()->create(['name' => 'Ingredient2', 'user_id' => $user->id]);
-        //     // 検索クエリを実行
-        //     // 検索クエリを実行
-        //     $response = $this->get('/api/all-dish/search', [
-        //         // 'ingredient' => 'Ingredient1', // 検索条件（適切なものに変更する）
-        //         "user_id" => $user->id,
-        //     ]);
-
-        //     // レスポンスが正常であることを確認
-        //     $response->assertStatus(200);
-
-        //     // レスポンスの内容を表示
-
-        //     // レスポンスに検索結果が含まれているかどうかを確認
-        //     if (count($response->json()['dishes']) > 0) {
-        //         $response->assertJson(['dishes' => [$dish1->toArray()]]);
-        //         $response->assertJsonMissing(['dishes' => [$dish2->toArray()]]);
-        //     } else {
-        //         // 検索結果がない場合の処理
-        //         // ここに何かしらの確認処理を追加するか、コメントで記述しておくと良いでしょう。
-        //         dd('検索結果なし');
-        //     }
-        //     Logger::debug("Search results: " . json_encode($response->json()));
-    }
 }
